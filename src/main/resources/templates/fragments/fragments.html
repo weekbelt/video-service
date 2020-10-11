@@ -11,15 +11,17 @@
 
 <header th:fragment="header" class="header">
     <div class="header__column">
-        <i class="fab fa-youtube"></i>
+        <a th:href="@{/}">
+            <i class="fab fa-youtube"></i>
+        </a>
     </div>
     <div class="header__column">
         <ul>
             <li>
-                <a href="#">Join</a>
+                <a th:href="@{/join}">Join</a>
             </li>
             <li>
-                <a href="#">Log In</a>
+                <a th:href="@{/login}">Log In</a>
             </li>
         </ul>
     </div>
