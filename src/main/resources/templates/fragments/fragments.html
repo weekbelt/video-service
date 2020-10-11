@@ -9,12 +9,27 @@
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
 </head>
 
-<header th:fragment="header">
-    <h1>WeTube</h1>
+<header th:fragment="header" class="header">
+    <div class="header__column">
+        <i class="fab fa-youtube"></i>
+    </div>
+    <div class="header__column">
+        <ul>
+            <li>
+                <a href="#">Join</a>
+            </li>
+            <li>
+                <a href="#">Log In</a>
+            </li>
+        </ul>
+    </div>
 </header>
 
-<footer th:fragment="footer">
-    <span>&copy; WeTube</span>
+<footer th:fragment="footer" class="footer">
+    <div class="footer__icon">
+       <i class="fab fa-youtube"></i>
+    </div>
+    <span class="footer__text">WeTube 2020 &copy;</span>
 </footer>
 
 </html>
