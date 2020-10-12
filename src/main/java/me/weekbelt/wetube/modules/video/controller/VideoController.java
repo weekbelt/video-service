@@ -1,4 +1,4 @@
-package me.weekbelt.wetube.modules.video;
+package me.weekbelt.wetube.modules.video.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

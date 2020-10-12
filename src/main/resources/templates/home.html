@@ -6,7 +6,10 @@
 <body>
     <header th:replace="fragments/fragments.html :: header"></header>
     <div class="videos">
-        <h1>Video</h1>
+        <div th:each="item : ${videos}">
+            <h1 th:text="${item.title}"></h1>
+            <p th:text="${item.description}"></p>
+        </div>
     </div>
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
