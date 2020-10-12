@@ -5,7 +5,16 @@
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
     <header th:replace="fragments/fragments.html :: header"></header>
-    <p>Hello</p>
+    <div class="form-container">
+        <form th:action="@{'/videos/' + ${id}}" method="post">
+            <input type="text" name="title" placeholder="Title">
+            <textarea name="description" placeholder="Description"></textarea>
+            <input type="submit" value="Update Video">
+        </form>
+        <a th:href="@{'/videos/' + ${id}}" class="form-container__link form-container__link--delete">
+            Delete Video
+        </a>
+    </div>
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 </html>
