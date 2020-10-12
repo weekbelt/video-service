@@ -5,7 +5,16 @@
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
     <header th:replace="fragments/fragments.html :: header"></header>
-    <p>Hello</p>
+    <div class="form-container">
+        <form th:action="@{/members/edit-profile}" method="post">
+            <label for="avatar">Avatar</label>
+            <input type="file" id="avatar" name="avatar">
+            <input type="text" placeholder="Name" name="name">
+            <input type="email" placeholder="Email" name="email">
+            <input type="submit" value="Update Profile">
+        </form>
+        <a th:href="@{/members/change-password}" class="from-container__link">Change Password</a>
+    </div>
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 </html>
