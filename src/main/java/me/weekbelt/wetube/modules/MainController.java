@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -16,8 +17,9 @@ public class MainController {
     }
 
     @GetMapping("/search")
-    public String searchVideo(Model model) {
+    public String searchVideo(@RequestParam String term, Model model) {
         model.addAttribute("pageTitle", "Search");
+        model.addAttribute("searchingBy", term);
         return "videos/search";
     }
 

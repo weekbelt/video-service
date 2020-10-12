@@ -5,7 +5,9 @@
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
     <header th:replace="fragments/fragments.html :: header"></header>
-    <p>Hello</p>
+    <div class="search__header">
+        <h3 th:text="'Searching for: ' +  ${searchingBy}"></h3>
+    </div>
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 </html>
