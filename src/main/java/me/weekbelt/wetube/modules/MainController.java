@@ -13,7 +13,7 @@ public class MainController {
     @GetMapping("/")
     public String mainPage(Model model) {
         model.addAttribute("pageTitle", "Home");
-        return "index";
+        return "home";
     }
 
     @GetMapping("/search")

@@ -5,7 +5,16 @@
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
     <header th:replace="fragments/fragments.html :: header"></header>
-    <p>Hello</p>
+    <div class="form__container">
+        <form th:action="@{/join}" method="post">
+            <input type="text" name="name" placeholder="Full Name">
+            <input type="email" name="email" placeholder="Email">
+            <input type="password" name="password" placeholder="Password">
+            <input type="password" name="password2" placeholder="Verify Password">
+            <input type="submit" value="Join Now">
+        </form>
+        <div th:replace="fragments/fragments.html :: social-login"></div>
+    </div>
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 </html>

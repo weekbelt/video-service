@@ -5,7 +5,8 @@
 <head th:fragment="head">
     <meta charset="UTF-8">
     <title th:text="${pageTitle}">WeTube</title>
-    <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css"/>
+<!--    <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css"/>-->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
 </head>
 
@@ -34,9 +35,23 @@
 
 <footer th:fragment="footer" class="footer">
     <div class="footer__icon">
-       <i class="fab fa-youtube"></i>
+        <i class="fab fa-youtube"></i>
     </div>
     <span class="footer__text">WeTube 2020 &copy;</span>
 </footer>
 
+<div th:fragment="social-login" class="social-login">
+    <button class="social-login--github">
+        <span>
+            <i class="fab fa-github"></i>
+            Continue with Github
+        </span>
+    </button>
+    <button class="social-login--facebook">
+        <span>
+            <i class="fab fa-facebook-square"></i>
+            Continue with Github
+        </span>
+    </button>
+</div>
 </html>
