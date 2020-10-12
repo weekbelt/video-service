@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head">
     <meta charset="UTF-8">
-    <title>WeTube</title>
+    <title th:text="${pageTitle}">WeTube</title>
     <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css"/>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
 </head>
