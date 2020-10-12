@@ -29,7 +29,7 @@ public class MainController {
                 .title("Video awesome")
                 .description("This is something I love")
                 .views(24L)
-                .videoFile("https://archive.org/details/BigBuckBunny_124")
+                .videoFile("https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4")
                 .creator(creator)
                 .build();
         VideoForm video2 = VideoForm.builder()
@@ -37,7 +37,7 @@ public class MainController {
                 .title("Video super")
                 .description("This is something I love")
                 .views(24L)
-                .videoFile("https://archive.org/details/BigBuckBunny_124")
+                .videoFile("https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4")
                 .creator(creator)
                 .build();
         VideoForm video3 = VideoForm.builder()
@@ -45,7 +45,7 @@ public class MainController {
                 .title("Video nice")
                 .description("This is something I love")
                 .views(24L)
-                .videoFile("https://archive.org/details/BigBuckBunny_124")
+                .videoFile("https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4")
                 .creator(creator)
                 .build();
         VideoForm video4 = VideoForm.builder()
@@ -53,7 +53,7 @@ public class MainController {
                 .title("Video perfect")
                 .description("This is something I love")
                 .views(24L)
-                .videoFile("https://archive.org/details/BigBuckBunny_124")
+                .videoFile("https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4")
                 .creator(creator)
                 .build();
         ArrayList<VideoForm> videos = new ArrayList<>();
