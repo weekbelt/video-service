@@ -1,18 +1,34 @@
 package me.weekbelt.wetube.modules;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.weekbelt.wetube.modules.member.form.Creator;
+import me.weekbelt.wetube.modules.member.form.MemberJoinForm;
+import me.weekbelt.wetube.modules.member.validator.MemberJoinFormValidator;
 import me.weekbelt.wetube.modules.video.form.VideoForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class MainController {
+
+    ArrayList<VideoForm> videos = new ArrayList<>();
+
+    @InitBinder("memberJoinForm")
+    public void memberJoinFormInitBinder(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(new MemberJoinFormValidator());
+    }
 
     @GetMapping("/")
     public String mainPage(Model model) {
@@ -56,7 +72,6 @@ public class MainController {
                 .videoFile("https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4")
                 .creator(creator)
                 .build();
-        ArrayList<VideoForm> videos = new ArrayList<>();
         videos.add(video1);
         videos.add(video2);
         videos.add(video3);
@@ -72,17 +87,29 @@ public class MainController {
     public String searchVideo(@RequestParam String term, Model model) {
         model.addAttribute("pageTitle", "Search");
         model.addAttribute("searchingBy", term);
+        model.addAttribute("videos", videos);
         return "videos/search";
     }
 
     @GetMapping("/join")
     public String join(Model model) {
+        model.addAttribute("memberJoinForm", new MemberJoinForm());
         model.addAttribute("pageTitle", "Join");
         return "join";
     }
 
+    @PostMapping("/join")
+    public String join(@Valid MemberJoinForm memberJoinForm, Errors errors) {
+        if (errors.hasErrors()) {
+            return "join";
+        }
+//        TODO: 회원 등록
+//        TODO: 로그인
+        return "redirect:/";
+    }
+
     @GetMapping("/login")
-    public String login(Model model){
+    public String login(Model model) {
         model.addAttribute("pageTitle", "Log In");
         return "login";
     }

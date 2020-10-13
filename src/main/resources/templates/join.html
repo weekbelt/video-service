@@ -6,11 +6,11 @@
 <body>
     <header th:replace="fragments/fragments.html :: header"></header>
     <div class="form-container">
-        <form th:action="@{/join}" method="post">
-            <input type="text" name="name" placeholder="Full Name">
-            <input type="email" name="email" placeholder="Email">
-            <input type="password" name="password" placeholder="Password">
-            <input type="password" name="password2" placeholder="Verify Password">
+        <form th:object="${memberJoinForm}" th:action="@{/join}" method="post">
+            <input type="text" th:field="*{name}" name="name" placeholder="Full Name">
+            <input type="email" th:field="*{email}" name="email" placeholder="Email">
+            <input type="password" th:field="*{password}" name="password" placeholder="Password">
+            <input type="password" th:field="*{password2}" name="password2" placeholder="Verify Password">
             <input type="submit" value="Join Now">
         </form>
         <div th:replace="fragments/fragments.html :: social-login"></div>
