@@ -13,9 +13,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
        http.authorizeRequests()
-               .mvcMatchers("/**").permitAll();
-//               .mvcMatchers("/", "/login", "/join", "search").permitAll()
-//               .anyRequest().authenticated();
+               .mvcMatchers("/", "/login", "/join", "search").permitAll()
+               .anyRequest().authenticated();
+
+        http.formLogin()
+                .loginPage("/login")
+                .permitAll();
+
+        http.logout()
+                .logoutSuccessUrl("/");
     }
 
     @Override

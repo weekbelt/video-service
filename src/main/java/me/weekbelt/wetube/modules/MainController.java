@@ -2,8 +2,10 @@ package me.weekbelt.wetube.modules;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.weekbelt.wetube.modules.member.Member;
 import me.weekbelt.wetube.modules.member.form.Creator;
 import me.weekbelt.wetube.modules.member.form.MemberJoinForm;
+import me.weekbelt.wetube.modules.member.service.MemberService;
 import me.weekbelt.wetube.modules.member.validator.MemberJoinFormValidator;
 import me.weekbelt.wetube.modules.video.form.VideoForm;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,8 @@ import java.util.ArrayList;
 @Controller
 @RequiredArgsConstructor
 public class MainController {
+
+    private final MemberService memberService;
 
     ArrayList<VideoForm> videos = new ArrayList<>();
 
@@ -103,8 +107,9 @@ public class MainController {
         if (errors.hasErrors()) {
             return "join";
         }
-//        TODO: 회원 등록
-//        TODO: 로그인
+
+        Member member = memberService.processNewMember(memberJoinForm);
+        memberService.login(member);
         return "redirect:/";
     }
 

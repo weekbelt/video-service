@@ -22,13 +22,24 @@
         </form>
     </div>
     <div class="header__column">
-        <ul>
+        <ul sec:authorize="!isAuthenticated()">
             <li>
                 <a th:href="@{/join}">Join</a>
             </li>
             <li>
                 <a th:href="@{/login}">Log In</a>
             </li>
+        </ul>
+        <ul sec:authorize="isAuthenticated()">
+            <li>
+                <a th:href="@{/videos/upload}">Upload</a>
+            </li>
+            <li>
+                <a th:href="@{'/members/'+ ${#authentication.name}}">Profile</a>
+            </li>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
         </ul>
     </div>
 </header>

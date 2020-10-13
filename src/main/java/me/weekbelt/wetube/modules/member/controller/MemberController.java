@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class MemberController {
 
-    @GetMapping("/{id}")
-    public String userDetail(@PathVariable Long id, Model model) {
+    @GetMapping("/{name}")
+    public String userDetail(@PathVariable String name, Model model) {
         model.addAttribute("pageTitle", "Member Detail");
         return "users/userDetail";
     }
