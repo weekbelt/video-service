@@ -6,11 +6,11 @@
 <body>
     <header th:replace="fragments/fragments.html :: header"></header>
     <div class="form-container">
-        <form th:action="@{/videos}" method="post">
+        <form th:object="${videoUploadForm}" th:action="@{/videos/upload}" method="post">
             <label for="file">Video File</label>
-            <input type="file" id="file" name="file">
-            <input type="text" placeholder="Title" name="title">
-            <textarea name="description" placeholder="Description"></textarea>
+            <input type="file" th:field="*{file}" id="file" name="file">
+            <input type="text" th:field="*{title}" placeholder="Title" name="title">
+            <textarea name="description" th:field="*{description}" placeholder="Description"></textarea>
             <input type="submit" value="Upload Video">
         </form>
     </div>

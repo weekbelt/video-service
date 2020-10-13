@@ -7,9 +7,11 @@
     <header th:replace="fragments/fragments.html :: header"></header>
     <div class="videos">
         <div th:each="item : ${videos}" class="videoBlock">
-            <video th:src="${item.videoFile}" class="videoBlock__thumbnail" controls="true"></video>
-            <h4 class="videoBlock__title" th:text="${item.title}"></h4>
-            <h6 class="videoBlock__views" th:text="${item.views}"></h6>
+            <a th:href="@{'/videos/' + ${item.id}}">
+                <video th:src="${item.videoFile}" class="videoBlock__thumbnail" controls="true"></video>
+                <h4 class="videoBlock__title" th:text="${item.title}"></h4>
+                <h6 class="videoBlock__views" th:text="${item.views}"></h6>
+            </a>
         </div>
     </div>
 </body>
