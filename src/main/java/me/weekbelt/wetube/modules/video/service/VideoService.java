@@ -77,4 +77,10 @@ public class VideoService {
                 () -> new IllegalArgumentException("해당하는 비디오가 없습니다. video id=" + videoId));
         findVideo.update(videoUpdateForm);
     }
+
+    public void deleteVideo(Long id) {
+        Video findVideo = videoRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("삭제하고자하는 비디오가 없습니다. videoId=" + id));
+        videoRepository.delete(findVideo);
+    }
 }

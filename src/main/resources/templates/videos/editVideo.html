@@ -14,7 +14,7 @@
             <textarea name="description" placeholder="Description" th:field="*{description}" th:text="${video.description}"></textarea>
             <input type="submit" value="Update Video">
         </form>
-        <a th:href="@{'/videos/' + ${id}}" class="form-container__link form-container__link--delete">
+        <a th:href="@{'/videos/' + ${id} + '/delete'}" class="form-container__link form-container__link--delete">
             Delete Video
         </a>
     </div>

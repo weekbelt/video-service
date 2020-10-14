@@ -58,7 +58,7 @@ public class VideoController {
     public String videoDetail(@CurrentMember Member member, @PathVariable Long id, Model model) {
         VideoForm videoForm = videoService.findVideoForm(id, member);
         model.addAttribute("video", videoForm);
-        model.addAttribute("pageTitle", "Video Detail");
+        model.addAttribute("pageTitle", videoForm.getTitle());
         return "videos/videoDetail";
     }
 
@@ -80,9 +80,10 @@ public class VideoController {
 
     @GetMapping("/{id}/delete")
     public String deleteVideo(@CurrentMember Member member, @PathVariable Long id, Model model) {
-        model.addAttribute("pageTitle", "Delete Video");
-        return "videos/deleteVideo";
+        videoService.deleteVideo(id);
+        return "redirect:/";
     }
+
 
 //    private ResponseEntity<Resource> setResponseVideo(long fileLength, String saveFileName, String contentType) {
 //        return ResponseEntity.ok()
