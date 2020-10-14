@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.weekbelt.wetube.modules.BaseTimeEntity;
 import me.weekbelt.wetube.modules.member.Member;
+import me.weekbelt.wetube.modules.video.form.VideoUpdateForm;
 
 import javax.persistence.*;
 
@@ -36,5 +37,10 @@ public class Video extends BaseTimeEntity {
         this.views = views;
         this.fileUrl = fileUrl;
         this.member = member;
+    }
+
+    public void update(VideoUpdateForm videoUpdateForm) {
+        this.title = videoUpdateForm.getTitle();
+        this.description = videoUpdateForm.getDescription();
     }
 }

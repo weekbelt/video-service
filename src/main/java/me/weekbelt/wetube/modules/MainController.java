@@ -39,7 +39,7 @@ public class MainController {
         if (member != null) {
             model.addAttribute("member", member);
         }
-        List<VideoForm> videos = videoService.findVideoForm();
+        List<VideoForm> videos = videoService.findVideoForms();
         model.addAttribute("videos", videos);
         model.addAttribute("pageTitle", "Home");
         return "home";
@@ -49,7 +49,7 @@ public class MainController {
     public String searchVideo(@RequestParam String term, Model model) {
         model.addAttribute("pageTitle", "Search");
         model.addAttribute("searchingBy", term);
-        List<VideoForm> videos = videoService.findVideoForm();
+        List<VideoForm> videos = videoService.findVideoForms();
         model.addAttribute("videos", videos);
         return "videos/search";
     }

@@ -9,6 +9,7 @@ import me.weekbelt.wetube.modules.video.VideoDtoFactory;
 import me.weekbelt.wetube.modules.member.form.Creator;
 import me.weekbelt.wetube.modules.video.Video;
 import me.weekbelt.wetube.modules.video.form.VideoForm;
+import me.weekbelt.wetube.modules.video.form.VideoUpdateForm;
 import me.weekbelt.wetube.modules.video.form.VideoUploadForm;
 import me.weekbelt.wetube.modules.video.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +33,7 @@ public class VideoService {
     private final VideoRepository videoRepository;
     private final MemberRepository memberRepository;
 
-    public List<VideoForm> findVideoForm() {
+    public List<VideoForm> findVideoForms() {
         List<Video> videoList = videoRepository.findAll();
         return videoList.stream().map(video -> {
             Member createMember = video.getMember();
@@ -40,6 +41,17 @@ public class VideoService {
 
             return VideoDtoFactory.videoToVideoForm(video, creator);
         }).collect(Collectors.toList());
+    }
+
+    public VideoForm findVideoForm(Long videoId, Member member) {
+        Member findMember = memberRepository.findByName(member.getName()).orElseThrow(
+                () -> new IllegalArgumentException("해당 유저가 존재하지 않습니다. name=" + member.getName()));
+
+        Creator creator = MemberDtoFactory.memberToCreator(findMember);
+        Video findVideo = videoRepository.findById(videoId).orElseThrow(
+                () -> new IllegalArgumentException("찾는 비디오가 없습니다. Video Id=" + videoId));
+
+        return VideoDtoFactory.videoToVideoForm(findVideo, creator);
     }
 
     public VideoForm uploadVideo(Member member, VideoUploadForm videoUploadForm) {
@@ -58,5 +70,11 @@ public class VideoService {
         Video savedVideo = videoRepository.save(video);
         Creator creator = MemberDtoFactory.memberToCreator(findMember);
         return VideoDtoFactory.videoToVideoForm(savedVideo, creator);
+    }
+
+    public void updateVideo(Long videoId, VideoUpdateForm videoUpdateForm) {
+        Video findVideo = videoRepository.findById(videoId).orElseThrow(
+                () -> new IllegalArgumentException("해당하는 비디오가 없습니다. video id=" + videoId));
+        findVideo.update(videoUpdateForm);
     }
 }

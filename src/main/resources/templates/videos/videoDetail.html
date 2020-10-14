@@ -9,7 +9,7 @@
         <video th:src="@{'/' + video.fileUrl}"></video>
     </div>
     <div class="video__info">
-        <a th:href="@{'/video/' + ${video.id} + '/edit'}">Edit Video</a>
+        <a th:href="@{'/videos/' + ${video.id} + '/edit'}">Edit Video</a>
         <h5 class="video__title" th:text="${video.title}">Video Title</h5>
         <span class="video__views" th:text="${video.views}">0</span>
         <p class="video__description" th:text="${video.description}">Video Description</p>

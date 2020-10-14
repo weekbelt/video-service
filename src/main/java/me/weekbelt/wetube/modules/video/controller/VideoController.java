@@ -6,6 +6,7 @@ import me.weekbelt.wetube.modules.member.CurrentMember;
 import me.weekbelt.wetube.modules.member.Member;
 import me.weekbelt.wetube.modules.video.Video;
 import me.weekbelt.wetube.modules.video.form.VideoForm;
+import me.weekbelt.wetube.modules.video.form.VideoUpdateForm;
 import me.weekbelt.wetube.modules.video.form.VideoUploadForm;
 import me.weekbelt.wetube.modules.video.service.VideoService;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,14 +56,26 @@ public class VideoController {
 
     @GetMapping("/{id}")
     public String videoDetail(@CurrentMember Member member, @PathVariable Long id, Model model) {
+        VideoForm videoForm = videoService.findVideoForm(id, member);
+        model.addAttribute("video", videoForm);
         model.addAttribute("pageTitle", "Video Detail");
         return "videos/videoDetail";
     }
 
     @GetMapping("/{id}/edit")
-    public String editVideo(@CurrentMember Member member, @PathVariable Long id, Model model) {
+    public String editVideoView(@CurrentMember Member member, @PathVariable Long id, Model model) {
+        VideoForm videoForm = videoService.findVideoForm(id, member);
+        model.addAttribute("video", videoForm);
         model.addAttribute("pageTitle", "Edit Video");
+        model.addAttribute("videoUpdateForm", new VideoUploadForm());
         return "videos/editVideo";
+    }
+
+    @PutMapping("/{id}/edit")
+    public String editVideo(@CurrentMember Member member, @PathVariable Long id,
+                            VideoUpdateForm videoUpdateForm, Model model){
+        videoService.updateVideo(id, videoUpdateForm);
+        return "redirect:/videos/" + id;
     }
 
     @GetMapping("/{id}/delete")
