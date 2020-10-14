@@ -34,7 +34,7 @@ public class VideoService {
     private final MemberRepository memberRepository;
 
     public List<VideoForm> findVideoForms() {
-        List<Video> videoList = videoRepository.findAll();
+        List<Video> videoList = videoRepository.findAllByOrderByIdDesc();
         return videoList.stream().map(video -> {
             Member createMember = video.getMember();
             Creator creator = MemberDtoFactory.memberToCreator(createMember);
