@@ -6,9 +6,9 @@
 <body>
     <header th:replace="fragments/fragments.html :: header"></header>
     <div class="form-container">
-        <form th:object="${videoUploadForm}" th:action="@{/videos/upload}" method="post">
+        <form th:object="${videoUploadForm}" th:action="@{/videos/upload}" method="post" enctype="multipart/form-data">
             <label for="file">Video File</label>
-            <input type="file" th:field="*{file}" id="file" name="file">
+            <input type="file" th:field="*{file}" id="file" name="file" accept="video/*">
             <input type="text" th:field="*{title}" placeholder="Title" name="title">
             <textarea name="description" th:field="*{description}" placeholder="Description"></textarea>
             <input type="submit" value="Upload Video">

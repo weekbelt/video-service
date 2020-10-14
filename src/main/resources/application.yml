@@ -1,7 +1,25 @@
+
 spring:
   profiles:
     active: local
 
+  thymeleaf:
+    cache: false
+
+  devtools:
+    remote:
+      restart:
+        enabled: true
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+property:
+  video:
+    url: /Users/joohyuk/Movies/
+    uploadFolder: upload_video/
 ---
 spring:
   profiles: test

@@ -10,8 +10,7 @@ import javax.validation.constraints.NotBlank;
 @Getter @Setter
 public class VideoUploadForm {
 
-//    TODO: 파일업로드
-    private String file;
+    private MultipartFile file;
 
     @NotBlank
     @Length(min = 2, max = 30)
