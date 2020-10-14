@@ -4,25 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.weekbelt.wetube.modules.member.CurrentMember;
 import me.weekbelt.wetube.modules.member.Member;
-import me.weekbelt.wetube.modules.video.Video;
-import me.weekbelt.wetube.modules.video.form.VideoForm;
+import me.weekbelt.wetube.modules.video.form.VideoReadForm;
 import me.weekbelt.wetube.modules.video.form.VideoUpdateForm;
 import me.weekbelt.wetube.modules.video.form.VideoUploadForm;
 import me.weekbelt.wetube.modules.video.service.VideoService;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 
 @Slf4j
 @Controller
@@ -45,8 +33,8 @@ public class VideoController {
     @PostMapping("/upload")
     public String uploadVideo(@CurrentMember Member member, VideoUploadForm videoUploadForm) {
         log.info(videoUploadForm.toString());
-        VideoForm videoForm = videoService.uploadVideo(member, videoUploadForm);
-        return "redirect:/videos/" + videoForm.getId();
+        VideoReadForm videoReadForm = videoService.uploadVideo(member, videoUploadForm);
+        return "redirect:/videos/" + videoReadForm.getId();
     }
 
 //    @GetMapping("/download")
@@ -56,16 +44,16 @@ public class VideoController {
 
     @GetMapping("/{id}")
     public String videoDetail(@CurrentMember Member member, @PathVariable Long id, Model model) {
-        VideoForm videoForm = videoService.findVideoForm(id, member);
-        model.addAttribute("video", videoForm);
-        model.addAttribute("pageTitle", videoForm.getTitle());
+        VideoReadForm videoReadForm = videoService.findVideoForm(id);
+        model.addAttribute("video", videoReadForm);
+        model.addAttribute("pageTitle", videoReadForm.getTitle());
         return "videos/videoDetail";
     }
 
     @GetMapping("/{id}/edit")
     public String editVideoView(@CurrentMember Member member, @PathVariable Long id, Model model) {
-        VideoForm videoForm = videoService.findVideoForm(id, member);
-        model.addAttribute("video", videoForm);
+        VideoReadForm videoReadForm = videoService.findVideoForm(id);
+        model.addAttribute("video", videoReadForm);
         model.addAttribute("pageTitle", "Edit Video");
         model.addAttribute("videoUpdateForm", new VideoUploadForm());
         return "videos/editVideo";

@@ -7,7 +7,8 @@ import me.weekbelt.wetube.modules.member.Member;
 import me.weekbelt.wetube.modules.member.form.MemberJoinForm;
 import me.weekbelt.wetube.modules.member.service.MemberService;
 import me.weekbelt.wetube.modules.member.validator.MemberJoinFormValidator;
-import me.weekbelt.wetube.modules.video.form.VideoForm;
+import me.weekbelt.wetube.modules.video.form.VideoElementForm;
+import me.weekbelt.wetube.modules.video.form.VideoReadForm;
 import me.weekbelt.wetube.modules.video.service.VideoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,7 +40,7 @@ public class MainController {
         if (member != null) {
             model.addAttribute("member", member);
         }
-        List<VideoForm> videos = videoService.findVideoForms();
+        List<VideoElementForm> videos = videoService.findVideoElementForms();
         model.addAttribute("videos", videos);
         model.addAttribute("pageTitle", "Home");
         return "home";
@@ -49,7 +50,7 @@ public class MainController {
     public String searchVideo(@RequestParam String term, Model model) {
         model.addAttribute("pageTitle", "Search");
         model.addAttribute("searchingBy", term);
-        List<VideoForm> videos = videoService.findVideoForms();
+        List<VideoElementForm> videos = videoService.findVideoElementForms();
         model.addAttribute("videos", videos);
         return "videos/search";
     }

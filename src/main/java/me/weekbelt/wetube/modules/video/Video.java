@@ -33,6 +33,9 @@ public class Video extends BaseTimeEntity{
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @OneToMany(mappedBy = "video", fetch = FetchType.LAZY)
+    private List<Comment> comments = new ArrayList<>();
+
     @Builder
     public Video(String title, String description, Long views, String fileUrl, Member member) {
         this.title = title;
