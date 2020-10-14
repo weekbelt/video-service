@@ -25,4 +25,9 @@ public class Comment extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
+    public void addVideo(Video video) {
+        this.video = video;
+        video.getComments().add(this);
+    }
 }

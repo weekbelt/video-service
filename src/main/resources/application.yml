@@ -20,13 +20,20 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
-
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 1000
 property:
   video:
     url: /Users/joohyuk/Movies/
     uploadFolder: upload_video/
 
-
+logging.level:
+  org.hibernate.SQL: debug
 ---
 spring:
   profiles: test
