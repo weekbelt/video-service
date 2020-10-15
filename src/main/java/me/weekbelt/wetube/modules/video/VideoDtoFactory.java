@@ -2,6 +2,7 @@ package me.weekbelt.wetube.modules.video;
 
 import me.weekbelt.wetube.modules.comment.form.CommentReadForm;
 import me.weekbelt.wetube.modules.member.Member;
+import me.weekbelt.wetube.modules.member.MemberDtoFactory;
 import me.weekbelt.wetube.modules.member.form.Creator;
 import me.weekbelt.wetube.modules.video.form.VideoElementForm;
 import me.weekbelt.wetube.modules.video.form.VideoReadForm;
@@ -9,6 +10,7 @@ import me.weekbelt.wetube.modules.video.form.VideoUpdateForm;
 import me.weekbelt.wetube.modules.video.form.VideoUploadForm;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class VideoDtoFactory {
 
@@ -50,5 +52,14 @@ public class VideoDtoFactory {
                 .title(video.getTitle())
                 .description(video.getDescription())
                 .build();
+    }
+
+    public static List<VideoElementForm> videosToVideoElementForms(List<Video> videoList) {
+        return videoList.stream().map(video -> {
+            Member createMember = video.getMember();
+            Creator creator = MemberDtoFactory.memberToCreator(createMember);
+            return VideoDtoFactory.videoToVideoElementForm(video, creator);
+        }).collect(Collectors.toList());
+
     }
 }

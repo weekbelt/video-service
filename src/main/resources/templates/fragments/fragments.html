@@ -8,9 +8,15 @@
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
 <header th:fragment="header" class="header">
-    <div class="header__column"><a th:href="@{/}"> <i class="fab fa-youtube"></i> </a></div>
     <div class="header__column">
-        <form th:action="@{/search}" method="get"><input type="text" placeholder="Search by term..." name="term"></form>
+        <a th:href="@{/}">
+            <i class="fab fa-youtube"></i>
+        </a>
+    </div>
+    <div class="header__column">
+        <form th:action="@{/search}" method="get">
+            <input type="text" placeholder="Search by term..." name="keyword">
+        </form>
     </div>
     <div class="header__column">
         <ul sec:authorize="!isAuthenticated()">

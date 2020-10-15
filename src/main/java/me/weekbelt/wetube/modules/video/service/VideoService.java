@@ -5,17 +5,13 @@ import me.weekbelt.wetube.infra.util.VideoFile;
 import me.weekbelt.wetube.modules.comment.Comment;
 import me.weekbelt.wetube.modules.comment.CommentDtoFactory;
 import me.weekbelt.wetube.modules.comment.form.CommentReadForm;
-import me.weekbelt.wetube.modules.comment.repository.CommentRepository;
 import me.weekbelt.wetube.modules.member.Member;
 import me.weekbelt.wetube.modules.member.MemberDtoFactory;
 import me.weekbelt.wetube.modules.member.repository.MemberRepository;
 import me.weekbelt.wetube.modules.video.VideoDtoFactory;
 import me.weekbelt.wetube.modules.member.form.Creator;
 import me.weekbelt.wetube.modules.video.Video;
-import me.weekbelt.wetube.modules.video.form.VideoElementForm;
-import me.weekbelt.wetube.modules.video.form.VideoReadForm;
-import me.weekbelt.wetube.modules.video.form.VideoUpdateForm;
-import me.weekbelt.wetube.modules.video.form.VideoUploadForm;
+import me.weekbelt.wetube.modules.video.form.*;
 import me.weekbelt.wetube.modules.video.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -41,12 +37,12 @@ public class VideoService {
 
     public List<VideoElementForm> findVideoElementForms() {
         List<Video> videoList = videoRepository.findAllByOrderByIdDesc();
+        return VideoDtoFactory.videosToVideoElementForms(videoList);
+    }
 
-        return videoList.stream().map(video -> {
-            Member createMember = video.getMember();
-            Creator creator = MemberDtoFactory.memberToCreator(createMember);
-            return VideoDtoFactory.videoToVideoElementForm(video, creator);
-        }).collect(Collectors.toList());
+    public List<VideoElementForm> findVideoElementFormsByKeyword(String keyword) {
+        List<Video> videoList = videoRepository.findAllByVideoKeyword(keyword);
+        return VideoDtoFactory.videosToVideoElementForms(videoList);
     }
 
     public VideoReadForm findVideoForm(Long videoId) {

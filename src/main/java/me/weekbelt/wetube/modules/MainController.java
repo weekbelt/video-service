@@ -8,7 +8,6 @@ import me.weekbelt.wetube.modules.member.form.MemberJoinForm;
 import me.weekbelt.wetube.modules.member.service.MemberService;
 import me.weekbelt.wetube.modules.member.validator.MemberJoinFormValidator;
 import me.weekbelt.wetube.modules.video.form.VideoElementForm;
-import me.weekbelt.wetube.modules.video.form.VideoReadForm;
 import me.weekbelt.wetube.modules.video.service.VideoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,10 +47,10 @@ public class MainController {
 
     // TODO: 검색기능 개선
     @GetMapping("/search")
-    public String searchVideo(@RequestParam String term, Model model) {
+    public String searchVideo(@RequestParam String keyword, Model model) {
         model.addAttribute("pageTitle", "Search");
-        model.addAttribute("searchingBy", term);
-        List<VideoElementForm> videos = videoService.findVideoElementForms();
+        model.addAttribute("searchingBy", keyword);
+        List<VideoElementForm> videos = videoService.findVideoElementFormsByKeyword(keyword);
         model.addAttribute("videos", videos);
         return "videos/search";
     }
