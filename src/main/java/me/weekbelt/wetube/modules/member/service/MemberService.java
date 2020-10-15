@@ -26,7 +26,7 @@ import java.util.Set;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class MemberService {
+public class MemberService implements UserDetailsService{
 
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
@@ -48,7 +48,7 @@ public class MemberService {
         Set<GrantedAuthority> grantedAuthorities = getGrantedAuthorities(member);
 
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                new UserMember(member, grantedAuthorities),
+                new UserMember(member),
                 member.getPassword(),
                 grantedAuthorities);
 
@@ -66,9 +66,11 @@ public class MemberService {
         return grantedAuthorities;
     }
 
-//    @Transactional(readOnly = true)
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        return null;
-//    }
+    @Transactional(readOnly = true)
+    @Override
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+        Member member = memberRepository.findByName(name).orElseThrow(
+                () -> new UsernameNotFoundException("찾는 유저가 없습니다."));
+        return new UserMember(member);
+    }
 }

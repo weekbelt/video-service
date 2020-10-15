@@ -1,4 +1,4 @@
-package me.weekbelt.wetube.modules.member.controller;
+package me.weekbelt.wetube.modules;
 
 import me.weekbelt.wetube.infra.MockMvcTest;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @MockMvcTest
-class MemberControllerTest {
+class MainControllerTest {
 
     @Autowired
     MockMvc mockMvc;
