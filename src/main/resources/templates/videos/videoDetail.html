@@ -15,8 +15,9 @@
         <p class="video__description" th:text="${video.description}">Video Description</p>
     </div>
     <div class="video__comment">
-        <span th:if="${video.comments.size()} == 1" th:text="${video.comments.size()} + ' comment'" class="video__comment-number"></span>
-        <span th:if="${video.comments.size()} > 1" th:text="${video.comments.size()} + ' comments'" class="video__comment-number"></span>
+        <span th:if="${video.comments.size() == 1}" th:text="${video.comments.size() + ' comment'}" class="video__comment-number"></span>
+        <span th:if="${video.comments.size() > 1}" th:text="${video.comments.size() + ' comments'}" class="video__comment-number"></span>
+        <span th:if="${video.comments.size() == 0}" th:text="${video.comments.size() + ' comment'}" class="video__comment-number"></span>
     </div>
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
