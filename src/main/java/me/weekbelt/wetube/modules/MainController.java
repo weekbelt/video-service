@@ -46,6 +46,7 @@ public class MainController {
         return "home";
     }
 
+    // TODO: 검색기능 개선
     @GetMapping("/search")
     public String searchVideo(@RequestParam String term, Model model) {
         model.addAttribute("pageTitle", "Search");
@@ -56,7 +57,7 @@ public class MainController {
     }
 
     @GetMapping("/join")
-    public String join(Model model) {
+    public String joinPage(Model model) {
         model.addAttribute("memberJoinForm", new MemberJoinForm());
         model.addAttribute("pageTitle", "Join");
         return "join";
