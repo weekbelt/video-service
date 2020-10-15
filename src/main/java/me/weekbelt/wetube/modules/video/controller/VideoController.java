@@ -4,9 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.weekbelt.wetube.modules.member.CurrentMember;
 import me.weekbelt.wetube.modules.member.Member;
+import me.weekbelt.wetube.modules.video.Video;
+import me.weekbelt.wetube.modules.video.VideoDtoFactory;
 import me.weekbelt.wetube.modules.video.form.VideoReadForm;
 import me.weekbelt.wetube.modules.video.form.VideoUpdateForm;
 import me.weekbelt.wetube.modules.video.form.VideoUploadForm;
+import me.weekbelt.wetube.modules.video.repository.VideoRepository;
 import me.weekbelt.wetube.modules.video.service.VideoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +25,7 @@ public class VideoController {
 //    private String DIR;
 //
     private final VideoService videoService;
+    private final VideoRepository videoRepository;
 
     @GetMapping("/upload")
     public String uploadVideoForm(@CurrentMember Member member, Model model) {
@@ -51,11 +55,11 @@ public class VideoController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editVideoView(@CurrentMember Member member, @PathVariable Long id, Model model) {
-        VideoReadForm videoReadForm = videoService.findVideoForm(id);
-        model.addAttribute("video", videoReadForm);
+    public String editVideoView(@CurrentMember Member member, @PathVariable("id") Video video, Model model) {
+        VideoUpdateForm videoUpdateForm = VideoDtoFactory.videoToVideoUpdateForm(video);
+        model.addAttribute("id", video.getId());
         model.addAttribute("pageTitle", "Edit Video");
-        model.addAttribute("videoUpdateForm", new VideoUploadForm());
+        model.addAttribute("videoUpdateForm", videoUpdateForm);
         return "videos/editVideo";
     }
 

@@ -1,8 +1,8 @@
 package me.weekbelt.wetube.modules.video.form;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@Builder @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 public class VideoUpdateForm {
 

@@ -5,6 +5,7 @@ import me.weekbelt.wetube.modules.member.Member;
 import me.weekbelt.wetube.modules.member.form.Creator;
 import me.weekbelt.wetube.modules.video.form.VideoElementForm;
 import me.weekbelt.wetube.modules.video.form.VideoReadForm;
+import me.weekbelt.wetube.modules.video.form.VideoUpdateForm;
 import me.weekbelt.wetube.modules.video.form.VideoUploadForm;
 
 import java.util.List;
@@ -41,6 +42,13 @@ public class VideoDtoFactory {
                 .fileUrl(fileUrl)
                 .views(0L)
                 .member(member)
+                .build();
+    }
+
+    public static VideoUpdateForm videoToVideoUpdateForm(Video video) {
+        return VideoUpdateForm.builder()
+                .title(video.getTitle())
+                .description(video.getDescription())
                 .build();
     }
 }

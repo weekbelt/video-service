@@ -7,11 +7,11 @@
     <header th:replace="fragments/fragments.html :: header"></header>
     <div class="form-container">
 <!--        <form th:action="@{'/videos/' + ${id}}" method="post">-->
-        <form th:object="${videoUpdateForm}" th:action="@{'/videos/' + ${id}} + '/edit'" th:method="put">
+        <form th:object="${videoUpdateForm}" th:action="@{'/videos/' + ${id} + '/edit'}" th:method="put">
 <!--            <input type="text" name="title" placeholder="Title" th:field="*{title}">-->
 <!--            <textarea name="description" placeholder="Description" th:field="*{description}"></textarea>-->
-            <input type="text" name="title" placeholder="Title" th:field="*{title}" th:value="${video.title}">
-            <textarea name="description" placeholder="Description" th:field="*{description}" th:text="${video.description}"></textarea>
+            <input type="text" name="title" placeholder="Title" th:field="*{title}">
+            <textarea name="description" placeholder="Description" th:field="*{description}"></textarea>
             <input type="submit" value="Update Video">
         </form>
         <a th:href="@{'/videos/' + ${id} + '/delete'}" class="form-container__link form-container__link--delete">

@@ -1,5 +1,7 @@
 package me.weekbelt.wetube.modules.video.form;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -19,6 +21,7 @@ public class VideoUploadForm {
     @NotBlank
     @Length(min = 5, message = "5자 이상 입력해 주세요.")
     private String description;
+
 
     @Override
     public String toString() {
