@@ -5,19 +5,22 @@
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
     <header th:replace="fragments/fragments.html :: header"></header>
-    <div class="video__player">
-        <video th:src="@{'/' + video.fileUrl}"></video>
-    </div>
-    <div class="video__info">
-        <a th:href="@{'/videos/' + ${video.id} + '/edit'}">Edit Video</a>
-        <h5 class="video__title" th:text="${video.title}">Video Title</h5>
-        <span class="video__views" th:text="${video.views}">0</span>
-        <p class="video__description" th:text="${video.description}">Video Description</p>
-    </div>
-    <div class="video__comment">
-        <span th:if="${video.comments.size() == 1}" th:text="${video.comments.size() + ' comment'}" class="video__comment-number"></span>
-        <span th:if="${video.comments.size() > 1}" th:text="${video.comments.size() + ' comments'}" class="video__comment-number"></span>
-        <span th:if="${video.comments.size() == 0}" th:text="${video.comments.size() + ' comment'}" class="video__comment-number"></span>
+    <div class="video-detail__container">
+        <div class="video__player">
+            <video th:src="@{'/' + video.fileUrl}"></video>
+        </div>
+        <div class="video__info">
+            <a th:href="@{'/videos/' + ${video.id} + '/edit'}">button Edit Video</a>
+            <h5 class="video__title" th:text="${video.title}">Video Title</h5>
+            <p class="video__description" th:text="${video.description}">Video Description</p>
+            <span th:if="${video.views == 1}" class="video__views" th:text="${video.views + ' view'}">1</span>
+            <span th:if="${video.views > 1}" class="video__views" th:text="${video.views + ' views'}">1</span>
+        </div>
+        <div class="video__comment">
+            <span th:if="${video.comments.size() == 1}" th:text="${video.comments.size() + ' comment'}" class="video__comment-number"></span>
+            <span th:if="${video.comments.size() > 1}" th:text="${video.comments.size() + ' comments'}" class="video__comment-number"></span>
+            <span th:if="${video.comments.size() == 0}" th:text="${video.comments.size() + ' comment'}" class="video__comment-number"></span>
+        </div>
     </div>
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>

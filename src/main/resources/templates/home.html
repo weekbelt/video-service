@@ -4,16 +4,17 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
-    <header th:replace="fragments/fragments.html :: header"></header>
-    <div class="videos">
-        <div th:each="item : ${videos}" class="videoBlock">
-            <a th:href="@{'/videos/' + ${item.id}}">
-                <video th:src="@{${item.videoFile}}" class="videoBlock__thumbnail" controls="true"></video>
-                <h4 class="videoBlock__title" th:text="${item.title}"></h4>
-                <h6 class="videoBlock__views" th:text="${item.views}"></h6>
-            </a>
-        </div>
+<header th:replace="fragments/fragments.html :: header"></header>
+<div class="home-videos">
+    <div th:each="item : ${videos}" class="videoBlock">
+        <a th:href="@{'/videos/' + ${item.id}}">
+            <video th:src="@{${item.videoFile}}" class="videoBlock__thumbnail" controls="false"></video>
+            <h4 class="videoBlock__title" th:text="${item.title}"></h4>
+            <h6 th:if="${item.views == 1}" class="videoBlock__views" th:text="${item.views + ' view'}"></h6>
+            <h6 th:if="${item.views > 1}" class="videoBlock__views" th:text="${item.views + ' views'}"></h6>
+        </a>
     </div>
+</div>
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 </html>

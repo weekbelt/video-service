@@ -4,16 +4,18 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
-    <header th:replace="fragments/fragments.html :: header"></header>
-    <div class="form-container">
-        <form th:object="${videoUploadForm}" th:action="@{/videos/upload}" method="post" enctype="multipart/form-data">
+<header th:replace="fragments/fragments.html :: header"></header>
+<div class="form-container">
+    <form th:object="${videoUploadForm}" th:action="@{/videos/upload}" method="post" enctype="multipart/form-data">
+        <div class="fileUpload">
             <label for="file">Video File</label>
-            <input type="file" th:field="*{file}" id="file" name="file" accept="video/*">
-            <input type="text" th:field="*{title}" placeholder="Title" name="title">
-            <textarea name="description" th:field="*{description}" placeholder="Description"></textarea>
-            <input type="submit" value="Upload Video">
-        </form>
-    </div>
+            <input type="file" th:field="*{file}" id="file" name="file" accept="video/*" required="true">
+        </div>
+        <input type="text" th:field="*{title}" placeholder="Title" name="title">
+        <textarea name="description" th:field="*{description}" placeholder="Description"></textarea>
+        <input type="submit" value="Upload Video">
+    </form>
+</div>
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 </html>

@@ -4,17 +4,19 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
-    <header th:replace="fragments/fragments.html :: header"></header>
-    <div class="form-container">
-        <form th:action="@{/members/edit-profile}" method="post">
+<header th:replace="fragments/fragments.html :: header"></header>
+<div class="form-container">
+    <form th:action="@{/members/edit-profile}" method="post">
+        <div class="fileUpload">
             <label for="avatar">Avatar</label>
             <input type="file" id="avatar" name="avatar">
-            <input type="text" placeholder="Name" name="name">
-            <input type="email" placeholder="Email" name="email">
-            <input type="submit" value="Update Profile">
-        </form>
-        <a th:href="@{/members/change-password}" class="from-container__link">Change Password</a>
-    </div>
+        </div>
+        <input type="text" placeholder="Name" name="name">
+        <input type="email" placeholder="Email" name="email">
+        <input type="submit" value="Update Profile">
+    </form>
+    <a th:href="@{/members/change-password}" class="from-container__link">button Change Password</a>
+</div>
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 </html>
