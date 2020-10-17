@@ -50,12 +50,14 @@
 </footer>
 
 <div th:fragment="social-login" class="social-login">
-    <button class="social-login--github">
+    <a th:href="@{/auth/github}">
+        <button class="social-login--github">
         <span>
             <i class="fab fa-github"></i>
             Continue with Github
         </span>
-    </button>
+        </button>
+    </a>
     <button class="social-login--facebook">
         <span>
             <i class="fab fa-facebook-square"></i>

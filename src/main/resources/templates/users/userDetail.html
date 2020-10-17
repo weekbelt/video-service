@@ -5,7 +5,20 @@
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
     <header th:replace="fragments/fragments.html :: header"></header>
-    <p>Hello</p>
+    <div class="user-profile">
+        <div class="user-profile__header">
+            <img th:src="${member.avatarUrl}" alt="" class="avatar">
+            <h4 class="profile__username" th:text="${member.name}"></h4>
+        </div>
+        <div class="user-profile__btns">
+            <a href="/members/edit-profile">
+                <button>Edit Profile</button>
+            </a>
+            <a href="/members/change-password">
+                <button>🔒 Change Password</button>
+            </a>
+        </div>
+    </div>
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 </html>
