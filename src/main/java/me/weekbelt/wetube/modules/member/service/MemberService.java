@@ -3,6 +3,7 @@ package me.weekbelt.wetube.modules.member.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.weekbelt.wetube.modules.member.Member;
+import me.weekbelt.wetube.modules.member.MemberDtoFactory;
 import me.weekbelt.wetube.modules.member.Role;
 import me.weekbelt.wetube.modules.member.UserMember;
 import me.weekbelt.wetube.modules.member.form.MemberJoinForm;
@@ -36,11 +37,7 @@ public class MemberService implements UserDetailsService{
     }
 
     private Member saveNewMember(MemberJoinForm memberJoinForm) {
-        Member member = Member.builder()
-                .email(memberJoinForm.getEmail())
-                .name(memberJoinForm.getName())
-                .password(passwordEncoder.encode(memberJoinForm.getPassword()))
-                .build();
+        Member member = MemberDtoFactory.memberJoinFormToMember(memberJoinForm, passwordEncoder);
         return memberRepository.save(member);
     }
 

@@ -1,4 +1,3 @@
-
 spring:
   profiles:
     active: local
@@ -27,6 +26,8 @@ spring:
       hibernate:
         format_sql: true
         default_batch_fetch_size: 1000
+
+
 property:
   video:
     url: /Users/joohyuk/Movies/
