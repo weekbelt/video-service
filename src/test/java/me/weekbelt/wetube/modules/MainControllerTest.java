@@ -1,6 +1,8 @@
 package me.weekbelt.wetube.modules;
 
 import me.weekbelt.wetube.infra.MockMvcTest;
+import me.weekbelt.wetube.modules.member.Member;
+import me.weekbelt.wetube.modules.member.MemberFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import static org.springframework.security.test.web.servlet.response.SecurityMoc
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @MockMvcTest
@@ -19,6 +22,9 @@ class MainControllerTest {
 
     @Autowired
     MockMvc mockMvc;
+
+    @Autowired
+    MemberFactory memberFactory;
 
     @Test
     @DisplayName("메인 페이지")
@@ -79,8 +85,8 @@ class MainControllerTest {
 
         // when
         ResultActions resultActions = mockMvc.perform(post(requestUrl)
-                .param("name", "joohyuk")
                 .param("email", "vfrvfr4207@hanmail.net")
+                .param("name", "joohyuk")
                 .param("password", "12345678")
                 .param("password2", "12345678")
                 .with(csrf()));
@@ -109,6 +115,31 @@ class MainControllerTest {
 
         // then
         resultActions
+                .andExpect(status().isOk())
+                .andExpect(view().name("join"))
+                .andExpect(model().hasErrors())
+                .andExpect(unauthenticated());
+    }
+
+
+    @Test
+    @DisplayName("회원 가입 - 실패(이미 존재하는 유저)")
+    void join_fail_existsEmail() throws Exception {
+        // given
+        String requestUrl = "/join";
+        Member member = memberFactory.createMember("joohyuk");
+
+        // when
+        ResultActions resultActions = mockMvc.perform(post(requestUrl)
+                .param("name", "joohyuk")
+                .param("email", "vfrvfr4207@hanmail.net")
+                .param("password", "12345678")
+                .param("password2", "12345678")
+                .with(csrf()));
+
+        // then
+        resultActions
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("join"))
                 .andExpect(model().hasErrors())

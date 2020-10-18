@@ -68,9 +68,12 @@ public class MemberService implements UserDetailsService{
 
     @Transactional(readOnly = true)
     @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        Member member = memberRepository.findByName(name).orElseThrow(
-                () -> new UsernameNotFoundException("찾는 유저가 없습니다."));
+    public UserDetails loadUserByUsername(String emailOrNickname) throws UsernameNotFoundException {
+        Member member = memberRepository.findByEmail(emailOrNickname).orElse(null);
+        if (member == null) {
+            member = memberRepository.findByName(emailOrNickname).orElseThrow(
+                    () -> new UsernameNotFoundException("찾는 아이디나 이메일이 없습니다."));
+        }
         return new UserMember(member);
     }
 }

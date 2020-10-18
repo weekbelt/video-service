@@ -28,10 +28,11 @@ public class MainController {
 
     private final MemberService memberService;
     private final VideoService videoService;
+    private final MemberJoinFormValidator memberJoinFormValidator;
 
     @InitBinder("memberJoinForm")
     public void memberJoinFormInitBinder(WebDataBinder webDataBinder) {
-        webDataBinder.addValidators(new MemberJoinFormValidator());
+        webDataBinder.addValidators(memberJoinFormValidator);
     }
 
     @GetMapping("/")
