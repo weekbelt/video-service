@@ -17,6 +17,7 @@ public class MemberFactory {
                 .name(name)
                 .email(name + "@email.com")
                 .password("12345678")
+                .role(Role.USER)
                 .build();
         return memberRepository.save(member);
     }

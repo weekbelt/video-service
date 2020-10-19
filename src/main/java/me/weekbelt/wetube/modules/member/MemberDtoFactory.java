@@ -1,7 +1,9 @@
 package me.weekbelt.wetube.modules.member;
 
+import me.weekbelt.wetube.modules.member.form.ChangeEmailForm;
 import me.weekbelt.wetube.modules.member.form.Creator;
 import me.weekbelt.wetube.modules.member.form.MemberJoinForm;
+import me.weekbelt.wetube.modules.member.form.MemberUpdateForm;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class MemberDtoFactory {
@@ -30,5 +32,18 @@ public class MemberDtoFactory {
                     .role(Role.USER)
                     .build();
         }
+    }
+
+    public static MemberUpdateForm memberToMemberUpdateForm(Member member) {
+        // TODO: 프로파일 이미지 삽입
+        return MemberUpdateForm.builder()
+                .name(member.getName())
+                .build();
+    }
+
+    public static ChangeEmailForm memberToChangeEmailForm(Member member) {
+        return ChangeEmailForm.builder()
+                .email(member.getEmail())
+                .build();
     }
 }

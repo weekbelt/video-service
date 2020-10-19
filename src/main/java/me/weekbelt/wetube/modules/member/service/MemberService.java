@@ -6,7 +6,9 @@ import me.weekbelt.wetube.modules.member.Member;
 import me.weekbelt.wetube.modules.member.MemberDtoFactory;
 import me.weekbelt.wetube.modules.member.Role;
 import me.weekbelt.wetube.modules.member.UserMember;
+import me.weekbelt.wetube.modules.member.form.ChangeEmailForm;
 import me.weekbelt.wetube.modules.member.form.MemberJoinForm;
+import me.weekbelt.wetube.modules.member.form.MemberUpdateForm;
 import me.weekbelt.wetube.modules.member.repository.MemberRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,7 +29,7 @@ import java.util.Set;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class MemberService implements UserDetailsService{
+public class MemberService implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
@@ -72,5 +74,24 @@ public class MemberService implements UserDetailsService{
                     () -> new UsernameNotFoundException("찾는 아이디나 이메일이 없습니다."));
         }
         return new UserMember(member);
+    }
+
+    public void updateProfile(Member member, MemberUpdateForm memberUpdateForm) {
+        Member findMember = memberRepository.findByName(member.getName()).orElseThrow(
+                () -> new UsernameNotFoundException("찾는 회원이 없습니다."));
+
+        // TODO: 사진 로컬에 저장
+        findMember.updateProfile(memberUpdateForm);
+        memberRepository.save(findMember);
+        login(findMember);
+    }
+
+    public void changeEmail(Member member, ChangeEmailForm changeEmailForm){
+        Member findMember = memberRepository.findByName(member.getName()).orElseThrow(
+                () -> new UsernameNotFoundException("찾는 회원이 없습니다."));
+
+        findMember.changeEmail(changeEmailForm);
+        memberRepository.save(findMember);
+        login(findMember);
     }
 }
