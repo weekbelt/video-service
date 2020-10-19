@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -64,13 +65,15 @@ public class MainController {
     }
 
     @PostMapping("/join")
-    public String join(@Valid MemberJoinForm memberJoinForm, Errors errors) {
+    public String join(@Valid MemberJoinForm memberJoinForm, Errors errors,
+                       RedirectAttributes attributes) {
         if (errors.hasErrors()) {
             return "join";
         }
 
         Member member = memberService.processNewMember(memberJoinForm);
         memberService.login(member);
+        attributes.addFlashAttribute("message", "회원가입에 성공하였습니다.");
         return "redirect:/";
     }
 

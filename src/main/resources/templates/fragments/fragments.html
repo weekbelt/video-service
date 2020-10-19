@@ -46,6 +46,13 @@
     </div>
 </header>
 
+<div th:fragment="message" th:if="${message}" class="alert alert-info alert-dismissible fade show mt-3" style="width: 100%" role="alert">
+    <span th:text="${message}">완료</span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
 <footer th:fragment="footer" class="footer">
     <div class="footer__icon">
         <i class="fab fa-youtube"></i>

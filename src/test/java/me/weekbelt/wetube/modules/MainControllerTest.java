@@ -94,6 +94,7 @@ class MainControllerTest {
         // then
         resultActions
                 .andExpect(status().is3xxRedirection())
+                .andExpect(flash().attributeExists("message"))
                 .andExpect(redirectedUrl("/"))
                 .andExpect(authenticated().withUsername("joohyuk"));
     }
