@@ -12,7 +12,6 @@ import me.weekbelt.wetube.modules.member.service.MemberService;
 import me.weekbelt.wetube.modules.member.validator.ChangeEmailFormValidator;
 import me.weekbelt.wetube.modules.member.validator.ChangePasswordFormValidator;
 import me.weekbelt.wetube.modules.member.validator.MemberUpdateFormValidator;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;

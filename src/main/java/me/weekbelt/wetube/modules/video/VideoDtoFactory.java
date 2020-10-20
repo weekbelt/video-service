@@ -8,18 +8,19 @@ import me.weekbelt.wetube.modules.video.form.VideoElementForm;
 import me.weekbelt.wetube.modules.video.form.VideoReadForm;
 import me.weekbelt.wetube.modules.video.form.VideoUpdateForm;
 import me.weekbelt.wetube.modules.video.form.VideoUploadForm;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class VideoDtoFactory {
-
     public static VideoElementForm videoToVideoElementForm(Video video, Creator creator) {
        return VideoElementForm.builder()
                .id(video.getId())
                .title(video.getTitle())
                .description(video.getDescription())
                .views(0L)
+               //TODO: 경로 다시 설정
                .videoFile(video.getFileUrl())
                .creator(creator)
                .build();
@@ -31,6 +32,7 @@ public class VideoDtoFactory {
                 .title(video.getTitle())
                 .description(video.getDescription())
                 .views(0L)
+                // TODO: 경로 다시 설정
                 .videoFile(video.getFileUrl())
                 .creator(creator)
                 .comments(commentReadForms)

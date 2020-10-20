@@ -14,6 +14,7 @@ import me.weekbelt.wetube.modules.video.service.VideoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class VideoController {
 
     private final VideoService videoService;
+    private final VideoRepository videoRepository;
 
     @GetMapping("/upload")
     public String uploadVideoForm(@CurrentMember Member member, Model model) {
@@ -47,8 +49,13 @@ public class VideoController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editVideoView(@CurrentMember Member member, @PathVariable("id") Video video, Model model) {
+    public String editVideoView(@CurrentMember Member member, @PathVariable("id") Video video,
+                                Model model, RedirectAttributes attributes) {
         VideoUpdateForm videoUpdateForm = VideoDtoFactory.videoToVideoUpdateForm(video);
+        if (!member.getId().equals(video.getMember().getId())) {
+            attributes.addFlashAttribute("message", "수정 권한이 없습니다.");
+            return "redirect:/videos/" + video.getId();
+        }
         model.addAttribute("id", video.getId());
         model.addAttribute("pageTitle", "Edit Video");
         model.addAttribute("videoUpdateForm", videoUpdateForm);
@@ -57,14 +64,21 @@ public class VideoController {
 
     @PutMapping("/{id}/edit")
     public String editVideo(@CurrentMember Member member, @PathVariable Long id,
-                            VideoUpdateForm videoUpdateForm, Model model){
+                            VideoUpdateForm videoUpdateForm, Model model) {
         videoService.updateVideo(id, videoUpdateForm);
         return "redirect:/videos/" + id;
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteVideo(@CurrentMember Member member, @PathVariable Long id, Model model) {
-        videoService.deleteVideo(id);
+    public String deleteVideo(@CurrentMember Member member, @PathVariable("id") Video video,
+                              RedirectAttributes attributes) {
+        if (!member.getId().equals(video.getMember().getId())) {
+            attributes.addFlashAttribute("message", "삭제 권한이 없습니다.");
+            return "redirect:/videos/" + video.getId();
+        }
+
+        videoService.deleteVideo(video.getId());
+        attributes.addFlashAttribute("message", "영상을 삭제 하였습니다.");
         return "redirect:/";
     }
 }

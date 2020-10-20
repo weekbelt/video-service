@@ -36,11 +36,11 @@ class MemberControllerTest {
 
     @Test
     @WithMember("joohyuk")
-    @DisplayName("회원 정보 뷰")
-    void userDetail() throws Exception {
+    @DisplayName("회원 정보 뷰 - (수정권한 O)")
+    void userDetail_isOwner() throws Exception {
         // given
         Member member = memberRepository.findByName("joohyuk").orElse(null);
-        String requestUrl = "/members/profile";
+        String requestUrl = "/members/profile/" + member.getName();
 
         // when
         ResultActions resultActions = mockMvc.perform(get(requestUrl));
@@ -50,6 +50,27 @@ class MemberControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("pageTitle"))
                 .andExpect(model().attributeExists("member"))
+                .andExpect(model().attribute("isOwner", true))
+                .andExpect(view().name("users/userDetail"));
+    }
+
+    @Test
+    @WithMember("joohyuk")
+    @DisplayName("회원 정보 뷰 - (수정권한 X)")
+    void userDetail_isNotOwner() throws Exception {
+        // given
+        Member twins = memberFactory.createMember("twins");
+        String requestUrl = "/members/profile/" + twins.getName();
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get(requestUrl));
+
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("pageTitle"))
+                .andExpect(model().attributeExists("member"))
+                .andExpect(model().attribute("isOwner", false))
                 .andExpect(view().name("users/userDetail"));
     }
 
@@ -68,6 +89,7 @@ class MemberControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("memberUpdateForm"))
                 .andExpect(model().attributeExists("pageTitle"))
+                .andExpect(model().attributeExists("member"))
                 .andExpect(view().name("users/editProfile"));
     }
 

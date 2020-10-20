@@ -5,6 +5,7 @@
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
     <header th:replace="fragments/fragments.html :: header"></header>
+    <div th:replace="fragments/fragments.html :: message"></div>
     <div class="video-detail__container">
         <div class="video__player">
             <video th:src="@{'/' + ${video.videoFile}}"></video>

@@ -27,7 +27,7 @@ public class WithMemberSecurityContextFactory implements WithSecurityContextFact
         memberService.processNewMember(memberJoinForm);
 
         // Authentication 만들고 SecurityContext에 넣어주기
-        UserDetails principal = memberService.loadUserByUsername(name);
+        UserDetails principal = memberService.loadUserByUsername(memberJoinForm.getEmail());
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, principal.getPassword(), principal.getAuthorities());
         SecurityContext context = SecurityContextHolder.getContext();
         context.setAuthentication(authentication);
