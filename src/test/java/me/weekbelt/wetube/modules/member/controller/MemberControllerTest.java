@@ -175,4 +175,62 @@ class MemberControllerTest {
                 .andExpect(view().name("users/changeEmail"));
     }
 
+    @Test
+    @WithMember("joohyuk")
+    @DisplayName("패스워드 변경 뷰")
+    void changePasswordView() throws Exception {
+        // given
+        String requestUrl = "/members/change-password";
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get(requestUrl));
+
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("changePasswordForm"))
+                .andExpect(model().attributeExists("pageTitle"))
+                .andExpect(view().name("users/changePassword"));
+    }
+
+    @Test
+    @WithMember("joohyuk")
+    @DisplayName("비밀번호 변경 - 성공")
+    void changePassword_success() throws Exception {
+        // given
+        String requestUrl = "/members/change-password";
+
+        // when
+        ResultActions resultActions = mockMvc.perform(post(requestUrl)
+                .param("newPassword", "987654321")        // 원래 비번 12345678
+                .param("newPassword1", "987654321")
+                .with(csrf()));
+
+        // when
+        resultActions
+                .andExpect(status().is3xxRedirection())
+                .andExpect(flash().attributeExists("message"))
+                .andExpect(redirectedUrl("/members/profile"));
+    }
+
+    @Test
+    @WithMember("joohyuk")
+    @DisplayName("비밀번호 변경 - 실패(패스워드 일치 X) ")
+    void changePassword_fail_diffPassword() throws Exception {
+        // given
+        String requestUrl = "/members/change-password";
+
+        // when
+        ResultActions resultActions = mockMvc.perform(post(requestUrl)
+                .param("newPassword", "987654123")    // 원래 패스워드 12345678
+                .param("newPassword1", "1231231231")
+                .with(csrf()));
+
+        // when
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(model().hasErrors())
+                .andExpect(model().attributeExists("pageTitle"))
+                .andExpect(view().name("users/changePassword"));
+    }
 }

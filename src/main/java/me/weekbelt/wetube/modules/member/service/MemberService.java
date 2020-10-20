@@ -7,6 +7,7 @@ import me.weekbelt.wetube.modules.member.MemberDtoFactory;
 import me.weekbelt.wetube.modules.member.Role;
 import me.weekbelt.wetube.modules.member.UserMember;
 import me.weekbelt.wetube.modules.member.form.ChangeEmailForm;
+import me.weekbelt.wetube.modules.member.form.ChangePasswordForm;
 import me.weekbelt.wetube.modules.member.form.MemberJoinForm;
 import me.weekbelt.wetube.modules.member.form.MemberUpdateForm;
 import me.weekbelt.wetube.modules.member.repository.MemberRepository;
@@ -93,5 +94,13 @@ public class MemberService implements UserDetailsService {
         findMember.changeEmail(changeEmailForm);
         memberRepository.save(findMember);
         login(findMember);
+    }
+
+    public void changePassword(Member member, ChangePasswordForm changePasswordForm) {
+        Member findMember = memberRepository.findByName(member.getName()).orElseThrow(
+                () -> new UsernameNotFoundException("찾는 회원이 없습니다."));
+
+        findMember.changePassword(passwordEncoder.encode(changePasswordForm.getNewPassword()));
+        memberRepository.save(findMember);
     }
 }

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.weekbelt.wetube.modules.BaseTimeEntity;
 import me.weekbelt.wetube.modules.member.form.ChangeEmailForm;
+import me.weekbelt.wetube.modules.member.form.ChangePasswordForm;
 import me.weekbelt.wetube.modules.member.form.MemberUpdateForm;
 
 import javax.persistence.*;
@@ -45,5 +46,9 @@ public class Member extends BaseTimeEntity {
 
     public void changeEmail(ChangeEmailForm changeEmailForm) {
         this.email = changeEmailForm.getEmail();
+    }
+
+    public void changePassword(String newPassword) {
+        this.password = newPassword;
     }
 }

@@ -5,9 +5,11 @@ import me.weekbelt.wetube.modules.member.CurrentMember;
 import me.weekbelt.wetube.modules.member.Member;
 import me.weekbelt.wetube.modules.member.MemberDtoFactory;
 import me.weekbelt.wetube.modules.member.form.ChangeEmailForm;
+import me.weekbelt.wetube.modules.member.form.ChangePasswordForm;
 import me.weekbelt.wetube.modules.member.form.MemberUpdateForm;
 import me.weekbelt.wetube.modules.member.service.MemberService;
 import me.weekbelt.wetube.modules.member.validator.ChangeEmailFormValidator;
+import me.weekbelt.wetube.modules.member.validator.ChangePasswordFormValidator;
 import me.weekbelt.wetube.modules.member.validator.MemberUpdateFormValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +29,7 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberUpdateFormValidator memberUpdateFormValidator;
     private final ChangeEmailFormValidator changeEmailFormValidator;
+    private final ChangePasswordFormValidator changePasswordFormValidator;
 
     @InitBinder("memberUpdateForm")
     public void memberUpdateFormInitBinder(WebDataBinder webDataBinder) {
@@ -38,6 +41,11 @@ public class MemberController {
         webDataBinder.addValidators(changeEmailFormValidator);
     }
 
+    @InitBinder("changePasswordForm")
+    public void changePasswordFormInitBinder(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(changePasswordFormValidator);
+    }
+
     @GetMapping("/profile")
     public String userDetail(@CurrentMember Member member, Model model) {
         model.addAttribute("pageTitle", "Member Detail");
@@ -47,6 +55,7 @@ public class MemberController {
 
     @GetMapping("/edit-profile")
     public String editProfileView(@CurrentMember Member member, Model model) {
+        model.addAttribute("member", member);
         MemberUpdateForm memberUpdateForm = MemberDtoFactory.memberToMemberUpdateForm(member);
         model.addAttribute("memberUpdateForm", memberUpdateForm);
         model.addAttribute("pageTitle", "Edit Profile");
@@ -69,7 +78,8 @@ public class MemberController {
     public String changeEmailView(@CurrentMember Member member, Model model) {
         ChangeEmailForm changeEmailForm = MemberDtoFactory.memberToChangeEmailForm(member);
         model.addAttribute("changeEmailForm", changeEmailForm);
-        model.addAttribute("pageTitle", "Edit Email");
+        model.addAttribute("pageTitle", "Change Email");
+        model.addAttribute("member", member);
         return "users/changeEmail";
     }
 
@@ -77,7 +87,7 @@ public class MemberController {
     public String changeEmail(@CurrentMember Member member, @Valid ChangeEmailForm changeEmailForm,
                             Errors errors, Model model, RedirectAttributes attributes) {
         if (errors.hasErrors()) {
-            model.addAttribute("pageTitle", "Member Detail");
+            model.addAttribute("pageTitle", "Change Email");
             return "users/changeEmail";
         }
         memberService.changeEmail(member, changeEmailForm);
@@ -86,8 +96,22 @@ public class MemberController {
     }
 
     @GetMapping("/change-password")
-    public String changePassword(@CurrentMember Member member, Model model) {
+    public String changePasswordView(@CurrentMember Member member, Model model) {
+        model.addAttribute("changePasswordForm", new ChangePasswordForm());
         model.addAttribute("pageTitle", "Change Password");
+        model.addAttribute("member", member);
         return "users/changePassword";
     }
+
+   @PostMapping("/change-password")
+    public String changePassword(@CurrentMember Member member, @Valid ChangePasswordForm changePasswordForm,
+                                 Errors errors, Model model, RedirectAttributes attributes) {
+        if (errors.hasErrors()) {
+            model.addAttribute("pageTitle", "Change Password");
+            return "users/changePassword";
+        }
+        memberService.changePassword(member, changePasswordForm);
+        attributes.addFlashAttribute("message", "패스워드를 변경하였습니다.");
+        return "redirect:/members/profile";
+   }
 }
