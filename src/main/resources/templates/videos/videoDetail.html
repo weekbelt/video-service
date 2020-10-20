@@ -7,14 +7,19 @@
     <header th:replace="fragments/fragments.html :: header"></header>
     <div class="video-detail__container">
         <div class="video__player">
-            <video th:src="@{'/' + video.fileUrl}"></video>
+            <video th:src="@{'/' + ${video.videoFile}}"></video>
         </div>
         <div class="video__info">
-            <a th:href="@{'/videos/' + ${video.id} + '/edit'}">button Edit Video</a>
+            <a th:if="${member.email == video.creator.email}" th:href="@{'/videos/' + ${video.id} + '/edit'}">
+                <button>Edit Video</button>
+            </a>
             <h5 class="video__title" th:text="${video.title}">Video Title</h5>
             <p class="video__description" th:text="${video.description}">Video Description</p>
             <span th:if="${video.views == 1}" class="video__views" th:text="${video.views + ' view'}">1</span>
             <span th:if="${video.views > 1}" class="video__views" th:text="${video.views + ' views'}">1</span>
+            <div class="video__author">
+                Upload By <a th:href="@{'/members/profile/' + ${video.creator.name}}" th:text="${video.creator.name}"></a>
+            </div>
         </div>
         <div class="video__comment">
             <span th:if="${video.comments.size() == 1}" th:text="${video.comments.size() + ' comment'}" class="video__comment-number"></span>

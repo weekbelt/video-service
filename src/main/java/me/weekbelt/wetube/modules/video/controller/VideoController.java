@@ -20,12 +20,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/videos")
 @RequiredArgsConstructor
 public class VideoController {
-//
-//    @Value("${property.video.url}")
-//    private String DIR;
-//
+
     private final VideoService videoService;
-    private final VideoRepository videoRepository;
 
     @GetMapping("/upload")
     public String uploadVideoForm(@CurrentMember Member member, Model model) {
@@ -41,15 +37,11 @@ public class VideoController {
         return "redirect:/videos/" + videoReadForm.getId();
     }
 
-//    @GetMapping("/download")
-//    public void getVideos(HttpServletRequest req, @RequestParam String fileUrl) {
-//        log.info("fileUrl: " + fileUrl);
-//    }
-
     @GetMapping("/{id}")
     public String videoDetail(@CurrentMember Member member, @PathVariable Long id, Model model) {
         VideoReadForm videoReadForm = videoService.findVideoForm(id);
         model.addAttribute("video", videoReadForm);
+        model.addAttribute("member", member);
         model.addAttribute("pageTitle", videoReadForm.getTitle());
         return "videos/videoDetail";
     }
@@ -75,12 +67,4 @@ public class VideoController {
         videoService.deleteVideo(id);
         return "redirect:/";
     }
-
-
-//    private ResponseEntity<Resource> setResponseVideo(long fileLength, String saveFileName, String contentType) {
-//        return ResponseEntity.ok()
-//                .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(fileLength))
-//                .header(HttpHeaders.CONTENT_TYPE, contentType)
-//                .body(new FileSystemResource(saveFileName));
-//    }
 }

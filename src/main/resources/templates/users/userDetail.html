@@ -13,7 +13,7 @@
              th:src="${member.profileImage}" class="avatar" width="125" height="125">
         <h4 class="profile__username" th:text="${member.name}"></h4>
     </div>
-    <div class="user-profile__btns">
+    <div th:if="${isOwner}" class="user-profile__btns">
         <a href="/members/edit-profile">
             <button>✏️ Edit Profile</button>
         </a>
