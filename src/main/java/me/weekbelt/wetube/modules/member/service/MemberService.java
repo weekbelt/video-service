@@ -2,15 +2,20 @@ package me.weekbelt.wetube.modules.member.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.weekbelt.wetube.modules.comment.Comment;
+import me.weekbelt.wetube.modules.comment.CommentDtoFactory;
+import me.weekbelt.wetube.modules.comment.form.CommentReadForm;
+import me.weekbelt.wetube.modules.comment.repository.CommentRepository;
 import me.weekbelt.wetube.modules.member.Member;
 import me.weekbelt.wetube.modules.member.MemberDtoFactory;
 import me.weekbelt.wetube.modules.member.Role;
 import me.weekbelt.wetube.modules.member.UserMember;
-import me.weekbelt.wetube.modules.member.form.ChangeEmailForm;
-import me.weekbelt.wetube.modules.member.form.ChangePasswordForm;
-import me.weekbelt.wetube.modules.member.form.MemberJoinForm;
-import me.weekbelt.wetube.modules.member.form.MemberUpdateForm;
+import me.weekbelt.wetube.modules.member.form.*;
 import me.weekbelt.wetube.modules.member.repository.MemberRepository;
+import me.weekbelt.wetube.modules.video.Video;
+import me.weekbelt.wetube.modules.video.VideoDtoFactory;
+import me.weekbelt.wetube.modules.video.form.VideoElementForm;
+import me.weekbelt.wetube.modules.video.repository.VideoRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,7 +29,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -34,6 +41,17 @@ public class MemberService implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
+
+    public MemberReadForm findMemberWithVideosAndCommentsByName(String name) {
+        Member member = memberRepository.findByName(name).orElseThrow(
+                () -> new IllegalArgumentException("찾는 회원이 존재하지 않습니다. name=" + name));
+        List<Video> videos = member.getVideos();
+        List<Comment> comments = member.getComments();
+
+        List<VideoElementForm> videoElementForms = VideoDtoFactory.videosToVideoElementForms(videos);
+        List<CommentReadForm> commentReadForms = CommentDtoFactory.commentToCommentReadForms(comments);
+        return MemberDtoFactory.memberToMemberReadForm(member, videoElementForms, commentReadForms);
+    }
 
     public Member processNewMember(MemberJoinForm memberJoinForm) {
         return saveNewMember(memberJoinForm);

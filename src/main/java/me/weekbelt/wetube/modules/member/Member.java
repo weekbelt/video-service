@@ -4,11 +4,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.weekbelt.wetube.modules.BaseTimeEntity;
+import me.weekbelt.wetube.modules.comment.Comment;
 import me.weekbelt.wetube.modules.member.form.ChangeEmailForm;
 import me.weekbelt.wetube.modules.member.form.ChangePasswordForm;
 import me.weekbelt.wetube.modules.member.form.MemberUpdateForm;
+import me.weekbelt.wetube.modules.video.Video;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter @NoArgsConstructor
 @Entity
@@ -29,6 +33,12 @@ public class Member extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @OneToMany(mappedBy = "member")
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Video> videos = new ArrayList<>();
 
     @Builder
     public Member(String name, String email, String password, String profileImage, Role role) {

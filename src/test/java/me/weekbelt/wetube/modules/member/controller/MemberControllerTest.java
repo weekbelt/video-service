@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @MockMvcTest
@@ -47,7 +48,9 @@ class MemberControllerTest {
 
         // then
         resultActions
+                .andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(model().attributeExists("memberReadForm"))
                 .andExpect(model().attributeExists("pageTitle"))
                 .andExpect(model().attributeExists("member"))
                 .andExpect(model().attribute("isOwner", true))

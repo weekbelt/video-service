@@ -4,30 +4,45 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
-    <header th:replace="fragments/fragments.html :: header"></header>
-    <div th:replace="fragments/fragments.html :: message"></div>
-    <div class="video-detail__container">
-        <div class="video__player">
-            <video th:src="@{'/' + ${video.videoFile}}"></video>
-        </div>
-        <div class="video__info">
-            <a th:if="${member.email == video.creator.email}" th:href="@{'/videos/' + ${video.id} + '/edit'}">
-                <button>Edit Video</button>
-            </a>
-            <h5 class="video__title" th:text="${video.title}">Video Title</h5>
-            <p class="video__description" th:text="${video.description}">Video Description</p>
-            <span th:if="${video.views == 1}" class="video__views" th:text="${video.views + ' view'}">1</span>
-            <span th:if="${video.views > 1}" class="video__views" th:text="${video.views + ' views'}">1</span>
-            <div class="video__author">
-                Upload By <a th:href="@{'/members/profile/' + ${video.creator.name}}" th:text="${video.creator.name}"></a>
+<header th:replace="fragments/fragments.html :: header"></header>
+<div th:replace="fragments/fragments.html :: message"></div>
+<div class="video-detail__container">
+    <div class="videoPlayer" id="jsVideoPlayer">
+        <video th:src="@{video.videoFile}" autoplay></video>
+        <div class="videoPlayer__controls">
+            <div class="videoPlayer__column">
+                <span><i class="fas fa-volume-up"></i></span>
+                <span>00:00 / 10:00</span>
+            </div>
+            <div class="videoPlayer__column">
+                <span id="jsPlayButton"><i class="fas fa-play"></i></span>
+            </div>
+            <div class="videoPlayer__column">
+                <span><i class="fas fa-expand"></i></span>
             </div>
         </div>
-        <div class="video__comment">
-            <span th:if="${video.comments.size() == 1}" th:text="${video.comments.size() + ' comment'}" class="video__comment-number"></span>
-            <span th:if="${video.comments.size() > 1}" th:text="${video.comments.size() + ' comments'}" class="video__comment-number"></span>
-            <span th:if="${video.comments.size() == 0}" th:text="${video.comments.size() + ' comment'}" class="video__comment-number"></span>
+    </div>
+    <div class="video__info">
+        <a th:if="${member.email == video.creator.email}" th:href="@{'/videos/' + ${video.id} + '/edit'}">
+            <button>Edit Video</button>
+        </a>
+        <h5 class="video__title" th:text="${video.title}">Video Title</h5>
+        <p class="video__description" th:text="${video.description}">Video Description</p>
+        <span th:if="${video.views == 1}" class="video__views" th:text="${video.views + ' view'}">1</span>
+        <span th:if="${video.views > 1}" class="video__views" th:text="${video.views + ' views'}">1</span>
+        <div class="video__author">
+            Upload By <a th:href="@{'/members/profile/' + ${video.creator.name}}" th:text="${video.creator.name}"></a>
         </div>
     </div>
+    <div class="video__comment">
+        <span th:if="${video.comments.size() == 1}" th:text="${video.comments.size() + ' comment'}"
+              class="video__comment-number"></span>
+        <span th:if="${video.comments.size() > 1}" th:text="${video.comments.size() + ' comments'}"
+              class="video__comment-number"></span>
+        <span th:if="${video.comments.size() == 0}" th:text="${video.comments.size() + ' comment'}"
+              class="video__comment-number"></span>
+    </div>
+</div>
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 </html>

@@ -45,6 +45,11 @@ public class Video extends BaseTimeEntity{
         this.member = member;
     }
 
+    public void addMember(Member member) {
+        this.member = member;
+        member.getVideos().add(this);
+    }
+
     public void update(VideoUpdateForm videoUpdateForm) {
         this.title = videoUpdateForm.getTitle();
         this.description = videoUpdateForm.getDescription();

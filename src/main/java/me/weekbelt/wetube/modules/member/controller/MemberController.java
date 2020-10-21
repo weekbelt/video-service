@@ -6,6 +6,7 @@ import me.weekbelt.wetube.modules.member.Member;
 import me.weekbelt.wetube.modules.member.MemberDtoFactory;
 import me.weekbelt.wetube.modules.member.form.ChangeEmailForm;
 import me.weekbelt.wetube.modules.member.form.ChangePasswordForm;
+import me.weekbelt.wetube.modules.member.form.MemberReadForm;
 import me.weekbelt.wetube.modules.member.form.MemberUpdateForm;
 import me.weekbelt.wetube.modules.member.repository.MemberRepository;
 import me.weekbelt.wetube.modules.member.service.MemberService;
@@ -28,7 +29,6 @@ import javax.validation.Valid;
 public class MemberController {
 
     private final MemberService memberService;
-    private final MemberRepository memberRepository;
     private final MemberUpdateFormValidator memberUpdateFormValidator;
     private final ChangeEmailFormValidator changeEmailFormValidator;
     private final ChangePasswordFormValidator changePasswordFormValidator;
@@ -50,6 +50,8 @@ public class MemberController {
 
     @GetMapping("/profile/{name}")
     public String userDetail(@CurrentMember Member member, @PathVariable String name, Model model) {
+        MemberReadForm memberReadForm = memberService.findMemberWithVideosAndCommentsByName(name);
+        model.addAttribute("memberReadForm", memberReadForm);
         model.addAttribute("pageTitle", "Member Detail");
         model.addAttribute("member", member);
         model.addAttribute("isOwner", name.equals(member.getName()));

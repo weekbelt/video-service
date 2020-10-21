@@ -27,6 +27,7 @@ public class VideoController {
 
     @GetMapping("/upload")
     public String uploadVideoForm(@CurrentMember Member member, Model model) {
+        model.addAttribute("member", member);
         model.addAttribute("pageTitle", "Upload");
         model.addAttribute("videoUploadForm", new VideoUploadForm());
         return "videos/upload";
@@ -59,6 +60,7 @@ public class VideoController {
         model.addAttribute("id", video.getId());
         model.addAttribute("pageTitle", "Edit Video");
         model.addAttribute("videoUpdateForm", videoUpdateForm);
+        model.addAttribute("member", member);
         return "videos/editVideo";
     }
 
