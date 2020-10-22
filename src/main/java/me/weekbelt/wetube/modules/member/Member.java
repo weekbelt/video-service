@@ -11,8 +11,10 @@ import me.weekbelt.wetube.modules.member.form.MemberUpdateForm;
 import me.weekbelt.wetube.modules.video.Video;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter @NoArgsConstructor
 @Entity
@@ -27,8 +29,9 @@ public class Member extends BaseTimeEntity {
     @Column(unique = true, nullable = false)
     private String email;
 
-    private String profileImage;
     private String password;
+
+    private String profileImage;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

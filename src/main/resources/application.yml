@@ -15,10 +15,6 @@ spring:
       max-file-size: 50MB
       max-request-size: 50MB
 
-  mvc:
-    hiddenmethod:
-      filter:
-        enabled: true
   jpa:
     hibernate:
       ddl-auto: create
@@ -26,6 +22,11 @@ spring:
       hibernate:
         format_sql: true
         default_batch_fetch_size: 1000
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 
 property:
   video:
@@ -37,3 +38,8 @@ logging.level:
 ---
 spring:
   profiles: test
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true

@@ -27,21 +27,21 @@
         </div>
         <div class="header__column">
             <ul sec:authorize="!isAuthenticated()">
-                <li><a th:href="@{/join}">Join</a></li>
+                <li><a th:href="@{/join}" class="header__column-link">Join</a></li>
                 <li>
-                    <a th:href="@{/login}">Log In</a>
+                    <a th:href="@{/login}" class="header__column-link">Log In</a>
                 </li>
             </ul>
             <ul sec:authorize="isAuthenticated()">
                 <li>
-                    <a th:href="@{/videos/upload}">Upload</a>
+                    <a th:href="@{/videos/upload}" class="header__column-link">Upload</a>
                 </li>
                 <li>
-                    <a th:href="@{'/members/profile/' + ${member.name}}">Profile</a>
+                    <a th:href="@{'/members/profile/' + ${member.name}}" class="header__column-link">Profile</a>
                 </li>
-                <form th:action="@{/logout}" method="post">
-                    <button type="submit">Logout</button>
-                </form>
+                <li>
+                    <a th:href="@{'/logout'}" class="header__column-link">Logout</a>
+                </li>
             </ul>
         </div>
     </div>
