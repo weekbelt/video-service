@@ -1,12 +1,10 @@
 package me.weekbelt.wetube.modules.comment.form;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Builder
+@Builder @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 public class CommentReadForm {
 
