@@ -136,6 +136,7 @@ class MemberControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeExists("pageTitle"))
+                .andExpect(model().attributeExists("member"))
                 .andExpect(view().name("users/editProfile"));
     }
 
@@ -197,6 +198,7 @@ class MemberControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeExists("pageTitle"))
+                .andExpect(model().attributeExists("member"))
                 .andExpect(view().name("users/changeEmail"));
     }
 
@@ -256,6 +258,7 @@ class MemberControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeExists("pageTitle"))
+                .andExpect(model().attributeExists("member"))
                 .andExpect(view().name("users/changePassword"));
     }
 }

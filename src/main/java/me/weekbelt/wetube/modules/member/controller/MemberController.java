@@ -8,7 +8,6 @@ import me.weekbelt.wetube.modules.member.form.ChangeEmailForm;
 import me.weekbelt.wetube.modules.member.form.ChangePasswordForm;
 import me.weekbelt.wetube.modules.member.form.MemberReadForm;
 import me.weekbelt.wetube.modules.member.form.MemberUpdateForm;
-import me.weekbelt.wetube.modules.member.repository.MemberRepository;
 import me.weekbelt.wetube.modules.member.service.MemberService;
 import me.weekbelt.wetube.modules.member.validator.ChangeEmailFormValidator;
 import me.weekbelt.wetube.modules.member.validator.ChangePasswordFormValidator;
@@ -72,6 +71,7 @@ public class MemberController {
                               Errors errors, Model model, RedirectAttributes attributes) {
         if (errors.hasErrors()) {
             model.addAttribute("pageTitle", "Member Detail");
+            model.addAttribute("member", member);
             return "users/editProfile";
         }
         memberService.updateProfile(member, memberUpdateForm);
@@ -93,6 +93,7 @@ public class MemberController {
                             Errors errors, Model model, RedirectAttributes attributes) {
         if (errors.hasErrors()) {
             model.addAttribute("pageTitle", "Change Email");
+            model.addAttribute("member", member);
             return "users/changeEmail";
         }
         memberService.changeEmail(member, changeEmailForm);
@@ -113,6 +114,7 @@ public class MemberController {
                                  Errors errors, Model model, RedirectAttributes attributes) {
         if (errors.hasErrors()) {
             model.addAttribute("pageTitle", "Change Password");
+            model.addAttribute("member", member);
             return "users/changePassword";
         }
         memberService.changePassword(member, changePasswordForm);
