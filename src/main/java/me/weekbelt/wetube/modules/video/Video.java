@@ -54,4 +54,8 @@ public class Video extends BaseTimeEntity{
         this.title = videoUpdateForm.getTitle();
         this.description = videoUpdateForm.getDescription();
     }
+
+    public void plusView() {
+        this.views += 1;
+    }
 }

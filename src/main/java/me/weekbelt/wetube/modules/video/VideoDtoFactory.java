@@ -31,7 +31,7 @@ public class VideoDtoFactory {
                 .id(video.getId())
                 .title(video.getTitle())
                 .description(video.getDescription())
-                .views(0L)
+                .views(video.getViews())
                 // TODO: 경로 다시 설정
                 .videoFile(video.getFileUrl())
                 .creator(creator)

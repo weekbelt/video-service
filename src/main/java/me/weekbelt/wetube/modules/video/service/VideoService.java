@@ -1,6 +1,7 @@
 package me.weekbelt.wetube.modules.video.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.weekbelt.wetube.infra.util.VideoFile;
 import me.weekbelt.wetube.modules.comment.Comment;
 import me.weekbelt.wetube.modules.comment.CommentDtoFactory;
@@ -48,6 +49,8 @@ public class VideoService {
     public VideoReadForm findVideoForm(Long videoId) {
         Video findVideo = videoRepository.findWithMemberById(videoId).orElseThrow(
                 () -> new IllegalArgumentException("찾는 비디오가 없습니다. Video Id=" + videoId));
+        // 조회수 증가
+        findVideo.plusView();
         Member findMember = findVideo.getMember();
         List<Comment> comments = findVideo.getComments();
 
