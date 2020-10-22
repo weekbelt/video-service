@@ -6,6 +6,10 @@
 <body>
 <header th:replace="fragments/fragments.html :: header"></header>
 <div class="form-container">
+    <div class="record-container" id="jsRecordContainer">
+        <video id="jsVideoPreview"></video>
+        <button id="jsRecordBtn">Start Recording</button>
+    </div>
     <form th:object="${videoUploadForm}" th:action="@{/videos/upload}" method="post" enctype="multipart/form-data">
         <div class="fileUpload">
             <label for="file">Video File</label>
