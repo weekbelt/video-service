@@ -31,12 +31,12 @@ public class VideoApiController {
         File fileVideo = new File(CLASS_PATH + videoReadForm.getSaveFileName());
         long fileLength = fileVideo.length();
         String saveFileName = CLASS_PATH + videoReadForm.getSaveFileName();
-        String contentType = "video/mp4";
+        String[] contentType = {"video/mp4", "video/webm"};
 
         return setResponseVideo(fileLength, saveFileName, contentType);
     }
 
-    private ResponseEntity<?> setResponseVideo(long fileLength, String saveFileName, String contentType) {
+    private ResponseEntity<?> setResponseVideo(long fileLength, String saveFileName, String[] contentType) {
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(fileLength))
                 .header(HttpHeaders.CONTENT_TYPE, contentType)
