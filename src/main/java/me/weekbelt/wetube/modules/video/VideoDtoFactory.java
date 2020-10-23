@@ -20,8 +20,7 @@ public class VideoDtoFactory {
                .title(video.getTitle())
                .description(video.getDescription())
                .views(0L)
-               //TODO: 경로 다시 설정
-               .videoFile(video.getFileUrl())
+               .saveFileName(video.getSaveFileName())
                .creator(creator)
                .build();
     }
@@ -32,18 +31,17 @@ public class VideoDtoFactory {
                 .title(video.getTitle())
                 .description(video.getDescription())
                 .views(video.getViews())
-                // TODO: 경로 다시 설정
-                .videoFile(video.getFileUrl())
+                .saveFileName(video.getSaveFileName())
                 .creator(creator)
                 .comments(commentReadForms)
                 .build();
     }
 
-    public static Video videoUploadFormToVideo(VideoUploadForm videoUploadForm, Member member, String fileUrl) {
+    public static Video videoUploadFormToVideo(VideoUploadForm videoUploadForm, Member member, String saveFileName) {
         return Video.builder()
                 .title(videoUploadForm.getTitle())
                 .description(videoUploadForm.getDescription())
-                .fileUrl(fileUrl)
+                .saveFileName(saveFileName)
                 .views(0L)
                 .member(member)
                 .build();

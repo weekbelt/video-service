@@ -96,4 +96,5 @@ public class VideoService {
                 () -> new IllegalArgumentException("삭제하고자하는 비디오가 없습니다. videoId=" + id));
         videoRepository.delete(findVideo);
     }
+
 }

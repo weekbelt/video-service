@@ -8,7 +8,8 @@
 <div th:replace="fragments/fragments.html :: message"></div>
 <div class="video-detail__container">
     <div class="videoPlayer" id="jsVideoPlayer">
-        <video th:src="@{video.videoFile}" autoplay></video>
+        <video></video>
+<!--            비디오 삽입-->
         <div class="videoPlayer__controls">
             <div class="videoPlayer__column">
                 <span id="jsVolumeBtn"><i class="fas fa-volume-up"></i></span>
@@ -46,8 +47,16 @@
               class="video__comment-number"></span>
         <span th:if="${video.comments.size() == 0}" th:text="${video.comments.size() + ' comment'}"
               class="video__comment-number"></span>
+        <form method="post" class="add__comment" id="jsAddComment">
+            <input type="text" placeholder="Add a comment">
+        </form>
+        <ul th:each="comment : ${video.comments}" class="video__comments-list">
+            <li><span th:text="${commet.text}"></span></li>
+        </ul>
     </div>
 </div>
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
+<div class="videoId" th:id="${video.id}"></div>
+<script src="/js/videoPlayer.js"></script>
 </html>

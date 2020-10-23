@@ -1,14 +1,12 @@
 package me.weekbelt.wetube.modules.video.form;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 
+@Builder @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 public class VideoUploadForm {
 

@@ -12,16 +12,16 @@ public class VideoElementForm {
     private String title;
     private String description;
     private Long views;
-    private String videoFile;
+    private String saveFileName;
     private Creator creator;
 
     @Builder
-    public VideoElementForm(Long id, String title, String description, Long views, String videoFile, Creator creator) {
+    public VideoElementForm(Long id, String title, String description, Long views, String saveFileName, Creator creator) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.views = views;
-        this.videoFile = videoFile;
+        this.saveFileName = saveFileName;
         this.creator = creator;
     }
 }

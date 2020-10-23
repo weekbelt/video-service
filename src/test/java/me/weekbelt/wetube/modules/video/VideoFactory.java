@@ -19,7 +19,7 @@ public class VideoFactory {
                 .description(videoUploadForm.getDescription())
                 .views(0L)
                 // TODO: video 처리
-                .fileUrl(videoUploadForm.getFile().getOriginalFilename())
+                .saveFileName(videoUploadForm.getFile().getOriginalFilename())
                 .build();
 
         return videoRepository.save(video);

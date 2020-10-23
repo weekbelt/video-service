@@ -14,6 +14,7 @@ import me.weekbelt.wetube.modules.video.service.VideoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
@@ -23,7 +24,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class VideoController {
 
     private final VideoService videoService;
-    private final VideoRepository videoRepository;
 
     @GetMapping("/upload")
     public String uploadVideoForm(@CurrentMember Member member, Model model) {
@@ -35,7 +35,6 @@ public class VideoController {
 
     @PostMapping("/upload")
     public String uploadVideo(@CurrentMember Member member, VideoUploadForm videoUploadForm) {
-        log.info(videoUploadForm.toString());
         VideoReadForm videoReadForm = videoService.uploadVideo(member, videoUploadForm);
         return "redirect:/videos/" + videoReadForm.getId();
     }

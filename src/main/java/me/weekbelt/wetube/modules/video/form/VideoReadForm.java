@@ -15,19 +15,19 @@ public class VideoReadForm {
     private String title;
     private String description;
     private Long views;
-    private String videoFile;
+    private String saveFileName;
     private Creator creator;
     private List<CommentReadForm> comments;
 
     @Builder
     public VideoReadForm(Long id, String title, String description,
-                         Long views, String videoFile,
+                         Long views, String saveFileName,
                          Creator creator, List<CommentReadForm> comments) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.views = views;
-        this.videoFile = videoFile;
+        this.saveFileName = saveFileName;
         this.creator = creator;
         this.comments = comments;
     }
