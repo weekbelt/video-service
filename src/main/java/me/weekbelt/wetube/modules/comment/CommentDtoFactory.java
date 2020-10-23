@@ -4,6 +4,7 @@ import me.weekbelt.wetube.modules.comment.form.CommentCreateForm;
 import me.weekbelt.wetube.modules.comment.form.CommentReadForm;
 import me.weekbelt.wetube.modules.member.Member;
 import me.weekbelt.wetube.modules.video.Video;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,5 +33,9 @@ public class CommentDtoFactory {
                 .member(member)
                 .video(video)
                 .build();
+    }
+
+    public static Page<CommentReadForm> commentPageToCommentReadFormPage(Page<Comment> commentPage) {
+        return commentPage.map(CommentDtoFactory::commentToCommentReadForm);
     }
 }

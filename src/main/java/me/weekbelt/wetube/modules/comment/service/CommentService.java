@@ -11,6 +11,8 @@ import me.weekbelt.wetube.modules.member.Member;
 import me.weekbelt.wetube.modules.member.repository.MemberRepository;
 import me.weekbelt.wetube.modules.video.Video;
 import me.weekbelt.wetube.modules.video.repository.VideoRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,5 +52,10 @@ public class CommentService {
 
         commentRepository.delete(comment);
         return commentReadForm;
+    }
+
+    public Page<CommentReadForm> getComments(Long videoId, Pageable pageable) {
+        Page<Comment> commentPage = commentRepository.findAllByVideoIdOrderByCreatedDateDesc(videoId, pageable);
+        return CommentDtoFactory.commentPageToCommentReadFormPage(commentPage);
     }
 }
