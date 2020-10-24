@@ -1,6 +1,17 @@
 spring:
   profiles:
-    active: local
+    active: dev
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+logging.level:
+  org.hibernate.SQL: debug
+---
+spring:
+  profiles: local
 
   servlet:
     multipart:
@@ -15,23 +26,38 @@ spring:
         format_sql: true
         default_batch_fetch_size: 1000
 
-  mvc:
-    hiddenmethod:
-      filter:
-        enabled: true
+property:
+  video:
+    url: /Users/joohyuk/Movies/
+    uploadFolder: upload_video/
+
+---
+spring:
+  profiles: dev
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format-sql: true
+        default_batch_fetch_size: 1000
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/video_service?serverTimezone=UTC&characterEncoding=UTF-8
+    username: connectuser
+    password: connect123!@#
 
 property:
   video:
     url: /Users/joohyuk/Movies/
     uploadFolder: upload_video/
 
-logging.level:
-  org.hibernate.SQL: debug
 ---
 spring:
   profiles: test
 
-  mvc:
-    hiddenmethod:
-      filter:
-        enabled: true
+property:
+  video:
+    url: /Users/joohyuk/Movies/
+    uploadFolder: upload_video/

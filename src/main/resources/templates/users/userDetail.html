@@ -27,7 +27,7 @@
     <div class="home-videos">
         <div th:each="video : ${memberReadForm.videos}">
             <a th:href="@{'/videos/' + ${video.id}}">
-                <video th:src="@{'file:///Users/joohyuk/Movies/' + ${video.videoFile}}" class="videoBlock__thumbnail" controls="false"></video>
+                <video th:src="@{'file:///Users/joohyuk/Movies/' + ${video.saveFileName}}" class="videoBlock__thumbnail" controls="false"></video>
                 <h4 class="videoBlock__title" th:text="${video.title}"></h4>
                 <h6 th:if="${video.views == 1}" class="videoBlock__views" th:text="${video.views + ' view'}"></h6>
                 <h6 th:if="${video.views > 1}" class="videoBlock__views" th:text="${video.views + ' views'}"></h6>
