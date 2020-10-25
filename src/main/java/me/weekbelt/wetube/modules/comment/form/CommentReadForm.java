@@ -16,6 +16,8 @@ public class CommentReadForm {
 
     private String text;
 
-    private LocalDateTime createdAt;
+    private LocalDateTime createdDateTime;
+
+    private LocalDateTime modifiedDateTime;
 
 }

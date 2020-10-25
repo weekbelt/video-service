@@ -34,6 +34,7 @@ public class Video extends BaseTimeEntity{
     private Member member;
 
     @OneToMany(mappedBy = "video", fetch = FetchType.LAZY)
+    @org.hibernate.annotations.OrderBy(clause = "createdDate DESC")
     private List<Comment> comments = new ArrayList<>();
 
     @Builder

@@ -16,7 +16,8 @@ public class CommentDtoFactory {
                 .videoId(comment.getVideo().getId())
                 .name(comment.getMember().getName())
                 .text(comment.getText())
-                .createdAt(comment.getCreatedDate())
+                .createdDateTime(comment.getCreatedDate())
+                .modifiedDateTime(comment.getLastModifiedDate())
                 .build();
     }
 
