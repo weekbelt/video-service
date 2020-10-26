@@ -56,20 +56,20 @@
     </div>
 
     <div class="comment-container__timeline">
-                <span th:if="${video.comments.size() == 1}" th:text="${video.comments.size() + ' comment'}"
-                      class="video__comment-number"></span>
+        <span th:if="${video.comments.size() == 1}" th:text="${video.comments.size() + ' comment'}"
+              class="video__comment-number"></span>
         <span th:if="${video.comments.size() > 1}" th:text="${video.comments.size() + ' comments'}"
               class="video__comment-number"></span>
         <span th:if="${video.comments.size() == 0}" th:text="${video.comments.size() + ' comment'}"
               class="video__comment-number">0 comment</span>
 
         <ul class="time-label flex" id="commentList">
-<!--            ajax요청으로 댓글 삽입-->
+            <!--            ajax요청으로 댓글 삽입-->
             <li class="card" th:each="comment : ${video.comments}">
                 <div class="card-header">
                     <a th:href="@{'/members/profile/' + ${comment.name}}" th:text="${comment.name}">Joohyuk</a>
                     <!--                    TODO: moment.js 활용-->
-                    <span class="fromNow">10분 전</span>
+                    <span class="fromNow" th:text="${comment.modifiedDateTime}">10분 전</span>
                 </div>
                 <div class="card-body">
                     <p class="card-text" th:text="${comment.text}">동영상 시청 잘 했습니다!!!</p>
@@ -108,6 +108,14 @@
 <input type="hidden" id="currentMemberName" th:value="${video.creator.name}">
 <script src="/js/videoPlayer.js"></script>
 <script src="/js/addComment.js"></script>
+<script>
+    $(function () {
+        moment.locale('ko');
+        $(".fromNow").text(function (index, dateTime) {
+            return moment(dateTime, "YYYY-MM-DD`T`hh:mm").fromNow();
+        });
+    })
+</script>
 <script id="template" type="text/x-handlebars-template">
     <li class="card" data-id="{{id}}">
         <div class="card-header">
