@@ -43,7 +43,7 @@ public class CommentsApiController {
         return ResponseEntity.ok(comments);
     }
 
-    @PutMapping("{commentId}")
+    @PutMapping("/{commentId}")
     public ResponseEntity<?> modifyComment(@PathVariable Long commentId,
                                            @RequestBody @Valid CommentUpdateForm commentUpdateForm,
                                            Errors errors) {

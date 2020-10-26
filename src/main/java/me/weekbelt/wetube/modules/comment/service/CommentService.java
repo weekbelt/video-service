@@ -41,6 +41,7 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 () -> new IllegalArgumentException("해당 코멘트가 존재하지 않습니다. commentId=" + commentId));
         comment.update(commentUpdateForm);
+        commentRepository.save(comment);
 
         return CommentDtoFactory.commentToCommentReadForm(comment);
     }

@@ -66,7 +66,7 @@
 
         <ul class="time-label flex" id="commentList">
             <!--            ajax요청으로 댓글 삽입-->
-            <li class="card" th:data-id="${comment.id}" th:each="comment : ${video.comments}">
+            <li class="card" th:data-commentId="${comment.id}" th:each="comment : ${video.comments}">
                 <div class="card-header">
                     <a th:href="@{'/members/profile/' + ${comment.name}}" th:text="${comment.name}">Joohyuk</a>
                     <span class="fromNow" th:text="${comment.modifiedDateTime}">10분 전</span>
@@ -75,7 +75,7 @@
                     <p class="card-text" th:text="${comment.text}">동영상 시청 잘 했습니다!!!</p>
                     <div id="comment-modify-button" th:if="${comment.isWriter(#authentication.getPrincipal())}">
                         <!--                        TODO: 수정 삭제 처리 핸들러 생성-->
-                        <a data-toggle="modal" data-target="#modifyCommentModal"
+                        <a data-toggle="modal" data-target="#modifyCommentModal" th:data-id="${comment.id}"
                            class="badge badge-primary">수정</a>
                         <a data-toggle="modal" data-target="#deleteCommentModal"
                            class="badge badge-primary">삭제</a>
@@ -118,7 +118,8 @@
             </div>
             <div class="modal-body form-group">
                 <p>댓글을 수정해주세요.</p>
-                <textarea class="form-control" id="modifyCommentText" name="text" placeholder="댓글을 작성해 주세요"
+                <textarea class="form-control" id="modifyCommentText" name="text"
+                          placeholder="댓글을 작성해 주세요"
                           required></textarea>
                 <div class="invalid-feedback">3자에서 200자 사이로 입력해 주세요</div>
             </div>
@@ -170,7 +171,7 @@
     })
 </script>
 <script id="template" type="text/x-handlebars-template">
-    <li class="card" data-id="{{id}}">
+    <li class="card" data-commentId="{{id}}">
         <div class="card-header">
             <a href="/members/profile/{{name}}">{{name}}</a>
             <span class="fromNow">{{modifiedDateTime}}</span>
@@ -181,7 +182,7 @@
                 <div id="comment-modify-button">
                     <!--                        TODO: 수정 삭제 처리 핸들러 생성-->
                     <a data-toggle="modal" data-target="#modifyCommentModal"
-                       class="badge badge-primary">수정</a>
+                       class="badge badge-primary" data-id="{{id}}">수정</a>
                     <a data-toggle="modal" data-target="#deleteCommentModal"
                        class="badge badge-primary">삭제</a>
                 </div>
