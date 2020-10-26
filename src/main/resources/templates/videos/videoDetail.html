@@ -65,10 +65,9 @@
 
         <ul class="time-label flex" id="commentList">
             <!--            ajax요청으로 댓글 삽입-->
-            <li class="card" th:each="comment : ${video.comments}">
+            <li class="card" th:data-id="${comment.id}" th:each="comment : ${video.comments}">
                 <div class="card-header">
                     <a th:href="@{'/members/profile/' + ${comment.name}}" th:text="${comment.name}">Joohyuk</a>
-                    <!--                    TODO: moment.js 활용-->
                     <span class="fromNow" th:text="${comment.modifiedDateTime}">10분 전</span>
                 </div>
                 <div class="card-body">
@@ -172,7 +171,6 @@
     <li class="card" data-id="{{id}}">
         <div class="card-header">
             <a href="/members/profile/{{name}}">{{name}}</a>
-            <!--                    TODO: moment.js 활용-->
             <span class="fromNow">{{modifiedDateTime}}</span>
         </div>
         <div class="card-body">
