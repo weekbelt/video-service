@@ -2,15 +2,20 @@ const commentObj = {
     isValid: false,
     currentMemberName: document.querySelector("#currentMemberName").value,
     init: function () {
-        // 댓글 글자 수 유효한지 확인하는 이벤트 등록
+        // 댓글 생성 및 수정시 글자 수 유효한지 확인하는 이벤트 등록
         const commentText = document.querySelector("#newCommentText");
         commentText.addEventListener("keyup", this.isValidText);
+        const modifyCommentText = document.querySelector("#modifyCommentText");
+        modifyCommentText.addEventListener("keyup", this.isValidText);
+
         // 댓글 작성 요청 이벤트 등록
         const commentCreateButton = document.querySelector("#commentAddBtn");
         commentCreateButton.addEventListener("click", this.createCommentRequest);
+
         // 댓글 수정 요청 이벤트 등록
         const commentModifyButton = document.querySelector("#commentModifyButton");
-        commentModifyButton.addEventListener("click", this.modfiyCommentRequest);
+        commentModifyButton.addEventListener("click", this.modifyCommentRequest);
+
         // 댓글 삭제 요청 이벤트 등록
         const commentDeleteButton = document.querySelector("#replyDeleteButton");
         commentDeleteButton.addEventListener("click", this.deleteCommentRequest);
@@ -30,10 +35,15 @@ const commentObj = {
             const response = await ajax("POST", requestUri, createCommentForm);
 
             alert("등록 되었습니다.");
+            commentObj.addCommentTemplate(response);
 
+            // 성공적인 등록후 댓글 입력창 초기화 처리
             commentObj.isValid = false;
             commentText.value = "";
-            commentObj.addCommentTemplate(response);
+            if (commentText.classList.contains("is-valid")) {
+                commentText.classList.remove("is-valid");
+            }
+
         }
     },
     modifyCommentRequest: function() {
@@ -56,10 +66,20 @@ const commentObj = {
         commentListContainer.insertAdjacentHTML("afterbegin", commentElement);
     },
     isValidText: function (event) {
-        let text = event.target.value;
-        commentObj.isValid = (/^.{3,1000}$/).test(text);
-        
-        console.log(commentObj.isValid);
+        const textArea = event.target;
+        let text = textArea.value;
+        commentObj.isValid = /^.{3,200}$/.test(text);
+        if (commentObj.isValid) {
+            if (textArea.classList.contains("is-invalid")) {
+                textArea.classList.remove("is-invalid");
+            }
+            textArea.classList.add("is-valid");
+        } else {
+            if (textArea.classList.contains("is-valid")) {
+                textArea.classList.remove("is-valid");
+            }
+            textArea.classList.add("is-invalid");
+        }
     }
 };
 
