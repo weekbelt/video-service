@@ -13,21 +13,24 @@ const commentObj = {
         commentCreateButton.addEventListener("click", this.createCommentRequest);
 
         // 댓글 수정 요청 이벤트 등록
-        // const commentModifyButton = document.querySelector("#commentModifyButton");
-        // commentModifyButton.addEventListener("click", commentObj.modifyCommentRequest);
         $('#modifyCommentModal').on('show.bs.modal', function (e) {
             const commentId = $(e.relatedTarget).data('id');
             const commentModifyButton = document.querySelector("#commentModifyButton");
             commentModifyButton.addEventListener("click", () => {
                 commentObj.modifyCommentRequest(commentId);
             })
-
         })
 
         // // 댓글 삭제 요청 이벤트 등록
         // const commentDeleteButton = document.querySelector("#replyDeleteButton");
         // commentDeleteButton.addEventListener("click", this.deleteCommentRequest);
-
+        $('#deleteCommentModal').on('show.bs.modal', function (e) {
+            const commentId = $(e.relatedTarget).data('id');
+            const commentDeleteButton = document.querySelector("#commentDeleteButton");
+            commentDeleteButton.addEventListener("click", () => {
+                commentObj.deleteCommentRequest(commentId);
+            })
+        })
     },
     createCommentRequest: async function () {
         // json 요청 데이터
@@ -96,6 +99,13 @@ const commentObj = {
             const commentListContainer = document.querySelector("#commentList");
             commentListContainer.replaceChild(modifiedCommentTemplate, modifyBeforeCommentTemplate);
         }
+    },
+    deleteCommentRequest: async function (commentId) {
+        const videoId = document.querySelector(".videoId").id;
+        const deleteRequestUri = "/api/videos/" + videoId + "/comments/" + commentId;
+        const response = await ajax("DELETE", deleteRequestUri);
+        alert("성공적으로 삭제하였습니다.")
+        window.location.href = "/videos/" + videoId;
     },
     makeCommentTemplate: function (commentReadForm) {
         // 최근 수정 시간을 ~전 으로 처리

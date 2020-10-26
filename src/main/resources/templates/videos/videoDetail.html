@@ -74,10 +74,9 @@
                 <div class="card-body">
                     <p class="card-text" th:text="${comment.text}">동영상 시청 잘 했습니다!!!</p>
                     <div id="comment-modify-button" th:if="${comment.isWriter(#authentication.getPrincipal())}">
-                        <!--                        TODO: 수정 삭제 처리 핸들러 생성-->
                         <a data-toggle="modal" data-target="#modifyCommentModal" th:data-id="${comment.id}"
                            class="badge badge-primary">수정</a>
-                        <a data-toggle="modal" data-target="#deleteCommentModal"
+                        <a data-toggle="modal" data-target="#deleteCommentModal" th:data-id="${comment.id}"
                            class="badge badge-primary">삭제</a>
                     </div>
                 </div>
@@ -148,7 +147,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" type="submit" aria-describedby="submitHelp"
-                        id="replyDeleteButton">삭제
+                        id="commentDeleteButton">삭제
                 </button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
             </div>
@@ -184,7 +183,7 @@
                     <a data-toggle="modal" data-target="#modifyCommentModal"
                        class="badge badge-primary" data-id="{{id}}">수정</a>
                     <a data-toggle="modal" data-target="#deleteCommentModal"
-                       class="badge badge-primary">삭제</a>
+                       class="badge badge-primary" data-id="{{id}}">삭제</a>
                 </div>
             {{/if}}
         </div>
