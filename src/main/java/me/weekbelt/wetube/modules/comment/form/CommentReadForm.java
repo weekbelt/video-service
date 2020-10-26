@@ -1,6 +1,7 @@
 package me.weekbelt.wetube.modules.comment.form;
 
 import lombok.*;
+import me.weekbelt.wetube.modules.member.UserMember;
 
 import java.time.LocalDateTime;
 
@@ -20,4 +21,8 @@ public class CommentReadForm {
 
     private LocalDateTime modifiedDateTime;
 
+    public boolean isWriter(UserMember userMember) {
+        String name = userMember.getMember().getName();
+        return this.name.equals(name);
+    }
 }

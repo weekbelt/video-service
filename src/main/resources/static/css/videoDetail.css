@@ -3,18 +3,15 @@
     max-width: 840px;
 }
 
-.comment-container__input #newCommentWriter {
-    max-width: none;
+.comment-container__input #newCommentText {
+    max-width: inherit;
+    margin-top: 10px;
 }
 
 .comment-container__input .comment-container__input-button {
     width: fit-content;
     margin-left: 730px;
 }
-
-/* .comment-container__input #commentAddBtn {
-  width: fit-content;
-} */
 
 .comment-container > .comment-container__input,
 .comment-container__timeline {
@@ -48,4 +45,19 @@
 
 .comment-container__timeline > .pagination {
     margin-top: 20px;
+}
+
+/* modal css */
+.modal-header .close {
+    max-width: fit-content;
+    box-shadow: none;
+}
+
+.modal-body #modifyCommentText {
+    max-width: inherit;
+    margin-top: 10px;
+}
+
+.modal-footer button {
+    max-width: fit-content;
 }

@@ -73,10 +73,12 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text" th:text="${comment.text}">동영상 시청 잘 했습니다!!!</p>
-                    <div id="comment-modify-button">
+                    <div id="comment-modify-button" th:if="${comment.isWriter(#authentication.getPrincipal())}">
                         <!--                        TODO: 수정 삭제 처리 핸들러 생성-->
-                        <a href="#" class="badge badge-primary">수정</a>
-                        <a href="#" class="badge badge-primary">삭제</a>
+                        <a data-toggle="modal" data-target="#modifyCommentModal"
+                           class="badge badge-primary">수정</a>
+                        <a data-toggle="modal" data-target="#deleteCommentModal"
+                           class="badge badge-primary">삭제</a>
                     </div>
                 </div>
             </li>
@@ -102,10 +104,60 @@
         </ul>
     </div>
 </div>
+
+<!-- 수정 모달창-->
+<div class="modal fade" id="modifyCommentModal" tabindex="-1" role="dialog"
+     aria-labelledby="modifyCommentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">댓글 수정</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>댓글을 수정해주세요.</p>
+                <textarea class="form-control" id="modifyCommentText" name="text" placeholder="댓글을 작성해 주세요"
+                          required></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" aria-describedby="submitHelp"
+                        id="commentModifyButton">수정
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 삭제 모달창 -->
+<div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="leaveTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">댓글 삭제</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><strong>삭제</strong> 하시겠습니까?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" aria-describedby="submitHelp"
+                        id="replyDeleteButton">삭제
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 <div class="videoId" th:id="${video.id}"></div>
-<input type="hidden" id="currentMemberName" th:value="${video.creator.name}">
+<input type="hidden" id="videoCreatorName" th:value="${video.creator.name}">
+<input type="hidden" id="currentMemberName" th:value="${member.name}">
 <script src="/js/videoPlayer.js"></script>
 <script src="/js/addComment.js"></script>
 <script>

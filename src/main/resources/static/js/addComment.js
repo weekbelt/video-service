@@ -14,6 +14,7 @@ const commentObj = {
             text: commentText.value,
         }
 
+        // TODO: 3~200자 이하 검증
         if (!commentObj.isValid) {
             alert("글자수를 3자 이상 200자 이하로 입력해주세요.");
         } else {
@@ -21,9 +22,7 @@ const commentObj = {
             const requestUri = "/api/videos/" + videoId + "/comments";
             const response = await ajax("POST", requestUri, createCommentForm);
 
-            if (response.name === commentObj.currentMemberName) {
-                alert("등록 되었습니다.");
-            }
+            alert("등록 되었습니다.");
 
             commentText.value = "";
             commentObj.addCommentTemplate(response);
