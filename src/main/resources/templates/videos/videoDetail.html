@@ -48,7 +48,7 @@
         <div class="mb-3 form-group">
             <label for="newCommentText" id="createCommentLabel">댓글 남기기</label>
             <textarea class="form-control" id="newCommentText" name="content" placeholder="댓글을 남겨주세요"
-                      required></textarea>
+                      wrap="hard" required></textarea>
             <div class="invalid-feedback">3자에서 200자 사이로 입력해 주세요</div>
         </div>
         <div class="comment-container__input-button">
@@ -57,49 +57,31 @@
     </div>
 
     <div class="comment-container__timeline">
-        <span th:if="${video.comments.size() == 1}" th:text="${video.comments.size() + ' comment'}"
-              class="video__comment-number"></span>
-        <span th:if="${video.comments.size() > 1}" th:text="${video.comments.size() + ' comments'}"
-              class="video__comment-number"></span>
-        <span th:if="${video.comments.size() == 0}" th:text="${video.comments.size() + ' comment'}"
-              class="video__comment-number">0 comment</span>
+        <span id="commentNum">
+<!--            comment 개수 표시-->
+        </span>
 
         <ul class="time-label flex" id="commentList">
             <!--            ajax요청으로 댓글 삽입-->
-            <li class="card" th:data-commentId="${comment.id}" th:each="comment : ${video.comments}">
-                <div class="card-header">
-                    <a th:href="@{'/members/profile/' + ${comment.name}}" th:text="${comment.name}">Joohyuk</a>
-                    <span class="fromNow" th:text="${comment.modifiedDateTime}">10분 전</span>
-                </div>
-                <div class="card-body">
-                    <p class="card-text" th:text="${comment.text}">동영상 시청 잘 했습니다!!!</p>
-                    <div id="comment-modify-button" th:if="${comment.isWriter(#authentication.getPrincipal())}">
-                        <a data-toggle="modal" data-target="#modifyCommentModal" th:data-id="${comment.id}"
-                           class="badge badge-primary">수정</a>
-                        <a data-toggle="modal" data-target="#deleteCommentModal" th:data-id="${comment.id}"
-                           class="badge badge-primary">삭제</a>
-                    </div>
-                </div>
-            </li>
         </ul>
 
         <!--        TODO: Pagination 작업-->
         <ul class="pagination pagination-sm justify-content-center">
             <!--페이지 버튼 삽입-->
-            <li class="page-item disabled">
-                <span class="page-link">Previous</span>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item active" aria-current="page">
-                        <span class="page-link">
-                        2
-                        <span class="sr-only">(current)</span>
-                        </span>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
+<!--            <li class="page-item disabled">-->
+<!--                <span class="page-link">Previous</span>-->
+<!--            </li>-->
+<!--            <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--            <li class="page-item active" aria-current="page">-->
+<!--                        <span class="page-link">-->
+<!--                        2-->
+<!--                        <span class="sr-only">(current)</span>-->
+<!--                        </span>-->
+<!--            </li>-->
+<!--            <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="#">Next</a>-->
+<!--            </li>-->
         </ul>
     </div>
 </div>
@@ -117,7 +99,7 @@
             </div>
             <div class="modal-body form-group">
                 <p>댓글을 수정해주세요.</p>
-                <textarea class="form-control" id="modifyCommentText" name="text"
+                <textarea class="form-control" id="modifyCommentText" name="text" wrap="hard"
                           placeholder="댓글을 작성해 주세요"
                           required></textarea>
                 <div class="invalid-feedback">3자에서 200자 사이로 입력해 주세요</div>
@@ -161,6 +143,7 @@
 <input type="hidden" id="currentMemberName" th:value="${member.name}">
 <script src="/js/videoPlayer.js"></script>
 <script src="/js/addComment.js"></script>
+<script src="/js/commentPagination.js"></script>
 <script>
     $(function () {
         moment.locale('ko');
@@ -169,7 +152,7 @@
         });
     })
 </script>
-<script id="template" type="text/x-handlebars-template">
+<script id="commentTemplate" type="text/x-handlebars-template">
     <li class="card" data-commentId="{{id}}">
         <div class="card-header">
             <a href="/members/profile/{{name}}">{{name}}</a>

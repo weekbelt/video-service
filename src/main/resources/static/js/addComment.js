@@ -1,4 +1,5 @@
 const commentObj = {
+    pagePerElementNum: 10,
     isValid: false,
     currentMemberName: document.querySelector("#currentMemberName").value,
     init: function () {
@@ -22,8 +23,6 @@ const commentObj = {
         })
 
         // // 댓글 삭제 요청 이벤트 등록
-        // const commentDeleteButton = document.querySelector("#replyDeleteButton");
-        // commentDeleteButton.addEventListener("click", this.deleteCommentRequest);
         $('#deleteCommentModal').on('show.bs.modal', function (e) {
             const commentId = $(e.relatedTarget).data('id');
             const commentDeleteButton = document.querySelector("#commentDeleteButton");
@@ -49,10 +48,8 @@ const commentObj = {
 
             alert("등록 되었습니다.");
 
-            // 등곡한 댓글 리스트 맨 위에 삽입
-            const commentElement = commentObj.makeCommentTemplate(response);
-            const commentListContainer = document.querySelector("#commentList");
-            commentListContainer.insertAdjacentHTML("afterbegin", commentElement);
+            // comments AJAX 재요청으로 앞 10개 댓글만 보이도록
+            commentLoadObj.init(0, commentObj.pagePerElementNum);
 
             // 성공적인 등록후 댓글 입력창 초기화 처리
             commentObj.isValid = false;
@@ -74,8 +71,6 @@ const commentObj = {
             alert("글자수를 3자 이상 200자 이하로 입력해주세요.");
         } else {
             // ajax 요청 uri 구하기
-            // const modifyButton = event.target;
-            // const commentId = modifyButton.value;
             const videoId = document.querySelector(".videoId").id;
             const modifyRequestUri = "/api/videos/" + videoId + "/comments/" + commentId;
             const response = await ajax("PUT", modifyRequestUri, modifyCommentForm);
@@ -92,20 +87,21 @@ const commentObj = {
             // 모달 끄기
             $('#modifyCommentModal').modal("hide");
 
-            // 기존의 댓글 창 수정
-            const modifyBeforeCommentTemplate = document.querySelector('[data-commentId="' + commentId + '"]');
-            const modifiedCommentTemplate = $.parseHTML(commentObj.makeCommentTemplate(response))[1];
-
-            const commentListContainer = document.querySelector("#commentList");
-            commentListContainer.replaceChild(modifiedCommentTemplate, modifyBeforeCommentTemplate);
+            // 수정 후 comment 리스트 AJAX 요청 초기화
+            commentLoadObj.init(0, commentObj.pagePerElementNum);
         }
     },
     deleteCommentRequest: async function (commentId) {
         const videoId = document.querySelector(".videoId").id;
         const deleteRequestUri = "/api/videos/" + videoId + "/comments/" + commentId;
         const response = await ajax("DELETE", deleteRequestUri);
+
         alert("성공적으로 삭제하였습니다.")
-        window.location.href = "/videos/" + videoId;
+
+        $('#deleteCommentModal').modal('hide');
+
+        // 삭제 후 comment 리스트 AJAX 요청 초기화
+        commentLoadObj.init(0, commentObj.pagePerElementNum);
     },
     makeCommentTemplate: function (commentReadForm) {
         // 최근 수정 시간을 ~전 으로 처리
@@ -116,7 +112,7 @@ const commentObj = {
         if (commentReadForm.name === commentObj.currentMemberName) {
             commentReadForm.isWriter = true;
         }
-        const commentElementTemplate = document.querySelector("#template").innerHTML;
+        const commentElementTemplate = document.querySelector("#commentTemplate").innerHTML;
         const bindTemplate = Handlebars.compile(commentElementTemplate);
         const commentElement = bindTemplate(commentReadForm);
 
@@ -125,7 +121,9 @@ const commentObj = {
     isValidText: function (event) {
         const textArea = event.target;
         let text = textArea.value;
-        commentObj.isValid = /^.{3,200}$/.test(text);
+        console.log(text);
+        let resultText = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
+        commentObj.isValid = /^.{3,200}?$/.test(resultText);
         if (commentObj.isValid) {
             if (textArea.classList.contains("is-invalid")) {
                 textArea.classList.remove("is-invalid");
@@ -142,4 +140,5 @@ const commentObj = {
 
 document.addEventListener("DOMContentLoaded", () => {
     commentObj.init();
+    commentLoadObj.init(0, commentObj.pagePerElementNum);
 });
