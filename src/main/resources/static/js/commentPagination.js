@@ -7,9 +7,6 @@ const commentLoadObj = {
         this.showCommentNum(responseComments.totalElements);
         // 페이지 리스트 호출
         commentPageLoadObj.showPagination(responseComments);
-        // 페이지 버튼 클릭 이벤트 등록
-        const pageButton = document.querySelector(".pagination");
-        pageButton.addEventListener("click", commentPageLoadObj.pageButtonClickEvent)
     },
     getResponseData: async function (pageNum, size) {
         const videoId = document.querySelector(".videoId").id;
@@ -40,54 +37,70 @@ const commentLoadObj = {
 const commentPageLoadObj = {
     showPagination: function (commentResponse) {
         const pageable = commentResponse.pageable;
-        // 제일 마지막 페이지 구하기
-        let endPage = (Math.ceil(commentResponse.number / pageable.pageSize) * pageable.pageSize);
-        let tempEndPage = commentResponse.totalPages;
-        if (endPage === 0 || endPage > tempEndPage) {
-            endPage = tempEndPage;
-        }
 
-        // 첫 페이지 구하기
-        let startPage = (endPage - pageable.pageSize) + 1;
-        if (startPage < 0) {
-            startPage = 1;
-        }
-        let prev = startPage !== 1;
-        let next = endPage * commentResponse.size < commentResponse.totalElements;
+        // 해당 페이지에 속한 첫번째 PageNumber구하기
+        let startNumber = Math.floor(commentResponse.number / pageable.pageSize) * pageable.pageSize + 1;
+
+        // 마지막 PageNumber 구하기
+        let endNumber = commentResponse.totalPages > startNumber + (pageable.pageSize - 1) ? startNumber + (pageable.pageSize - 1) : commentResponse.totalPages;
 
         let str = "";
-        if (prev) {
-            str +=
-                "<li class='page-item'>\n" +
-                "    <a class='page-link' aria-label='Previous' href='" + (startPage - 1) + "'> << </a>\n" +
+        // 제일 첫 페이지로 가는 버튼 구하기
+        str += "<li class='page-item'>\n" +
+            "<a class='page-link' aria-label='Previous' data-id='0'>&laquo;</a>\n" +
+            "</li>"
+
+        // 이전 페이지로 가는 버튼 구하기
+        if (commentResponse.first) {
+            str += "<li class='page-item disabled'>\n" +
+                "<a class='page-link' aria-label='Previous' data-id='" + (commentResponse.number - 1) + "'>&lsaquo;</a>\n" +
+                "</li>"
+        } else {
+            str += "<li class='page-item'>\n" +
+                "<a class='page-link' aria-label='Previous' data-id='" + (commentResponse.number - 1) + "'>&lsaquo;</a>\n" +
                 "</li>"
         }
 
-        for (let i = startPage, len = endPage; i <= len; i++) {
-            const isActive = commentResponse.number === (i - 1) ? 'active' : '';
-            str +=
-                "<li class='page-item " + isActive + "'>\n" +
-                "   <a class='page-link' href='" + (i - 1) + "'>" + i + "</a>\n" +
+        // 페이지 번호 표시
+        for (let pageNumber = startNumber; pageNumber <= endNumber; pageNumber++) {
+            if ((pageNumber - 1) === commentResponse.number) {
+                str += "<li class='page-item active'>\n" +
+                    "<a class='page-link' data-id='" + (pageNumber - 1) + "'>" + pageNumber +"</a>\n" +
+                    "</li>"
+            } else {
+                str += "<li class='page-item'>\n" +
+                    "<a class='page-link' data-id='" + (pageNumber - 1) + "'>" + pageNumber + "</a>\n" +
+                    "</li>"
+            }
+        }
+
+
+        // 다음 페이지로 가는 버튼 구하기
+        if (commentResponse.last) {
+            str += "<li class='page-item disabled'>\n" +
+                "<a class='page-link' aria-label='Previous' data-id='" + (commentResponse.number + 1) + "'>&rsaquo;</a>\n" +
+                "</li>"
+        } else {
+            str += "<li class='page-item'>\n" +
+                "<a class='page-link' aria-label='Previous' data-id='" + (commentResponse.number + 1) + "'>&rsaquo;</a>\n" +
                 "</li>"
         }
 
-        if (next) {
-            str +=
-                "<li class='page-item'>\n" +
-                "   <a class='page-link' aria-label='Next' href='" + (endPage + 1) + "'> >> </a>\n" +
-                "</li>"
-        }
+        // 제일 마지막 페이지로 가는 버튼 구하기
+        str += "<li class='page-item'>\n" +
+            "<a class='page-link' data-id='" + (commentResponse.totalPages - 1) + "'>&raquo;</a>\n" +
+            "</li>"
 
         let paginationContainer = document.querySelector(".pagination");
         paginationContainer.innerHTML = str;
+
+        // 페이지 버튼 클릭 이벤트 등록
+        const pageButton = document.querySelector(".pagination");
+        pageButton.addEventListener("click", commentPageLoadObj.pageButtonClickEvent)
     },
     pageButtonClickEvent: function (event) {
         event.preventDefault();
-        const requestPageNum = event.target.text;
+        const requestPageNum = event.target.dataset.id;
         commentLoadObj.init(requestPageNum, commentObj.pagePerElementNum);
     }
 };
-//
-// document.addEventListener("DOMContentLoaded", () => {
-//     commentLoadObj.init(10, commentObj.pagePerElementNum);
-// })
