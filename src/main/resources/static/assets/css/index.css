@@ -1,0 +1,11 @@
+#main {
+    margin-top: 100px;
+}
+.home-videos {
+    display: flex;
+    justify-content: stretch;
+}
+
+.home-videos .videoBlock {
+    padding: 10px;
+}

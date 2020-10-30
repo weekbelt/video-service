@@ -4,20 +4,74 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
-    <header th:replace="fragments/fragments.html :: header"></header>
-    <div class="form-container">
-        <form th:object="${memberJoinForm}" th:action="@{/join}" method="post">
-            <input type="email" th:field="*{email}" name="email" placeholder="Email">
-            <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
-            <input type="text" th:field="*{name}" name="name" placeholder="Full Name">
-            <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name</small>
-            <input type="password" th:field="*{password}" name="password" placeholder="Password" autocomplete="on">
-            <small class="form-text text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
-            <input type="password" th:field="*{password2}" name="password2" placeholder="Verify Password" autocomplete="on">
-            <input type="submit" value="Join Now">
-        </form>
-        <div th:replace="fragments/fragments.html :: social-login"></div>
-    </div>
+<header th:replace="fragments/fragments.html :: header"></header>
+<main id="main">
+    <section id="contact" class="contact section-bg" style="margin-top: 50px;">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>회원 가입</h2>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-6 mt-4 mt-md-0">
+                    <form th:action="@{/join}" th:object="${memberJoinForm}" method="post" role="form" class="php-email-form">
+                        <div class="form-group">
+                            <label for="email">이메일</label>
+                            <input type="email" th:field="*{email}" class="form-control" name="email" id="email" placeholder="Your Email"/>
+                            <small id="emailHelp" class="form-text text-muted">
+                                이 서비스는 사용자의 이메일을 공개하지 않습니다.
+                            </small>
+                            <small class="invalid-feedback">이메일을 입력하세요.</small>
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email
+                                Error</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">이름</label>
+                            <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Your Name"/>
+                            <small id="nameHelp" class="form-text text-muted">
+                                공백없이 문자와 숫자로만 3자 이상 20자 이내로 입력하세요. 가입후에 변경할 수 있습니다.
+                            </small>
+                            <small class="invalid-feedback">이름을 입력하세요.</small>
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}"
+                                   th:errors="*{name}">Name Error</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">패스워드</label>
+                            <input type="password" th:field="*{password}" class="form-control" name="password" id="password"/>
+                            <small id="passwordHelp" class="form-text text-muted">
+                                8자 이상 50자 이내로 입력하세요. 영문자, 숫자, 특수기호를 사용할 수 있으며 공백은 사용할 수 없습니다.
+                            </small>
+                            <small class="invalid-feedback">패스워드를 입력하세요.</small>
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('password')}"
+                                   th:errors="*{password}">Password
+                                Error</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="password2">패스워드 확인</label>
+                            <input type="password" th:field="*{password2}" class="form-control" name="password2" id="password2"/>
+                            <small id="passwordHelp" class="form-text text-muted">
+                                8자 이상 50자 이내로 입력하세요. 영문자, 숫자, 특수기호를 사용할 수 있으며 공백은 사용할 수 없습니다.
+                            </small>
+                            <small class="invalid-feedback">패스워드를 입력하세요.</small>
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('password2')}"
+                                   th:errors="*{password2}">Password2
+                                Error</small>
+                        </div>
+                        <div class="mb-3">
+                            <div class="loading">Loading</div>
+                            <div class="error-message"></div>
+                            <div class="sent-message">Your message has been sent. Thank you!</div>
+                        </div>
+                        <div class="text-center"><button type="submit">가입 요청</button></div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </section><!-- End Contact Section -->
+
+</main><!-- End #main -->
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 </html>

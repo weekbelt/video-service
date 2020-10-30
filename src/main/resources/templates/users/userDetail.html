@@ -5,37 +5,42 @@
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
 <header th:replace="fragments/fragments.html :: header"></header>
-<div class="user-profile">
-    <div class="user-profile__header">
-        <svg th:if="${#strings.isEmpty(member.profileImage)}" class="avatar"
-             th:data-jdenticon-value="${member.name}" width="125" height="125"></svg>
-        <img th:if="${!#strings.isEmpty(member.profileImage)}"
-             th:src="${member.profileImage}" class="avatar" width="125" height="125">
-        <h4 class="profile__username" th:text="${member.name}"></h4>
-    </div>
-    <div th:if="${isOwner}" class="user-profile__btns">
-        <a href="/members/edit-profile">
-            <button>✏️ Edit Profile</button>
-        </a>
-        <a href="/members/change-email">
-            <button>️📠 Change Email</button>
-        </a>
-        <a href="/members/change-password">
-            <button>🔒 Change Password</button>
-        </a>
-    </div>
-    <div class="home-videos">
-        <div th:each="video : ${memberReadForm.videos}">
-            <a th:href="@{'/videos/' + ${video.id}}">
-                <video th:src="@{'file:///Users/joohyuk/Movies/' + ${video.saveFileName}}" class="videoBlock__thumbnail" controls="false"></video>
-                <h4 class="videoBlock__title" th:text="${video.title}"></h4>
-                <h6 th:if="${video.views == 1}" class="videoBlock__views" th:text="${video.views + ' view'}"></h6>
-                <h6 th:if="${video.views > 1}" class="videoBlock__views" th:text="${video.views + ' views'}"></h6>
+<main id="main" class="container">
+    <div class="user-profile">
+        <div class="user-profile__header">
+            <svg th:if="${#strings.isEmpty(member.profileImage)}" class="avatar"
+                 th:data-jdenticon-value="${member.name}" width="125" height="125"></svg>
+            <img th:if="${!#strings.isEmpty(member.profileImage)}"
+                 th:src="${member.profileImage}" class="avatar" width="125" height="125">
+            <h4 class="profile__username" th:text="${member.name}"></h4>
+        </div>
+        <div th:if="${isOwner}" class="user-profile__btns">
+            <a href="/members/edit-profile" class="get-started-btn">
+                ✏️ Edit Profile
             </a>
-
+            <a href="/members/change-email" class="get-started-btn">
+                ️📠 Change Email
+            </a>
+            <a href="/members/change-password" class="get-started-btn">
+                🔒 Change Password
+            </a>
+        </div>
+        <div class="home-videos">
+            <div th:each="item : ${videos}" class="videoBlock">
+                <a th:href="@{'/videos/' + ${item.id}}">
+                    <video th:src="@{${item.saveFileName}}" class="videoBlock__thumbnail" controls="false"></video>
+                    <h4 class="videoBlock__title" th:text="${item.title}">안녕하세요</h4>
+                    <div class="videoBlock__bottom">
+                         <h6 th:if="${item.views == 1}" class="videoBlock__views" th:text="${item.views + ' view'}"></h6>
+                        <h6 th:if="${item.views > 1}" class="videoBlock__views" th:text="${item.views + ' views'}"></h6>
+                        <h6 class="ml-2 fromNow">1년 전</h6>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
-</div>
+
+</main><!-- End #main -->
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 </html>

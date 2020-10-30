@@ -5,22 +5,51 @@
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
 <header th:replace="fragments/fragments.html :: header"></header>
-<div class="form-container">
-    <div class="record-container" id="jsRecordContainer">
-        <video id="jsVideoPreview"></video>
-        <button id="jsRecordBtn">Start Recording</button>
+<main id="main">
+    <div class="section-title">
+        <h2>Upload Video</h2>
     </div>
-    <form th:object="${videoUploadForm}" th:action="@{/videos/upload}" method="post" enctype="multipart/form-data">
-        <div class="fileUpload">
-            <label for="file">Video File</label>
-            <input type="file" th:field="*{file}" id="file" name="file" accept="video/*" required="true">
+
+    <div class="contact">
+        <div class="form-container container">
+            <div class="record-container" id="jsRecordContainer">
+                <video id="jsVideoPreview"></video>
+                <button id="jsRecordBtn" class="btn get-started-btn">Start Recording</button>
+            </div>
+            <form th:object="${videoUploadForm}" th:action="@{/videos/upload}" method="post" enctype="multipart/form-data" class="php-email-form">
+                <div class="fileUpload">
+                    <label for="file">Video File</label>
+                    <input type="file" th:field="*{file}" id="file" name="file" accept="video/*" required="true">
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" th:field="*{title}" name="title" class="form-control" id="title" placeholder="Video Title"/>
+                    <small id="titleHelp" class="form-text text-muted">
+                        Video Title을 입력하세요.
+                    </small>
+                    <small class="invalid-feedback">제목을 입력하세요.</small>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title
+                        Error</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="videoDescription">Description</label>
+                    <textarea name="description" th:field="*{description}" placeholder="Description" rows="5" cols="83" id="videoDescription"></textarea>
+                    <small id="descriptionHelp" class="form-text text-muted">
+                        내용을 입력하세요.
+                    </small>
+                    <small class="invalid-feedback">내용을 입력하세요.</small>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Title
+                        Error</small>
+                </div>
+
+                <button type="submit">Upload Video</button>
+            </form>
         </div>
-        <input type="text" th:field="*{title}" placeholder="Title" name="title">
-        <textarea name="description" th:field="*{description}" placeholder="Description"></textarea>
-        <input type="submit" value="Upload Video">
-    </form>
-</div>
+    </div>
+</main><!-- End #main -->
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
-<script src="/js/videoRecorder.js"></script>
+<script src="/assets/js/videoRecorder.js"></script>
 </html>

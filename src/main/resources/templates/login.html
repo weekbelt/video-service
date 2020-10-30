@@ -4,15 +4,51 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
-    <header th:replace="fragments/fragments.html :: header"></header>
-    <div class="form-container">
-        <form th:action="@{/login}" method="post">
-            <input type="text" name="username" placeholder="Email">
-            <input type="password" name="password" placeholder="Password">
-            <input type="submit" value="Log In">
-        </form>
-        <div th:replace="fragments/fragments.html :: social-login"></div>
-    </div>
+<header th:replace="fragments/fragments.html :: header"></header>
+<main id="main">
+    <section id="contact" class="contact section-bg" style="margin-top: 50px;">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>로그인</h2>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-6 mt-4 mt-md-0">
+                    <form th:action="@{/login}" method="post" role="form" class="php-email-form">
+                        <div class="form-group">
+                            <label for="username">이메일</label>
+                            <input type="text" name="username" class="form-control" id="username"
+                                   placeholder="Your Email or Nickname"/>
+                            <small id="nicknameHelp" class="form-text text-muted">
+                                가입할 때 사용한 이메일을 입력하세요.
+                            </small>
+                            <small class="invalid-feedback">이메일을 입력하세요.</small>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="password">패스워드</label>
+                            <input type="password" name="password" class="form-control" id="password"/>
+                            <small id="passwordHelp" class="form-text text-muted">
+                                패스워드를 입력하세요.</a>
+                            </small>
+                            <small class="invalid-feedback">패스워드를 입력하세요.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="loading">Loading</div>
+                            <div class="error-message"></div>
+                            <div class="sent-message">Your message has been sent. Thank you!</div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit">가입 요청</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Contact Section -->
+</main><!-- End #main -->
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 </html>

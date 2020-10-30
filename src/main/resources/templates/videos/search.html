@@ -4,19 +4,25 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
-    <header th:replace="fragments/fragments.html :: header"></header>
+<header th:replace="fragments/fragments.html :: header"></header>
+<main id="main" class="container">
     <div class="search__header">
-        <h3 th:text="'Searching for: ' +  ${searchingBy}"></h3>
+        <h3 th:text="'Searching for: ' +  ${searchingBy}">Searching for: Spring</h3>
     </div>
-    <div class="search__videos">
+    <div class="home-videos">
         <div th:each="item : ${videos}" class="videoBlock">
             <a th:href="@{'/videos/' + ${item.id}}">
-                <video th:src="'/videos/download?fileUrl=' + ${item.saveFileName}" class="videoBlock__thumbnail" controls="true"></video>
-                <h4 class="videoBlock__title" th:text="${item.title}"></h4>
-                <h6 class="videoBlock__views" th:text="${item.views}"></h6>
+                <video th:src="@{${item.saveFileName}}" class="videoBlock__thumbnail" controls="false"></video>
+                <h4 class="videoBlock__title" th:text="${item.title}">안녕하세요</h4>
+                <div class="videoBlock__bottom">
+                    <!-- <h6 th:if="${item.views == 1}" class="videoBlock__views" th:text="${item.views + ' view'}"></h6> -->
+                    <h6 th:if="${item.views > 1}" class="videoBlock__views" th:text="${item.views + ' views'}">조회수 11회</h6>
+                    <h6 class="ml-2">1년 전</h6>
+                </div>
             </a>
         </div>
     </div>
+</main><!-- End #main -->
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 </html>

@@ -76,7 +76,7 @@ public class MemberController {
         }
         memberService.updateProfile(member, memberUpdateForm);
         attributes.addFlashAttribute("message", "정보를 수정하였습니다.");
-        return "redirect:/members/profile";
+        return "redirect:/members/profile/" + memberUpdateForm.getName();
     }
 
     @GetMapping("/change-email")
@@ -98,7 +98,7 @@ public class MemberController {
         }
         memberService.changeEmail(member, changeEmailForm);
         attributes.addFlashAttribute("message", "이메일을 수정하였습니다.");
-        return "redirect:/members/profile";
+        return "redirect:/members/profile/" + member.getName();
     }
 
     @GetMapping("/change-password")
@@ -119,6 +119,6 @@ public class MemberController {
         }
         memberService.changePassword(member, changePasswordForm);
         attributes.addFlashAttribute("message", "패스워드를 변경하였습니다.");
-        return "redirect:/members/profile";
+        return "redirect:/members/profile/" + member.getName();
    }
 }

@@ -1,0 +1,14 @@
+#searchVideo {
+    /* margin-top: 30px; */
+    background: #fff;
+    padding: 6px 10px;
+    position: relative;
+    border-radius: 5px;
+    text-align: left;
+    border: 1px solid #9da7fc;
+}
+
+#searchVideo > input[type="text"] {
+    border: 0;
+    padding: 4px 8px;
+}

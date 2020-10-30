@@ -5,18 +5,38 @@
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
 <header th:replace="fragments/fragments.html :: header"></header>
-<div class="form-container">
-    <form th:object="${memberUpdateForm}" th:action="@{/members/edit-profile}" method="post"
-          enctype="multipart/form-data">
-        <div class="fileUpload">
-            <label for="avatar">Avatar</label>
-            <input type="file" th:field="*{multipartImageProfile}" id="avatar" accept="image/*">
+<div th:replace="fragments/fragments.html :: message"></div>
+<main id="main">
+    <div class="section-title">
+        <h2>회원 정보 변경</h2>
+    </div>
+
+    <div class="contact">
+        <div class="form-container container">
+            <form th:object="${memberUpdateForm}" th:action="@{/members/edit-profile}" method="post"
+                  enctype="multipart/form-data" class="php-email-form">
+                <div class="fileUpload">
+                    <label for="avatar">Avatar</label>
+                    <input type="file" th:field="*{multipartImageProfile}" id="avatar" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label for="newName">새 이름</label>
+                    <input type="text" th:field="*{name}" name="name" class="form-control" id="newName"
+                           placeholder="New Password"/>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}"
+                           th:errors="*{name}">name</small>
+                    <small id="nameHelp" class="form-text text-muted">
+                        새로운 패스워드를 입력하세요.
+                    </small>
+                </div>
+                <div class="text-center">
+                    <button type="submit">Update Profile</button>
+                </div>
+            </form>
         </div>
-        <input type="text" placeholder="Name" name="name" th:field="*{name}">
-        <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name</small>
-        <input type="submit" value="Update Profile">
-    </form>
-</div>
+    </div>
+
+</main><!-- End #main -->
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 </html>
