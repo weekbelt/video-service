@@ -112,7 +112,7 @@ class MemberControllerTest {
         resultActions
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attributeExists("message"))
-                .andExpect(redirectedUrl("/members/profile"));
+                .andExpect(redirectedUrl("/members/profile/liam"));
 
         Member member = memberRepository.findByName("liam").orElse(null);
         assertThat(member).isNotNull();
@@ -174,7 +174,7 @@ class MemberControllerTest {
         resultActions
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attributeExists("message"))
-                .andExpect(redirectedUrl("/members/profile"));
+                .andExpect(redirectedUrl("/members/profile/joohyuk"));
 
         Member member = memberRepository.findByEmail("lg@twins.com").orElse(null);
         assertThat(member).isNotNull();
@@ -237,7 +237,7 @@ class MemberControllerTest {
         resultActions
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attributeExists("message"))
-                .andExpect(redirectedUrl("/members/profile"));
+                .andExpect(redirectedUrl("/members/profile/joohyuk"));
     }
 
     @Test

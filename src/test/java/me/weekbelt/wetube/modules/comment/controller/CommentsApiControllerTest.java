@@ -72,7 +72,8 @@ class CommentsApiControllerTest {
                 .andExpect(jsonPath("$.videoId").value(video.getId()))
                 .andExpect(jsonPath("$.name").value(member.getName()))
                 .andExpect(jsonPath("$.text").value(commentCreateForm.getText()))
-                .andExpect(jsonPath("$.createdAt").exists());
+                .andExpect(jsonPath("$.createdDateTime").exists())
+                .andExpect(jsonPath("$.modifiedDateTime").exists());
     }
 
 
@@ -174,7 +175,8 @@ class CommentsApiControllerTest {
                 .andExpect(jsonPath("videoId").value(video.getId()))
                 .andExpect(jsonPath("name").value(member.getName()))
                 .andExpect(jsonPath("text").value(commentUpdateForm.getText()))
-                .andExpect(jsonPath("createdAt").exists());
+                .andExpect(jsonPath("createdDateTime").exists())
+                .andExpect(jsonPath("modifiedDateTime").exists());
     }
 
     // TODO: 수정
@@ -256,7 +258,8 @@ class CommentsApiControllerTest {
                 .andExpect(jsonPath("videoId").value(video.getId()))
                 .andExpect(jsonPath("name").value(member.getName()))
                 .andExpect(jsonPath("text").value(comment.getText()))
-                .andExpect(jsonPath("createdAt").exists());
+                .andExpect(jsonPath("createdDateTime").exists())
+                .andExpect(jsonPath("modifiedDateTime").exists());
 
     }
 }
