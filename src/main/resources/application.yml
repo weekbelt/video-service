@@ -53,12 +53,3 @@ property:
   video:
     url: /Users/joohyuk/Movies/
     uploadFolder: upload_video/
-
----
-spring:
-  profiles: test
-
-property:
-  video:
-    url: /Users/joohyuk/Movies/
-    uploadFolder: upload_video/

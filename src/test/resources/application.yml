@@ -1,0 +1,27 @@
+spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 1000
+
+
+logging.level:
+  org.hibernate.SQL: debug
+
+property:
+  video:
+    url: /Users/joohyuk/Movies/
+    uploadFolder: upload_video/
