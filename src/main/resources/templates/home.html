@@ -10,7 +10,10 @@
     <div class="home-videos">
         <div th:each="item : ${videos}" class="videoBlock">
             <a th:href="@{'/videos/' + ${item.id}}">
-                <video th:src="@{${item.saveFileName}}" class="videoBlock__thumbnail" poster="/static/assets/img/portfolio/portfolio-4.jpg" controls="false"></video>
+
+                <!-- TODO: js를 활용하여 video 별로 thumbnail 삽입 -->
+                <img class="videoBlock__thumbnail" alt="Thumbnail" src="assets/img/portfolio/portfolio-4.jpg">
+
                 <h4 class="videoBlock__title" th:text="${item.title}"></h4>
                 <div class="videoBlock__bottom">
                     <h6 th:if="${item.views == 1}" class="videoBlock__views" th:text="${item.views + ' view'}"></h6>
