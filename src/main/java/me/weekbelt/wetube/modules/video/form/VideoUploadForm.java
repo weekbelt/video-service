@@ -10,7 +10,9 @@ import javax.validation.constraints.NotBlank;
 @Getter @Setter
 public class VideoUploadForm {
 
-    private MultipartFile file;
+    private MultipartFile thumbnailImageFile;
+
+    private MultipartFile videoFile;
 
     @NotBlank
     @Length(min = 2, max = 30)
@@ -20,11 +22,11 @@ public class VideoUploadForm {
     @Length(min = 5, message = "5자 이상 입력해 주세요.")
     private String description;
 
-
     @Override
     public String toString() {
         return "VideoUploadForm{" +
-                "file=" + file +
+                "thumbnailImageFile=" + thumbnailImageFile +
+                ", videoFile=" + videoFile +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 '}';

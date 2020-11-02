@@ -1,8 +1,8 @@
 package me.weekbelt.wetube.modules.video.controller;
 
 import lombok.RequiredArgsConstructor;
-import me.weekbelt.wetube.modules.video.form.VideoReadForm;
-import me.weekbelt.wetube.modules.video.service.VideoService;
+import me.weekbelt.wetube.modules.video.Video;
+import me.weekbelt.wetube.modules.video.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
@@ -20,26 +20,42 @@ import java.io.File;
 public class VideoApiController {
 
     @Value("${property.video.url}")
-    private String CLASS_PATH;
+    private String VIDEO_PATH;
+    @Value("${property.image.url}")
+    private String THUMB_PATH;
 
-    private final VideoService videoService;
+    private final VideoRepository videoRepository;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getVideoDetail(@PathVariable Long id) {
-        VideoReadForm videoReadForm = videoService.findVideoForm(id);
+        Video video = videoRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("해당하는 동영상이 존재하지 않습니다. videoId=" + id));
 
-        File fileVideo = new File(CLASS_PATH + videoReadForm.getSaveFileName());
+        File fileVideo = new File(VIDEO_PATH + video.getVideoSaveFileName());
         long fileLength = fileVideo.length();
-        String saveFileName = CLASS_PATH + videoReadForm.getSaveFileName();
+        String fileUrl = VIDEO_PATH + video.getVideoSaveFileName();
         String[] contentType = {"video/mp4", "video/webm"};
 
-        return setResponseVideo(fileLength, saveFileName, contentType);
+        return setResponseVideo(fileLength, fileUrl, contentType);
     }
 
-    private ResponseEntity<?> setResponseVideo(long fileLength, String saveFileName, String[] contentType) {
+    @GetMapping("/{id}/thumbnail")
+    public ResponseEntity<?> getThumbnailImage(@PathVariable Long id) {
+        Video video = videoRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("해당하는 동영상이 존재하지 않습니다. videoId=" + id));
+
+        File fileImage = new File(THUMB_PATH + video.getThumbnailSaveFileName());
+        long fileLength = fileImage.length();
+        String fileUrl = THUMB_PATH + video.getThumbnailSaveFileName();
+        String[] contentType = {"image/jpg", "image/png"};
+
+        return setResponseVideo(fileLength, fileUrl, contentType);
+    }
+
+    private ResponseEntity<?> setResponseVideo(long fileLength, String fileUrl, String[] contentType) {
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(fileLength))
                 .header(HttpHeaders.CONTENT_TYPE, contentType)
-                .body(new FileSystemResource(saveFileName));
+                .body(new FileSystemResource(fileUrl));
     }
 }

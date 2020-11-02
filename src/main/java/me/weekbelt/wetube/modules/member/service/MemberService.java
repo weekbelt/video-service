@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import me.weekbelt.wetube.modules.comment.Comment;
 import me.weekbelt.wetube.modules.comment.CommentDtoFactory;
 import me.weekbelt.wetube.modules.comment.form.CommentReadForm;
-import me.weekbelt.wetube.modules.comment.repository.CommentRepository;
 import me.weekbelt.wetube.modules.member.Member;
 import me.weekbelt.wetube.modules.member.MemberDtoFactory;
 import me.weekbelt.wetube.modules.member.Role;
@@ -15,7 +14,6 @@ import me.weekbelt.wetube.modules.member.repository.MemberRepository;
 import me.weekbelt.wetube.modules.video.Video;
 import me.weekbelt.wetube.modules.video.VideoDtoFactory;
 import me.weekbelt.wetube.modules.video.form.VideoElementForm;
-import me.weekbelt.wetube.modules.video.repository.VideoRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service

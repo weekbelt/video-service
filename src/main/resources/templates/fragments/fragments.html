@@ -162,4 +162,19 @@
         });
     })
 </script>
+
+<script th:fragment="showImage">
+    const showThumbnailImage = () => {
+        const videoBlockElements = document.querySelectorAll(".videoBlock");
+        videoBlockElements.forEach(videoBlockElement => {
+            const videoId = videoBlockElement.dataset.id;
+            const requestThumbUri = "/api/videos/" + videoId + "/thumbnail";
+
+            const imgTag = videoBlockElement.firstElementChild.firstElementChild;
+            imgTag.src = requestThumbUri;
+        });
+    };
+
+    document.addEventListener("DOMContentLoaded", showThumbnailImage);
+</script>
 </html>

@@ -17,9 +17,14 @@
                 <button id="jsRecordBtn" class="btn get-started-btn">Start Recording</button>
             </div>
             <form th:object="${videoUploadForm}" th:action="@{/videos/upload}" method="post" enctype="multipart/form-data" class="php-email-form">
-                <div class="fileUpload">
-                    <label for="file">Video File</label>
-                    <input type="file" th:field="*{file}" id="file" name="file" accept="video/*" required="true">
+                <div class="form-group">
+                    <label for="thumbnailImageFile">Thumbnail</label>
+                    <input type="file" th:field="*{thumbnailImageFile}" id="thumbnailImageFile" name="thumbnailImageFile" accept="image/*" required="true">
+                </div>
+
+                <div class="form-group">
+                    <label for="videoFile">Video File</label>
+                    <input type="file" th:field="*{videoFile}" id="videoFile" name="videoFile" accept="video/*" required="true">
                 </div>
 
                 <div class="form-group">

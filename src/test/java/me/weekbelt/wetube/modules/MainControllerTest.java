@@ -172,7 +172,8 @@ class MainControllerTest {
                     VideoUploadForm videoUploadForm = VideoUploadForm.builder()
                             .title("spring " + i)
                             .description("spring " + i + " description")
-                            .file(new MockMultipartFile("video", "testVideo", "video/mp4", "testVideo".getBytes()))
+                            .videoFile(new MockMultipartFile("videoFile", "testVideo", "video/mp4", "testVideo".getBytes()))
+                            .thumbnailImageFile(new MockMultipartFile("thumbnailImageFile", "testThumbnail", "image/png", "testThumbnail".getBytes()))
                             .build();
                     videoFactory.createVideo(member, videoUploadForm);
                 }

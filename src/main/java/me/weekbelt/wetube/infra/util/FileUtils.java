@@ -8,13 +8,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.UUID;
 
-public class VideoFile {
+public class FileUtils {
     public static String makeInherenceFile(String originalName) {
         UUID uuid = UUID.randomUUID();
         return uuid.toString() + "_" + originalName;
     }
 
-    public static void saveVideo(MultipartFile videoMultipartFile, String saveAddr) {
+    public static void saveFile(MultipartFile videoMultipartFile, String saveAddr) {
         try (FileOutputStream fileOutputStream = new FileOutputStream(saveAddr);
              BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
              FileInputStream fileInputStream = (FileInputStream) videoMultipartFile.getInputStream();

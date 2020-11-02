@@ -19,7 +19,8 @@ public class VideoFactory {
                 .description(videoUploadForm.getDescription())
                 .views(0L)
                 // TODO: video 처리
-                .saveFileName(videoUploadForm.getFile().getOriginalFilename())
+                .videoSaveFileName(videoUploadForm.getVideoFile().getOriginalFilename())
+                .thumbnailSaveFileName(videoUploadForm.getThumbnailImageFile().getOriginalFilename())
                 .build();
 
         return videoRepository.save(video);

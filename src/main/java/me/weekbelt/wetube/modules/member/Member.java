@@ -6,15 +6,12 @@ import lombok.NoArgsConstructor;
 import me.weekbelt.wetube.modules.BaseTimeEntity;
 import me.weekbelt.wetube.modules.comment.Comment;
 import me.weekbelt.wetube.modules.member.form.ChangeEmailForm;
-import me.weekbelt.wetube.modules.member.form.ChangePasswordForm;
 import me.weekbelt.wetube.modules.member.form.MemberUpdateForm;
 import me.weekbelt.wetube.modules.video.Video;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Getter @NoArgsConstructor
 @Entity

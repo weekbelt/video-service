@@ -9,12 +9,10 @@ import me.weekbelt.wetube.modules.video.VideoDtoFactory;
 import me.weekbelt.wetube.modules.video.form.VideoReadForm;
 import me.weekbelt.wetube.modules.video.form.VideoUpdateForm;
 import me.weekbelt.wetube.modules.video.form.VideoUploadForm;
-import me.weekbelt.wetube.modules.video.repository.VideoRepository;
 import me.weekbelt.wetube.modules.video.service.VideoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j

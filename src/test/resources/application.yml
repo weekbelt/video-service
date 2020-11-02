@@ -25,4 +25,7 @@ logging.level:
 property:
   video:
     url: /Users/joohyuk/Movies/
-    uploadFolder: upload_video/
+    uploadVideoFolder: upload_video/
+  image:
+    url: /Users/joohyuk/Pictures/
+    uploadThumbnailFolder: upload_thumbnail/

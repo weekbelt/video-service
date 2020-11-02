@@ -27,7 +27,8 @@ public class Video extends BaseTimeEntity{
 
     private Long views;
 
-    private String saveFileName;
+    private String thumbnailSaveFileName;
+    private String videoSaveFileName;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -38,11 +39,13 @@ public class Video extends BaseTimeEntity{
     private List<Comment> comments = new ArrayList<>();
 
     @Builder
-    public Video(String title, String description, Long views, String saveFileName, Member member) {
+    public Video(String title, String description, Long views,
+                 String thumbnailSaveFileName, String videoSaveFileName, Member member) {
         this.title = title;
         this.description = description;
         this.views = views;
-        this.saveFileName = saveFileName;
+        this.thumbnailSaveFileName = thumbnailSaveFileName;
+        this.videoSaveFileName = videoSaveFileName;
         this.member = member;
     }
 

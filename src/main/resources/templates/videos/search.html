@@ -10,14 +10,17 @@
         <h3 th:text="'Searching for: ' +  ${searchingBy}">Searching for: Spring</h3>
     </div>
     <div class="home-videos">
-        <div th:each="item : ${videos}" class="videoBlock">
+        <div th:each="item : ${videos}" class="videoBlock" th:data-id="${item.id}">
             <a th:href="@{'/videos/' + ${item.id}}">
-                <video th:src="@{${item.saveFileName}}" class="videoBlock__thumbnail" controls="false"></video>
-                <h4 class="videoBlock__title" th:text="${item.title}">안녕하세요</h4>
+
+                <!-- TODO: js를 활용하여 video 별로 thumbnail 삽입 -->
+                <img class="videoBlock__thumbnail" alt="Thumbnail">
+
+                <h4 class="videoBlock__title" th:text="${item.title}"></h4>
                 <div class="videoBlock__bottom">
-                    <!-- <h6 th:if="${item.views == 1}" class="videoBlock__views" th:text="${item.views + ' view'}"></h6> -->
-                    <h6 th:if="${item.views > 1}" class="videoBlock__views" th:text="${item.views + ' views'}">조회수 11회</h6>
-                    <h6 class="ml-2">1년 전</h6>
+                    <h6 th:if="${item.views == 1}" class="videoBlock__views" th:text="${item.views + ' view'}"></h6>
+                    <h6 th:if="${item.views > 1}" class="videoBlock__views" th:text="${item.views + ' views'}"></h6>
+                    <h6 class="ml-2 fromNow" th:text="${item.createdDateTime}"></h6>
                 </div>
             </a>
         </div>
@@ -25,4 +28,6 @@
 </main><!-- End #main -->
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
+<script th:replace="fragments/fragments.html :: time"></script>
+<script th:replace="fragments/fragments.html :: showImage"></script>
 </html>

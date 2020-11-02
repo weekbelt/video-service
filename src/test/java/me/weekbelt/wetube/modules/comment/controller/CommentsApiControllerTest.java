@@ -50,7 +50,8 @@ class CommentsApiControllerTest {
                 .title("test video title")
                 .description("test video description")
                 // TODO: MockMultipartFile 재작성
-                .file(new MockMultipartFile("video", "testVideo", "video/mp4", "testVideo".getBytes()))
+                .videoFile(new MockMultipartFile("video", "testVideo", "video/mp4", "testVideo".getBytes()))
+                .thumbnailImageFile(new MockMultipartFile("thumbnailImageFile", "testThumbnail", "image/png", "testThumbnail".getBytes()))
                 .build();
         Video video = videoFactory.createVideo(member, videoUploadForm);
         CommentCreateForm commentCreateForm = CommentCreateForm.builder()
@@ -87,7 +88,8 @@ class CommentsApiControllerTest {
                 .title("test video title")
                 .description("test video description")
                 // TODO: MockMultipartFile 재작성
-                .file(new MockMultipartFile("video", "testVideo", "video/mp4", "testVideo".getBytes()))
+                .videoFile(new MockMultipartFile("video", "testVideo", "video/mp4", "testVideo".getBytes()))
+                .thumbnailImageFile(new MockMultipartFile("thumbnailImageFile", "testThumbnail", "image/png", "testThumbnail".getBytes()))
                 .build();
         Video video = videoFactory.createVideo(member, videoUploadForm);
         CommentCreateForm commentCreateForm = CommentCreateForm.builder()
@@ -117,7 +119,8 @@ class CommentsApiControllerTest {
         VideoUploadForm videoUploadForm = VideoUploadForm.builder()
                 .title("video test")
                 .description("video description")
-                .file(new MockMultipartFile("video", "testVideo", "video/mp4", "testVideo".getBytes()))
+                .videoFile(new MockMultipartFile("video", "testVideo", "video/mp4", "testVideo".getBytes()))
+                .thumbnailImageFile(new MockMultipartFile("thumbnailImageFile", "testThumbnail", "image/png", "testThumbnail".getBytes()))
                 .build();
         Video video = videoFactory.createVideo(member, videoUploadForm);
 
@@ -148,7 +151,8 @@ class CommentsApiControllerTest {
                 .title("test video title")
                 .description("test video description")
                 // TODO: MockMultipartFile 재작성
-                .file(new MockMultipartFile("video", "testVideo", "video/mp4", "testVideo".getBytes()))
+                .videoFile(new MockMultipartFile("video", "testVideo", "video/mp4", "testVideo".getBytes()))
+                .thumbnailImageFile(new MockMultipartFile("thumbnailImageFile", "testThumbnail", "image/png", "testThumbnail".getBytes()))
                 .build();
         Video video = videoFactory.createVideo(member, videoUploadForm);
         CommentCreateForm commentCreateForm = CommentCreateForm.builder()
@@ -235,7 +239,8 @@ class CommentsApiControllerTest {
                 .title("test video title")
                 .description("test video description")
                 // TODO: MockMultipartFile 재작성
-                .file(new MockMultipartFile("video", "testVideo", "video/mp4", "testVideo".getBytes()))
+                .videoFile(new MockMultipartFile("video", "testVideo", "video/mp4", "testVideo".getBytes()))
+                .thumbnailImageFile(new MockMultipartFile("thumbnailImageFile", "testThumbnail", "image/png", "testThumbnail".getBytes()))
                 .build();
         Video video = videoFactory.createVideo(member, videoUploadForm);
 

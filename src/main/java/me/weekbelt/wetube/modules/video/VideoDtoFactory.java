@@ -8,7 +8,6 @@ import me.weekbelt.wetube.modules.video.form.VideoElementForm;
 import me.weekbelt.wetube.modules.video.form.VideoReadForm;
 import me.weekbelt.wetube.modules.video.form.VideoUpdateForm;
 import me.weekbelt.wetube.modules.video.form.VideoUploadForm;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +19,6 @@ public class VideoDtoFactory {
                .title(video.getTitle())
                .description(video.getDescription())
                .views(video.getViews())
-               .saveFileName(video.getSaveFileName())
                .creator(creator)
                .createdDateTime(video.getCreatedDate())
                .modifiedDateTime(video.getLastModifiedDate())
@@ -33,17 +31,19 @@ public class VideoDtoFactory {
                 .title(video.getTitle())
                 .description(video.getDescription())
                 .views(video.getViews())
-                .saveFileName(video.getSaveFileName())
+                .saveFileName(video.getVideoSaveFileName())
                 .creator(creator)
                 .comments(commentReadForms)
                 .build();
     }
 
-    public static Video videoUploadFormToVideo(VideoUploadForm videoUploadForm, Member member, String saveFileName) {
+    public static Video videoUploadFormToVideo(VideoUploadForm videoUploadForm, Member member,
+                                               String thumbnailSaveFileName, String videoSaveFileName) {
         return Video.builder()
                 .title(videoUploadForm.getTitle())
                 .description(videoUploadForm.getDescription())
-                .saveFileName(saveFileName)
+                .thumbnailSaveFileName(thumbnailSaveFileName)
+                .videoSaveFileName(videoSaveFileName)
                 .views(0L)
                 .member(member)
                 .build();

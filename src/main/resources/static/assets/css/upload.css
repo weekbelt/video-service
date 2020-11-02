@@ -1,16 +1,16 @@
 #jsRecordContainer {
     display: flex;
     flex-direction: column;
-    margin: 10px 0px;
+    margin: 10px 0;
 }
 
 #jsVideoPreview {
-    margin: 10px 0px;
+    margin: 10px 0;
     height: 300px;
 }
 
 #jsRecordBtn {
-    margin-left: 0px;
+    margin-left: 0;
 }
 
 #title {
