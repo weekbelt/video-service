@@ -49,8 +49,7 @@ public class VideoService {
     public VideoReadForm findVideoForm(Long videoId) {
         Video findVideo = videoRepository.findWithMemberById(videoId).orElseThrow(
                 () -> new IllegalArgumentException("찾는 비디오가 없습니다. Video Id=" + videoId));
-        // 조회수 증가
-        findVideo.plusView();
+
         Member findMember = findVideo.getMember();
         List<Comment> comments = findVideo.getComments();
 
@@ -97,4 +96,12 @@ public class VideoService {
         videoRepository.delete(findVideo);
     }
 
+    public void plusView(Long videoId) {
+        Video findVideo = videoRepository.findById(videoId).orElseThrow(
+                () -> new IllegalArgumentException("해당하는 동영상이 존재하지 않습니다. videoId=" + videoId));
+
+        // 조회수 증가
+        findVideo.plusView();
+        videoRepository.save(findVideo);
+    }
 }

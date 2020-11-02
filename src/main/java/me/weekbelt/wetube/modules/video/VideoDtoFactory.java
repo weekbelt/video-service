@@ -19,9 +19,11 @@ public class VideoDtoFactory {
                .id(video.getId())
                .title(video.getTitle())
                .description(video.getDescription())
-               .views(0L)
+               .views(video.getViews())
                .saveFileName(video.getSaveFileName())
                .creator(creator)
+               .createdDateTime(video.getCreatedDate())
+               .modifiedDateTime(video.getLastModifiedDate())
                .build();
     }
 

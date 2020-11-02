@@ -41,7 +41,9 @@ public class VideoController {
 
     @GetMapping("/{id}")
     public String videoDetail(@CurrentMember Member member, @PathVariable Long id, Model model) {
+        videoService.plusView(id);
         VideoReadForm videoReadForm = videoService.findVideoForm(id);
+
         model.addAttribute("video", videoReadForm);
         model.addAttribute("member", member);
         model.addAttribute("pageTitle", videoReadForm.getTitle());
