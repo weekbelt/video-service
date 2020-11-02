@@ -135,20 +135,15 @@
 </main><!-- End #main -->
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
+<script th:replace="fragments/fragments.html :: time"></script>
+
 <div class="videoId" th:id="${video.id}"></div>
 <input type="hidden" id="videoCreatorName" th:value="${video.creator.name}">
 <input type="hidden" id="currentMemberName" th:value="${member.name}">
 <script src="/assets/js/videoPlayer.js"></script>
 <script src="/assets/js/addComment.js"></script>
 <script src="/assets/js/commentPagination.js"></script>
-<script>
-    $(function () {
-        moment.locale('ko');
-        $(".fromNow").text(function (index, dateTime) {
-            return moment(dateTime, "YYYY-MM-DD`T`hh:mm").fromNow();
-        });
-    })
-</script>
+
 <script id="commentTemplate" type="text/x-handlebars-template">
     <li class="col-lg-4 portfolio-info" data-commentId="{{id}}">
         <div class="comment__header">

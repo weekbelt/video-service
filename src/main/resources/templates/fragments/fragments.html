@@ -153,4 +153,13 @@
         </div>
     </div>
 </footer>
+
+<script th:fragment="time">
+    $(function () {
+        moment.locale('ko');
+        $(".fromNow").text(function (index, dateTime) {
+            return moment(dateTime, "YYYY-MM-DD`T`hh:mm").fromNow();
+        });
+    })
+</script>
 </html>
