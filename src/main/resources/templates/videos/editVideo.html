@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="description">Description</label>
+                    <label for="videoDescription">Description</label>
                     <textarea name="description" th:field="*{description}" placeholder="Description" rows="5" cols="83"
                               id="videoDescription"></textarea>
                     <small id="descriptionHelp" class="form-text text-muted">
@@ -50,4 +50,5 @@
 </main><!-- End #main -->
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
+<div th:replace="fragments/fragments.html::jsVendorFiles"></div>
 </html>

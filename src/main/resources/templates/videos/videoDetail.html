@@ -135,14 +135,17 @@
 </main><!-- End #main -->
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
+<div th:replace="fragments/fragments.html::jsVendorFiles"></div>
 <script th:replace="fragments/fragments.html :: time"></script>
 
 <div class="videoId" th:id="${video.id}"></div>
 <input type="hidden" id="videoCreatorName" th:value="${video.creator.name}">
 <input type="hidden" id="currentMemberName" th:value="${member.name}">
+<script src="/assets/js/global.js"></script>
 <script src="/assets/js/videoPlayer.js"></script>
 <script src="/assets/js/addComment.js"></script>
 <script src="/assets/js/commentPagination.js"></script>
+
 
 <script id="commentTemplate" type="text/x-handlebars-template">
     <li class="col-lg-4 portfolio-info" data-commentId="{{id}}">

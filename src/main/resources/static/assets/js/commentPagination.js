@@ -11,7 +11,7 @@ const commentLoadObj = {
     getResponseData: async function (pageNum, size) {
         const videoId = document.querySelector(".videoId").id;
         const requestUri = "/api/videos/" + videoId + "/comments?page=" + pageNum + "&size=" + size;
-        return await ajax("GET", requestUri);
+        return await fetchRequest("GET", requestUri);
     },
     showCommentList: async function (responseComments) {
         const comments = responseComments.content;

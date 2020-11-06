@@ -44,7 +44,7 @@ const commentObj = {
             // ajax 요청 uri 구하기
             const videoId = document.querySelector(".videoId").id;
             const requestUri = "/api/videos/" + videoId + "/comments";
-            const response = await ajax("POST", requestUri, createCommentForm);
+            const response = await fetchRequest("POST", requestUri, createCommentForm);
 
             alert("등록 되었습니다.");
 
@@ -73,7 +73,7 @@ const commentObj = {
             // ajax 요청 uri 구하기
             const videoId = document.querySelector(".videoId").id;
             const modifyRequestUri = "/api/videos/" + videoId + "/comments/" + commentId;
-            const response = await ajax("PUT", modifyRequestUri, modifyCommentForm);
+            const response = await fetchRequest("PUT", modifyRequestUri, modifyCommentForm);
 
             alert("수정 되었습니다.");
 
@@ -94,7 +94,7 @@ const commentObj = {
     deleteCommentRequest: async function (commentId) {
         const videoId = document.querySelector(".videoId").id;
         const deleteRequestUri = "/api/videos/" + videoId + "/comments/" + commentId;
-        const response = await ajax("DELETE", deleteRequestUri);
+        const response = await fetchRequest("DELETE", deleteRequestUri);
 
         alert("성공적으로 삭제하였습니다.")
 
