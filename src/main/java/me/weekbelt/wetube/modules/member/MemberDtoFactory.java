@@ -1,12 +1,15 @@
 package me.weekbelt.wetube.modules.member;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import me.weekbelt.wetube.modules.comment.form.CommentReadForm;
 import me.weekbelt.wetube.modules.member.form.*;
 import me.weekbelt.wetube.modules.video.form.VideoElementForm;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
-
+// 인스턴스화 방지
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberDtoFactory {
     public static Creator memberToCreator(Member member) {
         return Creator.builder()

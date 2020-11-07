@@ -1,5 +1,7 @@
 package me.weekbelt.wetube.modules.video;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import me.weekbelt.wetube.modules.comment.form.CommentReadForm;
 import me.weekbelt.wetube.modules.member.Member;
 import me.weekbelt.wetube.modules.member.MemberDtoFactory;
@@ -12,6 +14,8 @@ import me.weekbelt.wetube.modules.video.form.VideoUploadForm;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// 인스턴스화 방지
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class VideoDtoFactory {
     public static VideoElementForm videoToVideoElementForm(Video video, Creator creator) {
        return VideoElementForm.builder()

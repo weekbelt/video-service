@@ -1,5 +1,7 @@
 package me.weekbelt.wetube.modules.comment;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import me.weekbelt.wetube.modules.comment.form.CommentCreateForm;
 import me.weekbelt.wetube.modules.comment.form.CommentReadForm;
 import me.weekbelt.wetube.modules.member.Member;
@@ -9,6 +11,8 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// 인스턴스화 방
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CommentDtoFactory {
     public static CommentReadForm commentToCommentReadForm(Comment comment) {
         return CommentReadForm.builder()
