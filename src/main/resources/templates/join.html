@@ -15,20 +15,24 @@
 
             <div class="row justify-content-center">
                 <div class="col-lg-6 mt-4 mt-md-0">
-                    <form th:action="@{/join}" th:object="${memberJoinForm}" method="post" role="form" class="needs-validation php-email-form">
+                    <form th:action="@{/join}" th:object="${memberJoinForm}" method="post" role="form"
+                          class="needs-validation php-email-form">
                         <div class="form-group">
                             <label for="email">이메일</label>
-                            <input type="email" th:field="*{email}" class="form-control" name="email" id="email" placeholder="Your Email"/>
+                            <input type="email" th:field="*{email}" class="form-control" name="email" id="email"
+                                   placeholder="Your Email"/>
                             <small id="emailHelp" class="form-text text-muted">
                                 이 서비스는 사용자의 이메일을 공개하지 않습니다.
                             </small>
                             <small class="invalid-feedback">이메일을 입력하세요.</small>
-                            <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}"
+                                   th:errors="*{email}">Email
                                 Error</small>
                         </div>
                         <div class="form-group">
                             <label for="name">이름</label>
-                            <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Your Name"/>
+                            <input type="text" th:field="*{name}" class="form-control" id="name"
+                                   placeholder="Your Name"/>
                             <small id="nameHelp" class="form-text text-muted">
                                 공백없이 문자와 숫자로만 3자 이상 20자 이내로 입력하세요. 가입후에 변경할 수 있습니다.
                             </small>
@@ -38,7 +42,8 @@
                         </div>
                         <div class="form-group">
                             <label for="password">패스워드</label>
-                            <input type="password" th:field="*{password}" class="form-control" name="password" id="password" autocomplete="on"/>
+                            <input type="password" th:field="*{password}" class="form-control" name="password"
+                                   id="password" autocomplete="on"/>
                             <small id="passwordHelp" class="form-text text-muted">
                                 8자 이상 50자 이내로 입력하세요. 영문자, 숫자, 특수기호를 사용할 수 있으며 공백은 사용할 수 없습니다.
                             </small>
@@ -49,8 +54,9 @@
                         </div>
                         <div class="form-group">
                             <label for="password2">패스워드 확인</label>
-                            <input type="password" th:field="*{password2}" class="form-control" name="password2" id="password2" autocomplete="on"/>
-                            <small id="passwordHelp" class="form-text text-muted">
+                            <input type="password" th:field="*{password2}" class="form-control" name="password2"
+                                   id="password2" autocomplete="on"/>
+                            <small id="password22Help" class="form-text text-muted">
                                 8자 이상 50자 이내로 입력하세요. 영문자, 숫자, 특수기호를 사용할 수 있으며 공백은 사용할 수 없습니다.
                             </small>
                             <small class="invalid-feedback">패스워드를 입력하세요.</small>
@@ -58,12 +64,9 @@
                                    th:errors="*{password2}">Password2
                                 Error</small>
                         </div>
-                        <div class="mb-3">
-                            <div class="loading">Loading</div>
-                            <div class="error-message"></div>
-                            <div class="sent-message">Your message has been sent. Thank you!</div>
+                        <div class="form-group text-center">
+                            <button type="submit">가입 요청</button>
                         </div>
-                        <div class="text-center"><button type="submit">가입 요청</button></div>
                     </form>
                 </div>
             </div>
