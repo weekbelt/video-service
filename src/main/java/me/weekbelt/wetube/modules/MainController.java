@@ -53,7 +53,10 @@ public class MainController {
     }
 
     @GetMapping("/search")
-    public String searchVideo(@RequestParam String keyword, Model model) {
+    public String searchVideo(@CurrentMember Member member, @RequestParam String keyword, Model model) {
+        if (member != null) {
+            model.addAttribute("member", member);
+        }
         model.addAttribute("pageTitle", "Search");
         model.addAttribute("searchingBy", keyword);
         List<VideoElementForm> videos = videoService.findVideoElementFormsByKeyword(keyword);
