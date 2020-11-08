@@ -9,6 +9,9 @@ import me.weekbelt.wetube.modules.member.service.MemberService;
 import me.weekbelt.wetube.modules.member.validator.MemberJoinFormValidator;
 import me.weekbelt.wetube.modules.video.form.VideoElementForm;
 import me.weekbelt.wetube.modules.video.service.VideoService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -33,7 +36,6 @@ import java.util.List;
 public class MainController {
 
     private final MemberService memberService;
-    private final VideoService videoService;
     private final MemberJoinFormValidator memberJoinFormValidator;
 
     @InitBinder("memberJoinForm")
@@ -46,21 +48,18 @@ public class MainController {
         if (member != null) {
             model.addAttribute("member", member);
         }
-        List<VideoElementForm> videos = videoService.findVideoElementForms();
-        model.addAttribute("videos", videos);
         model.addAttribute("pageTitle", "Home");
         return "home";
     }
 
     @GetMapping("/search")
-    public String searchVideo(@CurrentMember Member member, @RequestParam String keyword, Model model) {
+    public String searchVideo(@CurrentMember Member member,
+                              @RequestParam(defaultValue = "") String keyword, Model model) {
         if (member != null) {
             model.addAttribute("member", member);
         }
         model.addAttribute("pageTitle", "Search");
         model.addAttribute("searchingBy", keyword);
-        List<VideoElementForm> videos = videoService.findVideoElementFormsByKeyword(keyword);
-        model.addAttribute("videos", videos);
         return "videos/search";
     }
 

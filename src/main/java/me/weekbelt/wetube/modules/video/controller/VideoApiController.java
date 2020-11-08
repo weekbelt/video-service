@@ -2,15 +2,19 @@ package me.weekbelt.wetube.modules.video.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.wetube.modules.video.Video;
+import me.weekbelt.wetube.modules.video.form.VideoElementForm;
 import me.weekbelt.wetube.modules.video.repository.VideoRepository;
+import me.weekbelt.wetube.modules.video.service.VideoService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 
@@ -24,7 +28,16 @@ public class VideoApiController {
     @Value("${property.image.url}")
     private String THUMB_PATH;
 
+    private final VideoService videoService;
     private final VideoRepository videoRepository;
+
+    @GetMapping
+    public ResponseEntity<?> getVideos(@PageableDefault(size = 12, sort = "createdDate",
+            direction = Sort.Direction.DESC, page = 0) Pageable pageable, @RequestParam(defaultValue = "") String keyword) {
+
+        Page<VideoElementForm> videoElementFormPage = videoService.findVideoElementFormPageByKeyword(keyword, pageable);
+        return ResponseEntity.ok().body(videoElementFormPage);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getVideoDetail(@PathVariable Long id) {

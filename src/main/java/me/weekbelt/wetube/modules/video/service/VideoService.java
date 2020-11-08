@@ -14,6 +14,8 @@ import me.weekbelt.wetube.modules.video.Video;
 import me.weekbelt.wetube.modules.video.form.*;
 import me.weekbelt.wetube.modules.video.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,14 +42,13 @@ public class VideoService {
     private final VideoRepository videoRepository;
     private final MemberRepository memberRepository;
 
-    public List<VideoElementForm> findVideoElementForms() {
-        List<Video> videoList = videoRepository.findAllByOrderByIdDesc();
-        return VideoDtoFactory.videosToVideoElementForms(videoList);
-    }
+    public Page<VideoElementForm> findVideoElementFormPageByKeyword(String keyword, Pageable pageable) {
+        Page<Video> videoPage = videoRepository.findAllPageByKeyword(keyword, pageable);
 
-    public List<VideoElementForm> findVideoElementFormsByKeyword(String keyword) {
-        List<Video> videoList = videoRepository.findAllByVideoKeyword(keyword);
-        return VideoDtoFactory.videosToVideoElementForms(videoList);
+        return videoPage.map(video -> {
+            Creator creator = MemberDtoFactory.memberToCreator(video.getMember());
+            return VideoDtoFactory.videoToVideoElementForm(video, creator);
+        });
     }
 
     public VideoReadForm findVideoForm(Long videoId) {

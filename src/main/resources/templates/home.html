@@ -8,25 +8,27 @@
 <div th:replace="fragments/fragments.html :: message"></div>
 <main id="main">
     <div class="home-videos">
-        <div th:each="item : ${videos}" class="videoBlock" th:data-id="${item.id}">
-            <a th:href="@{'/videos/' + ${item.id}}">
-
-                <!-- TODO: js를 활용하여 video 별로 thumbnail 삽입 -->
-                <img class="videoBlock__thumbnail" alt="Thumbnail">
-
-                <h4 class="videoBlock__title" th:text="${item.title}"></h4>
-                <div class="videoBlock__bottom">
-                    <h6 th:if="${item.views == 1}" class="videoBlock__views" th:text="${item.views + ' view'}"></h6>
-                    <h6 th:if="${item.views > 1}" class="videoBlock__views" th:text="${item.views + ' views'}"></h6>
-                    <h6 class="ml-2 fromNow" th:text="${item.createdDateTime}"></h6>
-                </div>
-            </a>
-        </div>
+        <!-- video 삽입 -->
     </div>
 </main>
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 <div th:replace="fragments/fragments.html::jsVendorFiles"></div>
-<script th:replace="fragments/fragments.html :: time"></script>
-<script th:replace="fragments/fragments.html :: showImage"></script>
+<script src="/assets/js/global.js"></script>
+<script src="/assets/js/video/video.js"></script>
+
+<script id="videoElementTemplate" type="text/x-handlebars-template">
+    <div class="videoBlock" data-id="{{videoId}}">
+        <a href="{{videoDetailUri}}">
+
+            <img class="videoBlock__thumbnail" alt="Thumbnail" src="{{thumbnailUri}}">
+
+            <h4 class="videoBlock__title">{{title}}</h4>
+            <div class="videoBlock__bottom">
+                <h6 class="videoBlock__views">{{viewCount}}</h6>
+                <h6 class="ml-2 fromNow">{{createdDateTime}}</h6>
+            </div>
+        </a>
+    </div>
+</script>
 </html>
