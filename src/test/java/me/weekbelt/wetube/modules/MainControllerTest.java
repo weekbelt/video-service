@@ -52,7 +52,6 @@ class MainControllerTest {
 
         // then
         resultActions
-                .andExpect(model().attributeExists("videos"))
                 .andExpect(model().attributeExists("pageTitle"))
                 .andExpect(view().name("home"));
     }
@@ -72,7 +71,6 @@ class MainControllerTest {
         MockHttpServletResponse response = resultActions
                 .andExpect(model().attributeExists("pageTitle"))
                 .andExpect(model().attributeExists("searchingBy"))
-                .andExpect(model().attributeExists("videos"))
                 .andExpect(view().name("videos/search")).andReturn().getResponse();
 
         String contentAsString = response.getContentAsString();
