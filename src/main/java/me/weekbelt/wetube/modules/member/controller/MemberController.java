@@ -52,8 +52,12 @@ public class MemberController {
         MemberReadForm memberReadForm = memberService.findMemberWithVideosAndCommentsByName(name);
         model.addAttribute("memberReadForm", memberReadForm);
         model.addAttribute("pageTitle", "Member Detail");
-        model.addAttribute("member", member);
-        model.addAttribute("isOwner", name.equals(member.getName()));
+        if (member != null) {
+            model.addAttribute("member", member);
+            model.addAttribute("isOwner", name.equals(member.getName()));
+        } else {
+            model.addAttribute("isOwner", false);
+        }
         return "users/userDetail";
     }
 

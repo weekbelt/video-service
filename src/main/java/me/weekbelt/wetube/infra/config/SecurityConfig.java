@@ -18,8 +18,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .mvcMatchers("/", "/login", "/join", "search").permitAll()
-                .mvcMatchers("/api/videos/**").permitAll()
+                .antMatchers("/", "/login", "/join", "/search").permitAll()
+                .antMatchers("/members/profile/{name}").permitAll()
+                .antMatchers("/videos/{id}", "/api/videos/**").permitAll()
                 .anyRequest().authenticated();
 
         http.formLogin()
@@ -34,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .mvcMatchers("/node_modules/**")
+                .antMatchers("/node_modules/**")
                 .antMatchers("/assets/**")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }

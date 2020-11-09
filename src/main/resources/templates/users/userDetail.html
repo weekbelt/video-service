@@ -8,11 +8,11 @@
 <main id="main" class="container">
     <div class="user-profile">
         <div class="user-profile__header">
-            <svg th:if="${#strings.isEmpty(member.profileImage)}" class="avatar"
-                 th:data-jdenticon-value="${member.name}" width="125" height="125"></svg>
-            <img th:if="${!#strings.isEmpty(member.profileImage)}"
-                 th:src="${member.profileImage}" class="avatar" width="125" height="125">
-            <h4 class="profile__username" th:text="${member.name}"></h4>
+            <svg th:if="${#strings.isEmpty(memberReadForm.imageProfile)}" class="avatar"
+                 th:data-jdenticon-value="${memberReadForm.name}" width="125" height="125"></svg>
+            <img th:if="${!#strings.isEmpty(memberReadForm.imageProfile)}"
+                 th:src="${memberReadForm.imageProfile}" class="avatar" width="125" height="125">
+            <h4 class="profile__username" th:text="${memberReadForm.name}"></h4>
         </div>
         <div th:if="${isOwner}" class="user-profile__btns">
             <a href="/members/edit-profile" class="get-started-btn">

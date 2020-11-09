@@ -42,8 +42,10 @@ public class VideoController {
         videoService.plusView(id);
         VideoReadForm videoReadForm = videoService.findVideoForm(id);
 
+        if (member != null) {
+            model.addAttribute("member", member);
+        }
         model.addAttribute("video", videoReadForm);
-        model.addAttribute("member", member);
         model.addAttribute("pageTitle", videoReadForm.getTitle());
         return "videos/videoDetail";
     }

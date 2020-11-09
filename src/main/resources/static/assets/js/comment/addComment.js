@@ -1,7 +1,6 @@
 const commentObj = {
     pagePerElementNum: 10,
     isValid: false,
-    currentMemberName: document.querySelector("#currentMemberName").value,
     init: function () {
         // 댓글 생성 및 수정시 글자 수 유효한지 확인하는 이벤트 등록
         const commentText = document.querySelector("#newCommentText");
@@ -38,26 +37,32 @@ const commentObj = {
             text: commentText.value,
         }
 
-        if (!commentObj.isValid) {
-            alert("글자수를 3자 이상 200자 이하로 입력해주세요.");
-        } else {
-            // ajax 요청 uri 구하기
-            const videoId = document.querySelector(".videoId").id;
-            const requestUri = "/api/videos/" + videoId + "/comments";
-            const response = await fetchRequest("POST", requestUri, createCommentForm);
+        const currentMember = document.querySelector("#currentMemberName")
+        if (currentMember) {
+            if (!commentObj.isValid) {
+                alert("글자수를 3자 이상 200자 이하로 입력해주세요.");
+            } else {
+                // ajax 요청 uri 구하기
+                const videoId = document.querySelector(".videoId").id;
+                const requestUri = "/api/videos/" + videoId + "/comments";
+                const response = await fetchRequest("POST", requestUri, createCommentForm);
 
-            alert("등록 되었습니다.");
+                alert("등록 되었습니다.");
 
-            // comments AJAX 재요청으로 앞 10개 댓글만 보이도록
-            commentLoadObj.init(0, commentObj.pagePerElementNum);
+                // comments AJAX 재요청으로 앞 10개 댓글만 보이도록
+                commentLoadObj.init(0, commentObj.pagePerElementNum);
 
-            // 성공적인 등록후 댓글 입력창 초기화 처리
-            commentObj.isValid = false;
-            commentText.value = "";
-            if (commentText.classList.contains("is-valid")) {
-                commentText.classList.remove("is-valid");
+                // 성공적인 등록후 댓글 입력창 초기화 처리
+                commentObj.isValid = false;
+                commentText.value = "";
+                if (commentText.classList.contains("is-valid")) {
+                    commentText.classList.remove("is-valid");
+                }
+
             }
-
+        } else {
+            alert("댓글을 입력할 권한이 없습니다. 로그인 페이지로 이동합니다.");
+            window.location.href = "/login";
         }
     },
     modifyCommentRequest: async function (commentId) {
@@ -109,9 +114,14 @@ const commentObj = {
         commentReadForm.createdDateTime = moment(commentReadForm.createdDateTime, "YYYY-MM-DD`T`hh:mm").fromNow();
         commentReadForm.modifiedDateTime = moment(commentReadForm.modifiedDateTime, "YYYY-MM-DD`T`hh:mm").fromNow();
 
-        if (commentReadForm.name === commentObj.currentMemberName) {
-            commentReadForm.isWriter = true;
+        // 내가 남긴 댓글인지 검증
+        const currentMember = document.querySelector("#currentMemberName");
+        if (currentMember) {
+            if (commentReadForm.name === currentMember.value) {
+                commentReadForm.isWriter = true;
+            }
         }
+
         const commentElementTemplate = document.querySelector("#commentTemplate").innerHTML;
         const bindTemplate = Handlebars.compile(commentElementTemplate);
         const commentElement = bindTemplate(commentReadForm);

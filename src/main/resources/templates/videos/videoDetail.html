@@ -35,10 +35,13 @@
                 </div>
 
                 <div class="col-lg-4 portfolio-info video-info">
-                    <a th:if="${member.email == video.creator.email}"
-                       th:href="@{'/videos/' + ${video.id} + '/edit'}">
-                        Edit Video
-                    </a>
+<!--                    <div th:if="${member != null}" class="btn get-started-btn" style="margin: 10px 0">-->
+                        <a th:if="${member != null && member.email == video.creator.email}"
+                           th:href="@{'/videos/' + ${video.id} + '/edit'}" class="btn get-started-btn"
+                           style="margin: 10px 0">
+                            Edit Video
+                        </a>
+<!--                    </div>-->
                     <h5 class="video__title" th:text="${video.title}">Video Title</h5>
                     <p class="video__description" th:text="${video.description}">Video Description</p>
                     <!-- <span th:if="${video.views == 1}" class="video__views" th:text="${video.views} + ' view'">1</span> -->
@@ -140,7 +143,7 @@
 
 <div class="videoId" th:id="${video.id}"></div>
 <input type="hidden" id="videoCreatorName" th:value="${video.creator.name}">
-<input type="hidden" id="currentMemberName" th:value="${member.name}">
+<input th:if="${member}" type="hidden" id="currentMemberName" th:value="${member.name}">
 <script src="/assets/js/global.js"></script>
 <script src="/assets/js/video/videoPlayer.js"></script>
 <script src="/assets/js/comment/addComment.js"></script>
