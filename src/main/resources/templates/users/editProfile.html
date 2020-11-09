@@ -19,15 +19,8 @@
                     <label for="avatar">Avatar</label>
                     <input type="file" th:field="*{multipartImageProfile}" id="avatar" accept="image/*">
                 </div>
-                <div class="form-group">
-                    <label for="newName">새 이름</label>
-                    <input type="text" th:field="*{name}" name="name" class="form-control" id="newName"
-                           placeholder="New Password"/>
-                    <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}"
-                           th:errors="*{name}">name</small>
-                    <small id="nameHelp" class="form-text text-muted">
-                        새로운 패스워드를 입력하세요.
-                    </small>
+                <div class="imageWrap">
+                    <img class="thumb_image" style="width: 100px">
                 </div>
                 <div class="text-center">
                     <button type="submit">Update Profile</button>
@@ -40,4 +33,5 @@
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 <div th:replace="fragments/fragments.html::jsVendorFiles"></div>
+<script src="/assets/js/user/editProfile.js"></script>
 </html>
