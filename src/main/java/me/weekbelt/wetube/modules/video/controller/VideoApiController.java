@@ -5,7 +5,6 @@ import me.weekbelt.wetube.modules.video.Video;
 import me.weekbelt.wetube.modules.video.form.VideoElementForm;
 import me.weekbelt.wetube.modules.video.repository.VideoRepository;
 import me.weekbelt.wetube.modules.video.service.VideoService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Page;
@@ -26,7 +25,7 @@ public class VideoApiController {
     @Value("${property.video.url}")
     private String VIDEO_PATH;
     @Value("${property.image.url}")
-    private String THUMB_PATH;
+    private String IMAGE_PATH;
 
     private final VideoService videoService;
     private final VideoRepository videoRepository;
@@ -44,9 +43,9 @@ public class VideoApiController {
         Video video = videoRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당하는 동영상이 존재하지 않습니다. videoId=" + id));
 
-        File fileVideo = new File(VIDEO_PATH + video.getVideoSaveFileName());
+        File fileVideo = new File(VIDEO_PATH + video.getVideoFile().getSaveFileName());
         long fileLength = fileVideo.length();
-        String fileUrl = VIDEO_PATH + video.getVideoSaveFileName();
+        String fileUrl = VIDEO_PATH + video.getVideoFile().getSaveFileName();
         String[] contentType = {"video/mp4", "video/webm"};
 
         return setResponseVideo(fileLength, fileUrl, contentType);
@@ -57,10 +56,10 @@ public class VideoApiController {
         Video video = videoRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당하는 동영상이 존재하지 않습니다. videoId=" + id));
 
-        File fileImage = new File(THUMB_PATH + video.getThumbnailSaveFileName());
+        File fileImage = new File(IMAGE_PATH + video.getImageFile().getSaveFileName());
         long fileLength = fileImage.length();
-        String fileUrl = THUMB_PATH + video.getThumbnailSaveFileName();
-        String[] contentType = {"image/jpg", "image/png"};
+        String fileUrl = IMAGE_PATH + video.getImageFile().getSaveFileName();
+        String[] contentType = {"image/jpg", "image/png", "image/jpeg"};
 
         return setResponseVideo(fileLength, fileUrl, contentType);
     }

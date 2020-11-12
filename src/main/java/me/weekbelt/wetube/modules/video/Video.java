@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.weekbelt.wetube.modules.BaseTimeEntity;
+import me.weekbelt.wetube.modules.FileInfo.FileInfo;
 import me.weekbelt.wetube.modules.comment.Comment;
 import me.weekbelt.wetube.modules.member.Member;
 import me.weekbelt.wetube.modules.video.form.VideoUpdateForm;
@@ -27,8 +28,13 @@ public class Video extends BaseTimeEntity{
 
     private Long views;
 
-    private String thumbnailSaveFileName;
-    private String videoSaveFileName;
+    @OneToOne
+    @JoinColumn(name = "video_file_id")
+    private FileInfo videoFile;
+
+    @OneToOne
+    @JoinColumn(name = "image_file_id")
+    private FileInfo imageFile;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -40,12 +46,12 @@ public class Video extends BaseTimeEntity{
 
     @Builder
     public Video(String title, String description, Long views,
-                 String thumbnailSaveFileName, String videoSaveFileName, Member member) {
+                 FileInfo videoFile, FileInfo imageFile, Member member) {
         this.title = title;
         this.description = description;
         this.views = views;
-        this.thumbnailSaveFileName = thumbnailSaveFileName;
-        this.videoSaveFileName = videoSaveFileName;
+        this.videoFile = videoFile;
+        this.imageFile = imageFile;
         this.member = member;
     }
 

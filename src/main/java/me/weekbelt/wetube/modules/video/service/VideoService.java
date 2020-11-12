@@ -2,6 +2,8 @@ package me.weekbelt.wetube.modules.video.service;
 
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.wetube.infra.util.FileUtils;
+import me.weekbelt.wetube.modules.FileInfo.FileInfo;
+import me.weekbelt.wetube.modules.FileInfo.repository.FileInfoRepository;
 import me.weekbelt.wetube.modules.comment.Comment;
 import me.weekbelt.wetube.modules.comment.CommentDtoFactory;
 import me.weekbelt.wetube.modules.comment.form.CommentReadForm;
@@ -29,18 +31,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class VideoService {
 
-    @Value("${property.video.url}")
-    private String VIDEO_PATH;
-    @Value("${property.video.uploadVideoFolder}")
-    private String UPLOAD_VIDEO;
-    @Value("${property.image.url}")
-    private String THUMB_PATH;
-    @Value("${property.image.uploadThumbnailFolder}")
-    private String UPLOAD_THUMB;
-
-
     private final VideoRepository videoRepository;
     private final MemberRepository memberRepository;
+    private final FileInfoRepository fileInfoRepository;
+    private final FileUtils fileUtils;
 
     public Page<VideoElementForm> findVideoElementFormPageByKeyword(String keyword, Pageable pageable) {
         Page<Video> videoPage = videoRepository.findAllPageByKeyword(keyword, pageable);
@@ -71,30 +65,20 @@ public class VideoService {
                 () -> new IllegalArgumentException("해당 유저가 존재하지 않습니다. 유저 이름=" + member.getName()));
 
         // 로컬에 Thumbnail, Video 저장
-        String thumbnailSaveFileName = saveThumbnailAtLocal(videoUploadForm.getThumbnailImageFile());
-        String videoSaveFileName = saveVideoAtLocal(videoUploadForm.getVideoFile());
+        FileInfo imageFile = fileUtils.saveFileAtLocal(videoUploadForm.getThumbnailImageFile());
+        FileInfo videoFile = fileUtils.saveFileAtLocal(videoUploadForm.getVideoFile());
 
         // DB에 Thumbnail, Video 정보 저장
-        Video video = VideoDtoFactory.videoUploadFormToVideo(videoUploadForm, findMember, thumbnailSaveFileName, videoSaveFileName);
+        FileInfo savedImageFile = fileInfoRepository.save(imageFile);
+        FileInfo savedVideoFile = fileInfoRepository.save(videoFile);
+
+        Video video = VideoDtoFactory.videoUploadFormToVideo(videoUploadForm, findMember, savedVideoFile, savedImageFile);
 
         Video savedVideo = videoRepository.save(video);
         Creator creator = MemberDtoFactory.memberToCreator(findMember);
         return VideoDtoFactory.videoToVideoReadForm(savedVideo, creator, new ArrayList<>());
     }
 
-    private String saveThumbnailAtLocal(MultipartFile thumbnailImageFile) {
-        String thumbnailImageFileName = FileUtils.makeInherenceFile(thumbnailImageFile.getOriginalFilename());
-        String thumbnailSaveFileName = UPLOAD_THUMB + thumbnailImageFileName;
-        FileUtils.saveFile(thumbnailImageFile, THUMB_PATH + thumbnailSaveFileName);
-        return thumbnailSaveFileName;
-    }
-
-    private String saveVideoAtLocal(MultipartFile videoFile) {
-        String videoFileName = FileUtils.makeInherenceFile(videoFile.getOriginalFilename());
-        String videoSaveFileName = UPLOAD_VIDEO + videoFileName;
-        FileUtils.saveFile(videoFile, VIDEO_PATH + videoSaveFileName);
-        return videoSaveFileName;
-    }
 
     public void updateVideo(Long videoId, VideoUpdateForm videoUpdateForm) {
         Video findVideo = videoRepository.findById(videoId).orElseThrow(

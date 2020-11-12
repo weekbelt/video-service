@@ -2,6 +2,7 @@ package me.weekbelt.wetube.modules.video;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import me.weekbelt.wetube.modules.FileInfo.FileInfo;
 import me.weekbelt.wetube.modules.comment.form.CommentReadForm;
 import me.weekbelt.wetube.modules.member.Member;
 import me.weekbelt.wetube.modules.member.MemberDtoFactory;
@@ -35,19 +36,19 @@ public class VideoDtoFactory {
                 .title(video.getTitle())
                 .description(video.getDescription())
                 .views(video.getViews())
-                .saveFileName(video.getVideoSaveFileName())
+                .saveFileName(video.getVideoFile().getSaveFileName())
                 .creator(creator)
                 .comments(commentReadForms)
                 .build();
     }
 
     public static Video videoUploadFormToVideo(VideoUploadForm videoUploadForm, Member member,
-                                               String thumbnailSaveFileName, String videoSaveFileName) {
+                                               FileInfo videoFile, FileInfo imageFile) {
         return Video.builder()
                 .title(videoUploadForm.getTitle())
                 .description(videoUploadForm.getDescription())
-                .thumbnailSaveFileName(thumbnailSaveFileName)
-                .videoSaveFileName(videoSaveFileName)
+                .videoFile(videoFile)
+                .imageFile(imageFile)
                 .views(0L)
                 .member(member)
                 .build();

@@ -8,6 +8,7 @@ import me.weekbelt.wetube.modules.video.form.VideoElementForm;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
+
 // 인스턴스화 방지
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberDtoFactory {
@@ -39,10 +40,8 @@ public class MemberDtoFactory {
     }
 
     public static MemberUpdateForm memberToMemberUpdateForm(Member member) {
-        // TODO: 프로파일 이미지 삽입
-        return MemberUpdateForm.builder()
-                .name(member.getName())
-                .build();
+        // TODO: 나중에 정보 삽입
+        return new MemberUpdateForm();
     }
 
     public static ChangeEmailForm memberToChangeEmailForm(Member member) {
@@ -54,12 +53,27 @@ public class MemberDtoFactory {
     public static MemberReadForm memberToMemberReadForm(Member member,
                                                         List<VideoElementForm> videos,
                                                         List<CommentReadForm> comments) {
-        return MemberReadForm.builder()
-                .email(member.getEmail())
+        if (member.getProfileImage() != null) {
+            return MemberReadForm.builder()
+                    .email(member.getEmail())
+                    .name(member.getName())
+                    .imageProfile(member.getProfileImage().getSaveFileName())
+                    .videos(videos)
+                    .comments(comments)
+                    .build();
+        } else {
+            return MemberReadForm.builder()
+                    .email(member.getEmail())
+                    .name(member.getName())
+                    .videos(videos)
+                    .comments(comments)
+                    .build();
+        }
+    }
+
+    public static ChangeNameForm memberToChangeNameForm(Member member) {
+        return ChangeNameForm.builder()
                 .name(member.getName())
-                .imageProfile(member.getProfileImage())
-                .videos(videos)
-                .comments(comments)
                 .build();
     }
 }

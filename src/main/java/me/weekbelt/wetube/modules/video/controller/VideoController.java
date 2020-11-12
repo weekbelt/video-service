@@ -12,8 +12,11 @@ import me.weekbelt.wetube.modules.video.form.VideoUploadForm;
 import me.weekbelt.wetube.modules.video.service.VideoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 @Slf4j
 @Controller
@@ -32,7 +35,15 @@ public class VideoController {
     }
 
     @PostMapping("/upload")
-    public String uploadVideo(@CurrentMember Member member, VideoUploadForm videoUploadForm) {
+    public String uploadVideo(@CurrentMember Member member, @Valid VideoUploadForm videoUploadForm,
+                              Errors errors, Model model) {
+        if (errors.hasErrors()) {
+            model.addAttribute("pageTitle", "Upload");
+            model.addAttribute("member", member);
+            model.addAttribute("videoUploadForm", videoUploadForm);
+            return "videos/upload";
+        }
+
         VideoReadForm videoReadForm = videoService.uploadVideo(member, videoUploadForm);
         return "redirect:/videos/" + videoReadForm.getId();
     }
@@ -54,7 +65,7 @@ public class VideoController {
     public String editVideoView(@CurrentMember Member member, @PathVariable("id") Video video,
                                 Model model, RedirectAttributes attributes) {
         VideoUpdateForm videoUpdateForm = VideoDtoFactory.videoToVideoUpdateForm(video);
-        if (!member.getId().equals(video.getMember().getId())) {
+        if (member == null || !member.getId().equals(video.getMember().getId())) {
             attributes.addFlashAttribute("message", "수정 권한이 없습니다.");
             return "redirect:/videos/" + video.getId();
         }
@@ -67,7 +78,15 @@ public class VideoController {
 
     @PutMapping("/{id}/edit")
     public String editVideo(@CurrentMember Member member, @PathVariable Long id,
-                            VideoUpdateForm videoUpdateForm, Model model) {
+                            @Valid VideoUpdateForm videoUpdateForm, Errors errors, Model model) {
+
+        if (errors.hasErrors()) {
+            model.addAttribute("member", member);
+            model.addAttribute("pageTitle", "Edit Video");
+            model.addAttribute("videoUploadForm", videoUpdateForm);
+            return "videos/editVideo";
+        }
+
         videoService.updateVideo(id, videoUpdateForm);
         return "redirect:/videos/" + id;
     }

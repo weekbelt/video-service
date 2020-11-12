@@ -2,6 +2,9 @@ package me.weekbelt.wetube.modules.member.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.weekbelt.wetube.infra.util.FileUtils;
+import me.weekbelt.wetube.modules.FileInfo.FileInfo;
+import me.weekbelt.wetube.modules.FileInfo.repository.FileInfoRepository;
 import me.weekbelt.wetube.modules.comment.Comment;
 import me.weekbelt.wetube.modules.comment.CommentDtoFactory;
 import me.weekbelt.wetube.modules.comment.form.CommentReadForm;
@@ -14,6 +17,7 @@ import me.weekbelt.wetube.modules.member.repository.MemberRepository;
 import me.weekbelt.wetube.modules.video.Video;
 import me.weekbelt.wetube.modules.video.VideoDtoFactory;
 import me.weekbelt.wetube.modules.video.form.VideoElementForm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -38,6 +42,8 @@ public class MemberService implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
+    private final FileUtils fileUtils;
+    private final FileInfoRepository fileInfoRepository;
 
     public MemberReadForm findMemberWithVideosAndCommentsByName(String name) {
         Member member = memberRepository.findByName(name).orElseThrow(
@@ -93,8 +99,12 @@ public class MemberService implements UserDetailsService {
         Member findMember = memberRepository.findByName(member.getName()).orElseThrow(
                 () -> new UsernameNotFoundException("찾는 회원이 없습니다."));
 
-        // TODO: 사진 로컬에 저장
-        findMember.updateProfile(memberUpdateForm);
+        // 사진 로컬에 저장
+        FileInfo profileImageFile = fileUtils.saveFileAtLocal(memberUpdateForm.getMultipartImageProfile());
+        FileInfo savedProfileImageFile = fileInfoRepository.save(profileImageFile);
+
+        // 프로필 사진 정보 DB에 저장
+        findMember.updateProfile(savedProfileImageFile);
         memberRepository.save(findMember);
         login(findMember);
     }
@@ -114,5 +124,13 @@ public class MemberService implements UserDetailsService {
 
         findMember.changePassword(passwordEncoder.encode(changePasswordForm.getNewPassword()));
         memberRepository.save(findMember);
+    }
+
+    public void updateName(Member member, ChangeNameForm changeNameForm) {
+        Member findMember = memberRepository.findByName(member.getName()).orElseThrow(
+                () -> new UsernameNotFoundException("회원이 존재하지 않습니다."));
+        findMember.changeName(changeNameForm);
+        memberRepository.save(findMember);
+        login(findMember);
     }
 }

@@ -28,4 +28,4 @@ property:
     uploadVideoFolder: upload_video/
   image:
     url: /Users/joohyuk/Pictures/
-    uploadThumbnailFolder: upload_thumbnail/
+    uploadImageFolder: upload_image/
