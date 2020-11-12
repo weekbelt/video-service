@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/fragments.html :: head"></head>
+<body>
+<header th:replace="fragments/fragments.html :: header"></header>
+<div th:replace="fragments/fragments.html :: message"></div>
+<main id="main">
+    <div class="section-title">
+        <h2>회원 정보 변경</h2>
+    </div>
+
+    <div class="contact">
+        <div class="form-container container">
+            <form th:object="${changeNameForm}" th:action="@{/members/change-name}" method="post"
+                  enctype="multipart/form-data" class="php-email-form">
+                <div class="form-group">
+                    <label for="newName">새 이름</label>
+                    <input type="text" th:field="*{name}" name="name" class="form-control" id="newName"
+                           placeholder="New Password"/>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}"
+                           th:errors="*{name}">name</small>
+                    <small id="nameHelp" class="form-text text-muted">
+                        새로운 이름을 입력하세요.
+                    </small>
+                </div>
+                <div class="text-center">
+                    <button type="submit">Change Name</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</main><!-- End #main -->
+</body>
+<footer th:replace="fragments/fragments.html :: footer"></footer>
+<div th:replace="fragments/fragments.html::jsVendorFiles"></div>
+</html>

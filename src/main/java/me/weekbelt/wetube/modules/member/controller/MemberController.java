@@ -4,14 +4,11 @@ import lombok.RequiredArgsConstructor;
 import me.weekbelt.wetube.modules.member.CurrentMember;
 import me.weekbelt.wetube.modules.member.Member;
 import me.weekbelt.wetube.modules.member.MemberDtoFactory;
-import me.weekbelt.wetube.modules.member.form.ChangeEmailForm;
-import me.weekbelt.wetube.modules.member.form.ChangePasswordForm;
-import me.weekbelt.wetube.modules.member.form.MemberReadForm;
-import me.weekbelt.wetube.modules.member.form.MemberUpdateForm;
+import me.weekbelt.wetube.modules.member.form.*;
 import me.weekbelt.wetube.modules.member.service.MemberService;
 import me.weekbelt.wetube.modules.member.validator.ChangeEmailFormValidator;
+import me.weekbelt.wetube.modules.member.validator.ChangeNameFormValidator;
 import me.weekbelt.wetube.modules.member.validator.ChangePasswordFormValidator;
-import me.weekbelt.wetube.modules.member.validator.MemberUpdateFormValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -28,13 +25,13 @@ import javax.validation.Valid;
 public class MemberController {
 
     private final MemberService memberService;
-    private final MemberUpdateFormValidator memberUpdateFormValidator;
+    private final ChangeNameFormValidator changeNameFormValidator;
     private final ChangeEmailFormValidator changeEmailFormValidator;
     private final ChangePasswordFormValidator changePasswordFormValidator;
 
-    @InitBinder("memberUpdateForm")
-    public void memberUpdateFormInitBinder(WebDataBinder webDataBinder) {
-        webDataBinder.addValidators(memberUpdateFormValidator);
+    @InitBinder("changeNameForm")
+    public void changeNameFormFormInitBinder(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(changeNameFormValidator);
     }
 
     @InitBinder("changeEmailForm")
@@ -80,7 +77,30 @@ public class MemberController {
         }
         memberService.updateProfile(member, memberUpdateForm);
         attributes.addFlashAttribute("message", "정보를 수정하였습니다.");
-        return "redirect:/members/profile/" + memberUpdateForm.getName();
+        return "redirect:/members/profile/" + member.getName();
+    }
+
+    @GetMapping("/change-name")
+    public String changeNameView(@CurrentMember Member member, Model model) {
+        model.addAttribute("member", member);
+        ChangeNameForm changeNameForm = MemberDtoFactory.memberToChangeNameForm(member);
+        model.addAttribute("changeNameForm", changeNameForm);
+        model.addAttribute("pageTitle", "Change Name");
+        return "users/changeName";
+    }
+
+    @PostMapping("/change-name")
+    public String changeName(@CurrentMember Member member, Model model,
+                             @Valid ChangeNameForm changeNameForm, Errors errors,
+                             RedirectAttributes attributes) {
+        if (errors.hasErrors()) {
+            model.addAttribute("pageTitle", "Member Detail");
+            model.addAttribute("member", member);
+            return "users/changeName";
+        }
+        memberService.updateName(member, changeNameForm);
+        attributes.addFlashAttribute("message", "이름을 수정했습니다.");
+        return "redirect:/members/profile/" + member.getName();
     }
 
     @GetMapping("/change-email")
@@ -94,7 +114,7 @@ public class MemberController {
 
     @PostMapping("/change-email")
     public String changeEmail(@CurrentMember Member member, @Valid ChangeEmailForm changeEmailForm,
-                            Errors errors, Model model, RedirectAttributes attributes) {
+                              Errors errors, Model model, RedirectAttributes attributes) {
         if (errors.hasErrors()) {
             model.addAttribute("pageTitle", "Change Email");
             model.addAttribute("member", member);
@@ -113,7 +133,7 @@ public class MemberController {
         return "users/changePassword";
     }
 
-   @PostMapping("/change-password")
+    @PostMapping("/change-password")
     public String changePassword(@CurrentMember Member member, @Valid ChangePasswordForm changePasswordForm,
                                  Errors errors, Model model, RedirectAttributes attributes) {
         if (errors.hasErrors()) {
@@ -124,5 +144,5 @@ public class MemberController {
         memberService.changePassword(member, changePasswordForm);
         attributes.addFlashAttribute("message", "패스워드를 변경하였습니다.");
         return "redirect:/members/profile/" + member.getName();
-   }
+    }
 }

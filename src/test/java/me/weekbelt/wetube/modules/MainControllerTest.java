@@ -167,13 +167,7 @@ class MainControllerTest {
     private void createVideos() {
         Member member = memberFactory.createMember("joohyuk");
         IntStream.range(1, 11).forEach(i -> {
-                    VideoUploadForm videoUploadForm = VideoUploadForm.builder()
-                            .title("spring " + i)
-                            .description("spring " + i + " description")
-                            .videoFile(new MockMultipartFile("videoFile", "testVideo", "video/mp4", "testVideo".getBytes()))
-                            .thumbnailImageFile(new MockMultipartFile("thumbnailImageFile", "testThumbnail", "image/png", "testThumbnail".getBytes()))
-                            .build();
-                    videoFactory.createVideo(member, videoUploadForm);
+                    videoFactory.createVideo(member);
                 }
         );
     }

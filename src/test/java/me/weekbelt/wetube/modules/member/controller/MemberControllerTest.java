@@ -4,13 +4,20 @@ import me.weekbelt.wetube.infra.MockMvcTest;
 import me.weekbelt.wetube.modules.member.Member;
 import me.weekbelt.wetube.modules.member.MemberFactory;
 import me.weekbelt.wetube.modules.member.WithMember;
+import me.weekbelt.wetube.modules.member.form.MemberUpdateForm;
 import me.weekbelt.wetube.modules.member.repository.MemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+
+import java.io.File;
+import java.io.FileInputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -41,6 +48,7 @@ class MemberControllerTest {
     void userDetail_isOwner() throws Exception {
         // given
         Member member = memberRepository.findByName("joohyuk").orElse(null);
+        assert member != null;
         String requestUrl = "/members/profile/" + member.getName();
 
         // when
@@ -71,8 +79,8 @@ class MemberControllerTest {
         // then
         resultActions
                 .andExpect(status().isOk())
+                .andExpect(model().attributeExists("memberReadForm"))
                 .andExpect(model().attributeExists("pageTitle"))
-                .andExpect(model().attributeExists("member"))
                 .andExpect(model().attribute("isOwner", false))
                 .andExpect(view().name("users/userDetail"));
     }
@@ -100,31 +108,71 @@ class MemberControllerTest {
     @WithMember("joohyuk")
     @DisplayName("회원 업데이트 - 성공")
     void editProfile_success() throws Exception {
+        MockMultipartFile file = new MockMultipartFile(
+                "multipartImageProfile", "test.png", "image/png", "image".getBytes());
         // given
         String requestUrl = "/members/edit-profile";
 
         // when
-        ResultActions resultActions = mockMvc.perform(post(requestUrl)
-                .param("name", "liam")
+        ResultActions resultActions = mockMvc.perform(multipart(requestUrl)
+                .file(file)
                 .with(csrf()));
 
         // when
         resultActions
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attributeExists("message"))
-                .andExpect(redirectedUrl("/members/profile/liam"));
+                .andExpect(redirectedUrl("/members/profile/joohyuk"));
+    }
 
-        Member member = memberRepository.findByName("liam").orElse(null);
-        assertThat(member).isNotNull();
+//    @Test
+//    @WithMember("joohyuk")
+//    @DisplayName("회원 업데이트 - 실패(이미 존재하는 회원 이름) ")
+//    void editProfile_fail_existsName() throws Exception {
+//        // given
+//        String requestUrl = "/members/edit-profile";
+//        memberFactory.createMember("twins");
+//
+//        // when
+//        ResultActions resultActions = mockMvc.perform(post(requestUrl)
+//                .param("name", "twins")
+//                .with(csrf()));
+//
+//        // when
+//        resultActions
+//                .andExpect(status().isOk())
+//                .andExpect(model().hasErrors())
+//                .andExpect(model().attributeExists("pageTitle"))
+//                .andExpect(model().attributeExists("member"))
+//                .andExpect(view().name("users/editProfile"));
+//    }
+
+
+    @Test
+    @WithMember("joohyuk")
+    @DisplayName("회원 이름 변경 뷰")
+    void changeNameView() throws Exception {
+        // given
+        String requestUrl = "/members/change-name";
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get(requestUrl));
+
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("member"))
+                .andExpect(model().attributeExists("changeNameForm"))
+                .andExpect(model().attributeExists("pageTitle"))
+                .andExpect(view().name("users/changeName"));
     }
 
     @Test
     @WithMember("joohyuk")
-    @DisplayName("회원 업데이트 - 실패(이미 존재하는 회원 이름) ")
-    void editProfile_fail_existsName() throws Exception {
+    @DisplayName("회원 이름 변경 - 성공")
+    void changeNameView_success() throws Exception {
         // given
-        String requestUrl = "/members/edit-profile";
-        memberFactory.createMember("twins");
+        String requestUrl = "/members/change-name";
 
         // when
         ResultActions resultActions = mockMvc.perform(post(requestUrl)
@@ -133,11 +181,30 @@ class MemberControllerTest {
 
         // when
         resultActions
+                .andExpect(status().is3xxRedirection())
+                .andExpect(flash().attributeExists("message"))
+                .andExpect(redirectedUrl("/members/profile/twins"));
+    }
+
+    @ParameterizedTest(name = "{index} {displayName} name={0}")
+    @WithMember("joohyuk")
+    @DisplayName("회원 이름 변경 - 실패")
+    @ValueSource(strings = {"joohyuk", "@#$%@#$", "", "asdfasdfasdfhawkerjfghaskdfh"})
+    void changeNameView_fail(String name) throws Exception {
+        // given
+        String requestUrl = "/members/change-name";
+
+        // when
+        ResultActions resultActions = mockMvc.perform(post(requestUrl)
+                .param("name", name)
+                .with(csrf()));
+
+        // when
+        resultActions
                 .andExpect(status().isOk())
-                .andExpect(model().hasErrors())
                 .andExpect(model().attributeExists("pageTitle"))
                 .andExpect(model().attributeExists("member"))
-                .andExpect(view().name("users/editProfile"));
+                .andExpect(view().name("users/changeName"));
     }
 
     @Test
