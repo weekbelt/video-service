@@ -22,7 +22,7 @@ public class WetubeApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         MemberJoinForm memberJoinForm = new MemberJoinForm();
-        memberJoinForm.setName("joohyuk");
+        memberJoinForm.setName("Skywalker");
         memberJoinForm.setEmail("vfrvfr4207@gmail.com");
         memberJoinForm.setPassword("12345678");
         memberJoinForm.setPassword2("12345678");

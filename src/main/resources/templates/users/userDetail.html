@@ -6,12 +6,11 @@
 <body>
 <header th:replace="fragments/fragments.html :: header"></header>
 <main id="main" class="container">
-    <div class="user-profile">
+    <div class="user-profile" th:data-name="${memberReadForm.name}">
         <div class="user-profile__header">
-            <svg th:if="${#strings.isEmpty(memberReadForm.imageProfile)}" class="avatar"
+            <svg th:if="${!memberReadForm.hasProfileImage}" class="avatar"
                  th:data-jdenticon-value="${memberReadForm.name}" width="125" height="125"></svg>
-            <img th:if="${!#strings.isEmpty(memberReadForm.imageProfile)}"
-                 th:src="${memberReadForm.imageProfile}" class="avatar" width="125" height="125">
+            <img th:if="${memberReadForm.hasProfileImage}" class="avatar" width="125" height="125">
             <h4 class="profile__username" th:text="${memberReadForm.name}"></h4>
         </div>
         <div th:if="${isOwner}" class="user-profile__btns">
@@ -29,6 +28,7 @@
             </a>
         </div>
         <div class="home-videos">
+<!--            TODO: 비디오 리스트 AJAX 처리-->
             <div th:each="item : ${videos}" class="videoBlock">
                 <a th:href="@{'/videos/' + ${item.id}}">
                     <video th:src="@{${item.saveFileName}}" class="videoBlock__thumbnail" controls="false"></video>
@@ -47,4 +47,5 @@
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 <div th:replace="fragments/fragments.html::jsVendorFiles"></div>
+<script src="/assets/js/user/userDetail.js"></script>
 </html>

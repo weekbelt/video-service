@@ -14,7 +14,7 @@ public class MemberReadForm {
 
     private String email;
 
-    private String imageProfile;
+    private boolean hasProfileImage;
 
     private List<VideoElementForm> videos;
 

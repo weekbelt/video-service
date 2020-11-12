@@ -43,12 +43,12 @@ public class VideoApiController {
         Video video = videoRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당하는 동영상이 존재하지 않습니다. videoId=" + id));
 
-        File fileVideo = new File(VIDEO_PATH + video.getVideoFile().getSaveFileName());
-        long fileLength = fileVideo.length();
         String fileUrl = VIDEO_PATH + video.getVideoFile().getSaveFileName();
+        File fileVideo = new File(fileUrl);
+        long fileLength = fileVideo.length();
         String[] contentType = {"video/mp4", "video/webm"};
 
-        return setResponseVideo(fileLength, fileUrl, contentType);
+        return setResponseFile(fileLength, fileUrl, contentType);
     }
 
     @GetMapping("/{id}/thumbnail")
@@ -56,17 +56,17 @@ public class VideoApiController {
         Video video = videoRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당하는 동영상이 존재하지 않습니다. videoId=" + id));
 
-        File fileImage = new File(IMAGE_PATH + video.getImageFile().getSaveFileName());
-        long fileLength = fileImage.length();
         String fileUrl = IMAGE_PATH + video.getImageFile().getSaveFileName();
+        File fileImage = new File(fileUrl);
+        long fileLength = fileImage.length();
         String[] contentType = {"image/jpg", "image/png", "image/jpeg"};
 
-        return setResponseVideo(fileLength, fileUrl, contentType);
+        return setResponseFile(fileLength, fileUrl, contentType);
     }
 
-    private ResponseEntity<?> setResponseVideo(long fileLength, String fileUrl, String[] contentType) {
+    private ResponseEntity<?> setResponseFile(long contentLength, String fileUrl, String[] contentType) {
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(fileLength))
+                .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(contentLength))
                 .header(HttpHeaders.CONTENT_TYPE, contentType)
                 .body(new FileSystemResource(fileUrl));
     }

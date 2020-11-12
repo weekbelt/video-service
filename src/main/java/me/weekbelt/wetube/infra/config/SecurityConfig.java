@@ -19,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/", "/login", "/join", "/search").permitAll()
-                .antMatchers("/members/profile/{name}").permitAll()
+                .antMatchers("/members/profile/{name}", "/api/members/{name}/profileImage").permitAll()
                 .antMatchers("/videos/{id}", "/api/videos/**").permitAll()
                 .anyRequest().authenticated();
 

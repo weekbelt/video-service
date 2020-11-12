@@ -52,7 +52,7 @@ public class Member extends BaseTimeEntity {
         this.role = role;
     }
 
-    public void updateProfile(FileInfo fileInfo) {
+    public void updateProfile(FileInfo profileImage) {
         this.profileImage = profileImage;
     }
 

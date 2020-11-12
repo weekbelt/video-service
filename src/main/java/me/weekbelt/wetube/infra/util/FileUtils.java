@@ -17,7 +17,7 @@ public class FileUtils {
     private String UPLOAD_VIDEO;
 
     @Value("${property.image.url}")
-    private String THUMB_PATH;
+    private String IMAGE_PATH;
     @Value("${property.image.uploadImageFolder}")
     private String UPLOAD_IMAGE;
 
@@ -29,7 +29,7 @@ public class FileUtils {
         assert contentType != null;
         if (contentType.contains("image")) {
             saveFileName += UPLOAD_IMAGE + fileName;
-            saveFile(multipartFile, THUMB_PATH + saveFileName);
+            saveFile(multipartFile, IMAGE_PATH + saveFileName);
         } else if (contentType.contains("video")) {
             saveFileName += UPLOAD_VIDEO + fileName;
             saveFile(multipartFile, VIDEO_PATH + saveFileName);

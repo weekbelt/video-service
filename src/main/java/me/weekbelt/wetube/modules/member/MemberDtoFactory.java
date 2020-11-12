@@ -53,22 +53,13 @@ public class MemberDtoFactory {
     public static MemberReadForm memberToMemberReadForm(Member member,
                                                         List<VideoElementForm> videos,
                                                         List<CommentReadForm> comments) {
-        if (member.getProfileImage() != null) {
             return MemberReadForm.builder()
                     .email(member.getEmail())
                     .name(member.getName())
-                    .imageProfile(member.getProfileImage().getSaveFileName())
+                    .hasProfileImage(member.getProfileImage() != null)
                     .videos(videos)
                     .comments(comments)
                     .build();
-        } else {
-            return MemberReadForm.builder()
-                    .email(member.getEmail())
-                    .name(member.getName())
-                    .videos(videos)
-                    .comments(comments)
-                    .build();
-        }
     }
 
     public static ChangeNameForm memberToChangeNameForm(Member member) {
