@@ -46,14 +46,7 @@ class CommentsApiControllerTest {
     void createComment_success() throws Exception {
         // given
         Member member = memberRepository.findByName("joohyuk").get();
-        VideoUploadForm videoUploadForm = VideoUploadForm.builder()
-                .title("test video title")
-                .description("test video description")
-                // TODO: MockMultipartFile 재작성
-                .videoFile(new MockMultipartFile("video", "testVideo", "video/mp4", "testVideo".getBytes()))
-                .thumbnailImageFile(new MockMultipartFile("thumbnailImageFile", "testThumbnail", "image/png", "testThumbnail".getBytes()))
-                .build();
-        Video video = videoFactory.createVideo(member, videoUploadForm);
+        Video video = videoFactory.createVideo(member);
         CommentCreateForm commentCreateForm = CommentCreateForm.builder()
                 .text("test comment")
                 .build();
@@ -84,14 +77,7 @@ class CommentsApiControllerTest {
     void createComment_fail_forNotText() throws Exception {
         // given
         Member member = memberRepository.findByName("joohyuk").get();
-        VideoUploadForm videoUploadForm = VideoUploadForm.builder()
-                .title("test video title")
-                .description("test video description")
-                // TODO: MockMultipartFile 재작성
-                .videoFile(new MockMultipartFile("video", "testVideo", "video/mp4", "testVideo".getBytes()))
-                .thumbnailImageFile(new MockMultipartFile("thumbnailImageFile", "testThumbnail", "image/png", "testThumbnail".getBytes()))
-                .build();
-        Video video = videoFactory.createVideo(member, videoUploadForm);
+        Video video = videoFactory.createVideo(member);
         CommentCreateForm commentCreateForm = CommentCreateForm.builder()
                 .text("")   // 내용 입력 x
                 .build();
@@ -116,13 +102,7 @@ class CommentsApiControllerTest {
     void commentList() throws Exception {
         // given
         Member member = memberRepository.findByName("joohyuk").get();
-        VideoUploadForm videoUploadForm = VideoUploadForm.builder()
-                .title("video test")
-                .description("video description")
-                .videoFile(new MockMultipartFile("video", "testVideo", "video/mp4", "testVideo".getBytes()))
-                .thumbnailImageFile(new MockMultipartFile("thumbnailImageFile", "testThumbnail", "image/png", "testThumbnail".getBytes()))
-                .build();
-        Video video = videoFactory.createVideo(member, videoUploadForm);
+        Video video = videoFactory.createVideo(member);
 
         for (int i = 1; i <= 36; i++) {
             CommentCreateForm commentCreateForm = CommentCreateForm.builder()
@@ -147,14 +127,7 @@ class CommentsApiControllerTest {
     void modifyComment_success() throws Exception {
         // given
         Member member = memberRepository.findByName("joohyuk").get();
-        VideoUploadForm videoUploadForm = VideoUploadForm.builder()
-                .title("test video title")
-                .description("test video description")
-                // TODO: MockMultipartFile 재작성
-                .videoFile(new MockMultipartFile("video", "testVideo", "video/mp4", "testVideo".getBytes()))
-                .thumbnailImageFile(new MockMultipartFile("thumbnailImageFile", "testThumbnail", "image/png", "testThumbnail".getBytes()))
-                .build();
-        Video video = videoFactory.createVideo(member, videoUploadForm);
+        Video video = videoFactory.createVideo(member);
         CommentCreateForm commentCreateForm = CommentCreateForm.builder()
                 .text("test comment")
                 .build();
@@ -235,14 +208,7 @@ class CommentsApiControllerTest {
         Member member = memberRepository.findByName("joohyuk").get();
 
         // video 생성
-        VideoUploadForm videoUploadForm = VideoUploadForm.builder()
-                .title("test video title")
-                .description("test video description")
-                // TODO: MockMultipartFile 재작성
-                .videoFile(new MockMultipartFile("video", "testVideo", "video/mp4", "testVideo".getBytes()))
-                .thumbnailImageFile(new MockMultipartFile("thumbnailImageFile", "testThumbnail", "image/png", "testThumbnail".getBytes()))
-                .build();
-        Video video = videoFactory.createVideo(member, videoUploadForm);
+        Video video = videoFactory.createVideo(member);
 
         // comment 생성
         CommentCreateForm commentCreateForm = CommentCreateForm.builder()
