@@ -32,3 +32,20 @@
     margin-left: 0;
     width: 100%;
 }
+
+.card-header {
+    background-color: #f1f3ff;
+}
+
+.my-comment__content {
+    display: flex;
+    justify-content: space-between;
+}
+
+#commentList {
+    margin-bottom: 50px;
+}
+
+.my-comment {
+    margin-bottom: 15px;
+}

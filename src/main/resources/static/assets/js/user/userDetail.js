@@ -13,4 +13,5 @@ const userDetailObj = {
 
 document.addEventListener("DOMContentLoaded", () => {
     userDetailObj.init();
+    commentLoadObj.init(0, commentObj.pagePerElementNum);
 });

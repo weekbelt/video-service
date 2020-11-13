@@ -28,6 +28,7 @@ public class CommentDtoFactory {
         return CommentReadForm.builder()
                 .id(comment.getId())
                 .videoId(comment.getVideo().getId())
+                .videoTitle(comment.getVideo().getTitle())
                 .name(comment.getMember().getName())
                 .text(comment.getText())
                 .createdDateTime(comment.getCreatedDate())

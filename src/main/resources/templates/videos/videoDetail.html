@@ -5,7 +5,7 @@
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
 <header th:replace="fragments/fragments.html :: header"></header>
-<main id="main">
+<main id="main" data-page="videoDetail">
     <!-- ======= Portfolio Details Section ======= -->
     <section id="portfolio-details" class="portfolio-details contact[">
         <div class="container" data-aos="fade-up">
@@ -35,13 +35,13 @@
                 </div>
 
                 <div class="col-lg-4 portfolio-info video-info">
-<!--                    <div th:if="${member != null}" class="btn get-started-btn" style="margin: 10px 0">-->
-                        <a th:if="${member != null && member.email == video.creator.email}"
-                           th:href="@{'/videos/' + ${video.id} + '/edit'}" class="btn get-started-btn"
-                           style="margin: 10px 0">
-                            Edit Video
-                        </a>
-<!--                    </div>-->
+                    <!--                    <div th:if="${member != null}" class="btn get-started-btn" style="margin: 10px 0">-->
+                    <a th:if="${member != null && member.email == video.creator.email}"
+                       th:href="@{'/videos/' + ${video.id} + '/edit'}" class="btn get-started-btn"
+                       style="margin: 10px 0">
+                        Edit Video
+                    </a>
+                    <!--                    </div>-->
                     <h5 class="video__title" th:text="${video.title}">Video Title</h5>
                     <p class="video__description" th:text="${video.description}">Video Description</p>
                     <!-- <span th:if="${video.views == 1}" class="video__views" th:text="${video.views} + ' view'">1</span> -->
@@ -72,7 +72,7 @@
                             <!-- comment 개수 표시 -->
                         </span>
 
-                    <ul class="time-label flex" id="commentList">
+                    <ul class="time-label flex comments" id="commentList">
                         <!-- 댓글 삽입 -->
                     </ul>
 
@@ -146,8 +146,11 @@
 <input th:if="${member}" type="hidden" id="currentMemberName" th:value="${member.name}">
 <script src="/assets/js/global.js"></script>
 <script src="/assets/js/video/videoPlayer.js"></script>
+<script src="/assets/js/video/videoDetail.js"></script>
+<script src="/assets/js/comment/commentLoad.js"></script>
 <script src="/assets/js/comment/addComment.js"></script>
 <script src="/assets/js/comment/commentPagination.js"></script>
+
 
 
 <script id="commentTemplate" type="text/x-handlebars-template">

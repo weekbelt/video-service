@@ -50,7 +50,7 @@ const commentObj = {
                 alert("등록 되었습니다.");
 
                 // comments AJAX 재요청으로 앞 10개 댓글만 보이도록
-                commentLoadObj.init(0, commentObj.pagePerElementNum);
+                await commentLoadObj.init(0, commentObj.pagePerElementNum);
 
                 // 성공적인 등록후 댓글 입력창 초기화 처리
                 commentObj.isValid = false;
@@ -108,30 +108,9 @@ const commentObj = {
         // 삭제 후 comment 리스트 AJAX 요청 초기화
         commentLoadObj.init(0, commentObj.pagePerElementNum);
     },
-    makeCommentTemplate: function (commentReadForm) {
-        // 최근 수정 시간을 ~전 으로 처리
-        moment.locale('ko');
-        commentReadForm.createdDateTime = moment(commentReadForm.createdDateTime, "YYYY-MM-DD`T`hh:mm").fromNow();
-        commentReadForm.modifiedDateTime = moment(commentReadForm.modifiedDateTime, "YYYY-MM-DD`T`hh:mm").fromNow();
-
-        // 내가 남긴 댓글인지 검증
-        const currentMember = document.querySelector("#currentMemberName");
-        if (currentMember) {
-            if (commentReadForm.name === currentMember.value) {
-                commentReadForm.isWriter = true;
-            }
-        }
-
-        const commentElementTemplate = document.querySelector("#commentTemplate").innerHTML;
-        const bindTemplate = Handlebars.compile(commentElementTemplate);
-        const commentElement = bindTemplate(commentReadForm);
-
-        return commentElement;
-    },
     isValidText: function (event) {
         const textArea = event.target;
         let text = textArea.value;
-        console.log(text);
         let resultText = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
         commentObj.isValid = /^.{3,200}?$/.test(resultText);
         if (commentObj.isValid) {
@@ -148,7 +127,7 @@ const commentObj = {
     }
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-    commentObj.init();
-    commentLoadObj.init(0, commentObj.pagePerElementNum);
-});
+// document.addEventListener("DOMContentLoaded", () => {
+//     commentObj.init();
+//     commentLoadObj.init(0, commentObj.pagePerElementNum);
+// });

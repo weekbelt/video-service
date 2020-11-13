@@ -130,3 +130,8 @@
     display: flex;
     justify-content: space-between;
 }
+
+#comment-modify-button .badge {
+    margin-left: 0;
+    color: #3b4ef8;
+}

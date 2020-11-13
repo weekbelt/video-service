@@ -10,9 +10,9 @@
         <div class="row">
             <div class="col-2">
                 <div class="list-group" id="list-tab" role="tablist">
-                    <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list"
-                       href="#list-home" role="tab" aria-controls="home">Home</a>
-                    <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
+<!--                    <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list"-->
+<!--                       href="#list-home" role="tab" aria-controls="home">Home</a>-->
+                    <a class="list-group-item list-group-item-action active" id="list-profile-list" data-toggle="list"
                        href="#list-profile" role="tab" aria-controls="profile">Profile</a>
                     <a class="list-group-item list-group-item-action" id="list-videos-list" data-toggle="list"
                        href="#list-messages" role="tab" aria-controls="videos">My Video</a>
@@ -22,10 +22,11 @@
             </div>
             <div class="col-10">
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
-                        Home으로 이동
-                    </div>
-                    <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+<!--                    <div class="tab-pane fade show active" id="list-home" role="tabpanel"-->
+<!--                         aria-labelledby="list-home-list">-->
+<!--                        Home으로 이동-->
+<!--                    </div>-->
+                    <div class="tab-pane fade show active" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
                         <div class="user-profile" th:data-name="${memberReadForm.name}">
                             <div class="user-profile__header">
                                 <svg th:if="${!memberReadForm.hasProfileImage}" class="avatar"
@@ -50,15 +51,20 @@
                         </div>
 
                     </div>
-                    <div th:if="${isOwner}" class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+                    <div th:if="${isOwner}" class="tab-pane fade" id="list-messages" role="tabpanel"
+                         aria-labelledby="list-messages-list">
                         <div class="home-videos">
                             <!--내가 업로드한 비디오 리스트-->
                         </div>
                     </div>
-                    <div th:if="${isOwner}" class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
-                        <div class="comments">
+                    <div th:if="${isOwner}" class="tab-pane fade" id="list-settings" role="tabpanel"
+                         aria-labelledby="list-settings-list">
+                        <div class="comments" id="commentList">
                             <!--                            내가 작성한 댓글 리스트-->
                         </div>
+                        <ul class="pagination pagination-sm justify-content-center">
+                            <!-- 페이지 버튼 삽입 -->
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -69,8 +75,12 @@
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 <div th:replace="fragments/fragments.html::jsVendorFiles"></div>
 <script src="/assets/js/global.js"></script>
-<script src="/assets/js/user/userDetail.js"></script>
 <script src="/assets/js/video/video.js"></script>
+<script src="/assets/js/comment/addComment.js"></script>
+<script src="/assets/js/comment/commentLoad.js"></script>
+<script src="/assets/js/comment/commentPagination.js"></script>
+<script src="/assets/js/user/userDetail.js"></script>
+
 
 <!--동영상 템플릿-->
 <script id="videoElementTemplate" type="text/x-handlebars-template">
@@ -89,5 +99,15 @@
 </script>
 
 <!--댓글 템플릿-->
-
+<script id="commentTemplate" type="text/x-handlebars-template">
+    <a class="card my-comment" href="/videos/{{videoId}}">
+        <div class="card-header video-title">
+            {{videoTitle}}
+        </div>
+        <div class="card-body my-comment__content">
+            <span class="card-text my-comment__text">{{text}}</span>
+            <span class="my-comment__time fromNow">{{modifiedDateTime}}</span>
+        </div>
+    </a>
+</script>
 </html>

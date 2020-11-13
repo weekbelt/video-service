@@ -13,6 +13,8 @@ public class CommentReadForm {
 
     private Long videoId;
 
+    private String videoTitle;
+
     private String name;
 
     private String text;

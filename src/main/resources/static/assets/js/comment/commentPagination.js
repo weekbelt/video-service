@@ -1,39 +1,3 @@
-const commentLoadObj = {
-    init: async function (pageNum, size) {
-        const responseComments = await this.getResponseData(pageNum, size);
-        // 댓글 리스트 호출
-        this.showCommentList(responseComments);
-        // 댓글 개수 호출
-        this.showCommentNum(responseComments.totalElements);
-        // 페이지 리스트 호출
-        commentPageLoadObj.showPagination(responseComments);
-    },
-    getResponseData: async function (pageNum, size) {
-        const videoId = document.querySelector(".videoId").id;
-        const requestUri = "/api/videos/" + videoId + "/comments?page=" + pageNum + "&size=" + size;
-        return await fetchRequest("GET", requestUri);
-    },
-    showCommentList: async function (responseComments) {
-        const comments = responseComments.content;
-        let resultCommentListHTML = "";
-        comments.forEach(comment => {
-            resultCommentListHTML += commentObj.makeCommentTemplate(comment);
-        });
-
-        const commentListUl = document.querySelector("#commentList");
-        commentListUl.innerHTML = resultCommentListHTML;
-    },
-    showCommentNum: function (commentNum) {
-        let commentNumStr = "" + commentNum;
-        if (commentNum > 1) {
-            commentNumStr += " comments";
-        } else {
-            commentNumStr += " comment";
-        }
-        document.querySelector("#commentNum").innerHTML = commentNumStr;
-    }
-};
-
 const commentPageLoadObj = {
     showPagination: function (commentResponse) {
         const pageable = commentResponse.pageable;
