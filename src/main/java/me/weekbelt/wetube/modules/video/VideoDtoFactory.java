@@ -11,6 +11,7 @@ import me.weekbelt.wetube.modules.video.form.VideoElementForm;
 import me.weekbelt.wetube.modules.video.form.VideoReadForm;
 import me.weekbelt.wetube.modules.video.form.VideoUpdateForm;
 import me.weekbelt.wetube.modules.video.form.VideoUploadForm;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +19,23 @@ import java.util.stream.Collectors;
 // 인스턴스화 방지
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class VideoDtoFactory {
+
+    public static List<VideoElementForm> videosToVideoElementForms(List<Video> videoList) {
+        return videoList.stream().map(video -> {
+            Member createMember = video.getMember();
+            Creator creator = MemberDtoFactory.memberToCreator(createMember);
+            return videoToVideoElementForm(video, creator);
+        }).collect(Collectors.toList());
+    }
+
+    public static Page<VideoElementForm> videoPageToVideoElementFormPage(Page<Video> videoPage) {
+        return videoPage.map(video -> {
+            Creator creator = MemberDtoFactory.memberToCreator(video.getMember());
+            return videoToVideoElementForm(video, creator);
+        });
+    }
+
+
     public static VideoElementForm videoToVideoElementForm(Video video, Creator creator) {
        return VideoElementForm.builder()
                .id(video.getId())
@@ -59,14 +77,5 @@ public class VideoDtoFactory {
                 .title(video.getTitle())
                 .description(video.getDescription())
                 .build();
-    }
-
-    public static List<VideoElementForm> videosToVideoElementForms(List<Video> videoList) {
-        return videoList.stream().map(video -> {
-            Member createMember = video.getMember();
-            Creator creator = MemberDtoFactory.memberToCreator(createMember);
-            return VideoDtoFactory.videoToVideoElementForm(video, creator);
-        }).collect(Collectors.toList());
-
     }
 }

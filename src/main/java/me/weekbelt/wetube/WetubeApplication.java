@@ -27,5 +27,7 @@ public class WetubeApplication implements CommandLineRunner {
         memberJoinForm.setPassword("12345678");
         memberJoinForm.setPassword2("12345678");
         memberService.processNewMember(memberJoinForm);
+
+
     }
 }

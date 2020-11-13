@@ -35,6 +35,20 @@ public class VideoRepositoryCustomImpl implements VideoRepositoryCustom {
         return new PageImpl<>(boardList, pageable, videoQueryResults.getTotal());
     }
 
+    @Override
+    public Page<Video> findAllPageByName(String name, Pageable pageable) {
+        QueryResults<Video> videoQueryResults = queryFactory
+                .selectFrom(video)
+                .join(video.member, member).fetchJoin()
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .where(member.name.eq(name))
+                .orderBy(video.createdDate.desc())
+                .fetchResults();
+        List<Video> boardList = videoQueryResults.getResults();
+        return new PageImpl<>(boardList, pageable, videoQueryResults.getTotal());
+    }
+
     private BooleanExpression containKeyword(String keywordCond) {
         return video.title.containsIgnoreCase(keywordCond);
     }

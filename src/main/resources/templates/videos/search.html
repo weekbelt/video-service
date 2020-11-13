@@ -5,7 +5,7 @@
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
 <header th:replace="fragments/fragments.html :: header"></header>
-<main id="main">
+<main id="main" data-page="search">
     <div class="search__header">
         <h3 id="keyword" th:data-keyword="${searchingBy}" th:text="'Searching for: ' +  ${searchingBy}">Searching for: Spring</h3>
     </div>

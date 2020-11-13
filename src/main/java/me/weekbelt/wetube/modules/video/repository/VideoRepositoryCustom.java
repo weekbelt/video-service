@@ -10,5 +10,7 @@ import java.util.Optional;
 public interface VideoRepositoryCustom {
     Page<Video> findAllPageByKeyword(String keyword, Pageable pageable);
 
+    Page<Video> findAllPageByName(String name, Pageable pageable);
+
     Optional<Video> findWithMemberById(Long id);
 }

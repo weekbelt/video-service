@@ -5,47 +5,89 @@
 <head th:replace="fragments/fragments.html :: head"></head>
 <body>
 <header th:replace="fragments/fragments.html :: header"></header>
-<main id="main" class="container">
-    <div class="user-profile" th:data-name="${memberReadForm.name}">
-        <div class="user-profile__header">
-            <svg th:if="${!memberReadForm.hasProfileImage}" class="avatar"
-                 th:data-jdenticon-value="${memberReadForm.name}" width="125" height="125"></svg>
-            <img th:if="${memberReadForm.hasProfileImage}" class="avatar" width="125" height="125">
-            <h4 class="profile__username" th:text="${memberReadForm.name}"></h4>
-        </div>
-        <div th:if="${isOwner}" class="user-profile__btns">
-            <a href="/members/edit-profile" class="get-started-btn">
-                ✏️ Edit Profile
-            </a>
-            <a href="/members/change-name" class="get-started-btn">
-                🖋 Change Name
-            </a>
-            <a href="/members/change-email" class="get-started-btn">
-                ️📠 Change Email
-            </a>
-            <a href="/members/change-password" class="get-started-btn">
-                🔒 Change Password
-            </a>
-        </div>
-        <div class="home-videos">
-<!--            TODO: 비디오 리스트 AJAX 처리-->
-            <div th:each="item : ${videos}" class="videoBlock">
-                <a th:href="@{'/videos/' + ${item.id}}">
-                    <video th:src="@{${item.saveFileName}}" class="videoBlock__thumbnail" controls="false"></video>
-                    <h4 class="videoBlock__title" th:text="${item.title}">안녕하세요</h4>
-                    <div class="videoBlock__bottom">
-                         <h6 th:if="${item.views == 1}" class="videoBlock__views" th:text="${item.views + ' view'}"></h6>
-                        <h6 th:if="${item.views > 1}" class="videoBlock__views" th:text="${item.views + ' views'}"></h6>
-                        <h6 class="ml-2 fromNow">1년 전</h6>
+<main id="main" data-page="userDetail">
+    <nav class="user-detail-nav">
+        <div class="row">
+            <div class="col-2">
+                <div class="list-group" id="list-tab" role="tablist">
+                    <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list"
+                       href="#list-home" role="tab" aria-controls="home">Home</a>
+                    <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
+                       href="#list-profile" role="tab" aria-controls="profile">Profile</a>
+                    <a class="list-group-item list-group-item-action" id="list-videos-list" data-toggle="list"
+                       href="#list-messages" role="tab" aria-controls="videos">My Video</a>
+                    <a class="list-group-item list-group-item-action" id="list-comments-list" data-toggle="list"
+                       href="#list-settings" role="tab" aria-controls="comments">My comment</a>
+                </div>
+            </div>
+            <div class="col-10">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                        Home으로 이동
                     </div>
-                </a>
+                    <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+                        <div class="user-profile" th:data-name="${memberReadForm.name}">
+                            <div class="user-profile__header">
+                                <svg th:if="${!memberReadForm.hasProfileImage}" class="avatar"
+                                     th:data-jdenticon-value="${memberReadForm.name}" width="125" height="125"></svg>
+                                <img th:if="${memberReadForm.hasProfileImage}" class="avatar" width="125" height="125">
+                                <h4 class="profile__username" th:text="${memberReadForm.name}"></h4>
+                            </div>
+                            <div th:if="${isOwner}" class="user-profile__btns">
+                                <a href="/members/edit-profile" class="get-started-btn">
+                                    ✏️ Edit Profile
+                                </a>
+                                <a href="/members/change-name" class="get-started-btn">
+                                    🖋 Change Name
+                                </a>
+                                <a href="/members/change-email" class="get-started-btn">
+                                    ️📠 Change Email
+                                </a>
+                                <a href="/members/change-password" class="get-started-btn">
+                                    🔒 Change Password
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div th:if="${isOwner}" class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+                        <div class="home-videos">
+                            <!--내가 업로드한 비디오 리스트-->
+                        </div>
+                    </div>
+                    <div th:if="${isOwner}" class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
+                        <div class="comments">
+                            <!--                            내가 작성한 댓글 리스트-->
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
+    </nav>
 </main><!-- End #main -->
 </body>
 <footer th:replace="fragments/fragments.html :: footer"></footer>
 <div th:replace="fragments/fragments.html::jsVendorFiles"></div>
+<script src="/assets/js/global.js"></script>
 <script src="/assets/js/user/userDetail.js"></script>
+<script src="/assets/js/video/video.js"></script>
+
+<!--동영상 템플릿-->
+<script id="videoElementTemplate" type="text/x-handlebars-template">
+    <div class="videoBlock" data-id="{{videoId}}">
+        <a href="{{videoDetailUri}}">
+
+            <img class="videoBlock__thumbnail" alt="Thumbnail" src="{{thumbnailUri}}">
+
+            <h4 class="videoBlock__title">{{title}}</h4>
+            <div class="videoBlock__bottom">
+                <h6 class="videoBlock__views">{{viewCount}}</h6>
+                <h6 class="ml-2 fromNow">{{createdDateTime}}</h6>
+            </div>
+        </a>
+    </div>
+</script>
+
+<!--댓글 템플릿-->
+
 </html>

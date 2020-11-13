@@ -38,11 +38,12 @@ public class VideoService {
 
     public Page<VideoElementForm> findVideoElementFormPageByKeyword(String keyword, Pageable pageable) {
         Page<Video> videoPage = videoRepository.findAllPageByKeyword(keyword, pageable);
+        return VideoDtoFactory.videoPageToVideoElementFormPage(videoPage);
+    }
 
-        return videoPage.map(video -> {
-            Creator creator = MemberDtoFactory.memberToCreator(video.getMember());
-            return VideoDtoFactory.videoToVideoElementForm(video, creator);
-        });
+    public Page<VideoElementForm> findVideoElementFormPageByName(String name, Pageable pageable) {
+        Page<Video> videoPage = videoRepository.findAllPageByName(name, pageable);
+        return VideoDtoFactory.videoPageToVideoElementFormPage(videoPage);
     }
 
     public VideoReadForm findVideoForm(Long videoId) {
@@ -100,4 +101,5 @@ public class VideoService {
         findVideo.plusView();
         videoRepository.save(findVideo);
     }
+
 }

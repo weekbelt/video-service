@@ -31,7 +31,7 @@ public class VideoApiController {
     private final VideoRepository videoRepository;
 
     @GetMapping
-    public ResponseEntity<?> getVideos(@PageableDefault(size = 12, sort = "createdDate",
+    public ResponseEntity<?> getVideosByKeyword(@PageableDefault(size = 12, sort = "createdDate",
             direction = Sort.Direction.DESC, page = 0) Pageable pageable, @RequestParam(defaultValue = "") String keyword) {
 
         Page<VideoElementForm> videoElementFormPage = videoService.findVideoElementFormPageByKeyword(keyword, pageable);

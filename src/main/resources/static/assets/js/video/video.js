@@ -2,13 +2,25 @@ const videoObj = {
     keyword: "",
     lastPageNumber: 0,
     init: async function () {
-        const searchingBy = document.querySelector("#keyword");
-        if (searchingBy) {
+        const mainContainer = document.querySelector("#main");
+        let videoPage = "";
+        if (mainContainer.dataset.page === 'main') {
+            videoPage = await this.ajaxByKeyword();
+        } else if (mainContainer.dataset.page === 'search') {
+            const searchingBy = document.querySelector("#keyword");
             this.keyword = searchingBy.dataset.keyword;
+            videoPage = await this.ajaxByKeyword();
+        } else if (mainContainer.dataset.page === 'userDetail') {
+            const name = document.querySelector(".user-profile").dataset.name;
+            videoPage = await this.ajaxByName(name);
         }
+        // const searchingBy = document.querySelector("#keyword");
+        // if (searchingBy) {
+        //     this.keyword = searchingBy.dataset.keyword;
+        // }
 
-        const requestUri = "/api/videos?page=" + this.lastPageNumber + "&keyword=" + this.keyword;
-        let videoPage = await fetchRequest("GET", requestUri);
+        // const requestUri = "/api/videos?page=" + this.lastPageNumber + "&keyword=" + this.keyword;
+        // let videoPage = await fetchRequest("GET", requestUri);
 
         // 화면에 비디오 리스트 호출
         this.showVideos(videoPage);
@@ -21,6 +33,14 @@ const videoObj = {
                 videoObj.init();
             });
         }
+    },
+    ajaxByKeyword: async function () {
+        const requestUri = "/api/videos?page=" + videoObj.lastPageNumber + "&keyword=" + videoObj.keyword;
+        return await fetchRequest("GET", requestUri);
+    },
+    ajaxByName: async function (name) {
+        const requestUri = "/api/members/" + name + "/videos?page=" + videoObj.lastPageNumber;
+        return await fetchRequest("GET", requestUri);
     },
     showVideos: function (videoPage) {
         const videoContent = videoPage.content;
