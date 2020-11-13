@@ -14,6 +14,16 @@ import java.util.stream.Collectors;
 // 인스턴스화 방
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CommentDtoFactory {
+
+    public static Page<CommentReadForm> commentPageToCommentReadFormPage(Page<Comment> commentPage) {
+        return commentPage.map(CommentDtoFactory::commentToCommentReadForm);
+    }
+
+    public static List<CommentReadForm> commentToCommentReadForms(List<Comment> comments) {
+        return comments.stream().map(CommentDtoFactory::commentToCommentReadForm)
+                .collect(Collectors.toList());
+    }
+
     public static CommentReadForm commentToCommentReadForm(Comment comment) {
         return CommentReadForm.builder()
                 .id(comment.getId())
@@ -23,11 +33,6 @@ public class CommentDtoFactory {
                 .createdDateTime(comment.getCreatedDate())
                 .modifiedDateTime(comment.getLastModifiedDate())
                 .build();
-    }
-
-    public static List<CommentReadForm> commentToCommentReadForms(List<Comment> comments) {
-        return comments.stream().map(CommentDtoFactory::commentToCommentReadForm)
-                .collect(Collectors.toList());
     }
 
     public static Comment commentCreateFormToComment(CommentCreateForm commentCreateForm,
@@ -40,7 +45,4 @@ public class CommentDtoFactory {
                 .build();
     }
 
-    public static Page<CommentReadForm> commentPageToCommentReadFormPage(Page<Comment> commentPage) {
-        return commentPage.map(CommentDtoFactory::commentToCommentReadForm);
-    }
 }

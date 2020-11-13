@@ -1,10 +1,19 @@
 package me.weekbelt.wetube.modules.member.controller;
 
 import lombok.RequiredArgsConstructor;
+import me.weekbelt.wetube.modules.comment.form.CommentReadForm;
+import me.weekbelt.wetube.modules.comment.service.CommentService;
+import me.weekbelt.wetube.modules.member.CurrentMember;
 import me.weekbelt.wetube.modules.member.Member;
 import me.weekbelt.wetube.modules.member.repository.MemberRepository;
+import me.weekbelt.wetube.modules.video.form.VideoElementForm;
+import me.weekbelt.wetube.modules.video.service.VideoService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +32,22 @@ public class MemberApiController {
     private String IMAGE_PATH;
 
     private final MemberRepository memberRepository;
+    private final VideoService videoService;
+    private final CommentService commentService;
+
+    @GetMapping("/{name}/videos")
+    public ResponseEntity<?> getVideosByName(@PageableDefault(size = 12, sort = "createdDate",
+            direction = Sort.Direction.DESC, page = 0) Pageable pageable, @PathVariable String name) {
+        Page<VideoElementForm> videoElementFormPage = videoService.findVideoElementFormPageByName(name, pageable);
+        return ResponseEntity.ok().body(videoElementFormPage);
+    }
+
+    @GetMapping("/{name}/comments")
+    public ResponseEntity<?> getCommentsByName(@PageableDefault(size = 10, sort = "createdDate", direction = Sort.Direction.DESC) Pageable pageable,
+                                               @PathVariable String name) {
+        Page<CommentReadForm> comments = commentService.findCommentsByName(name, pageable);
+        return ResponseEntity.ok(comments);
+    }
 
     @GetMapping("/{name}/profileImage")
     public ResponseEntity<?> getMemberProfileImage(@PathVariable String name) {

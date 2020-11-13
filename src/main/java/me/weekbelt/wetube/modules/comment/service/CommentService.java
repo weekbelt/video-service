@@ -59,4 +59,9 @@ public class CommentService {
         Page<Comment> commentPage = commentRepository.findAllByVideoIdOrderByCreatedDateDesc(videoId, pageable);
         return CommentDtoFactory.commentPageToCommentReadFormPage(commentPage);
     }
+
+    public Page<CommentReadForm> findCommentsByName(String name, Pageable pageable) {
+        Page<Comment> commentPage = commentRepository.findAllByName(name, pageable);
+        return CommentDtoFactory.commentPageToCommentReadFormPage(commentPage);
+    }
 }
