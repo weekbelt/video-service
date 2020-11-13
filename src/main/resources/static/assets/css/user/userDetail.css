@@ -7,6 +7,10 @@
     border-color: #3b4ef8;
 }
 
+.user-profile__btn {
+    margin-top: 60px;
+}
+
 .home-videos {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

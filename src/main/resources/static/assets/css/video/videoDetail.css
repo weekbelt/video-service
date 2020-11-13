@@ -18,7 +18,7 @@
     -moz-transition: opacity 0.4s linear;
     transition: opacity 0.4s linear;
     color: white;
-    position: absolute;
+    /*position: absolute;*/
     z-index: 9;
     bottom: 5px;
     width: 100%;

@@ -34,7 +34,7 @@
                                 <img th:if="${memberReadForm.hasProfileImage}" class="avatar" width="125" height="125">
                                 <h4 class="profile__username" th:text="${memberReadForm.name}"></h4>
                             </div>
-                            <div th:if="${isOwner}" class="user-profile__btns">
+                            <div th:if="${isOwner}" class="user-profile__btn">
                                 <a href="/members/edit-profile" class="get-started-btn">
                                     ✏️ Edit Profile
                                 </a>
