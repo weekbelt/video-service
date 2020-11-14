@@ -59,7 +59,6 @@ const commentLoadObj = {
             }
         }
 
-        // const commentElementTemplate = document.querySelector("#commentTemplate").innerHTML;
         const bindTemplate = Handlebars.compile(commentTemplate);
         const commentElement = bindTemplate(commentReadForm);
 

@@ -19,6 +19,10 @@ spring:
         format_sql: true
         default_batch_fetch_size: 1000
 
+  datasource:
+    data: classpath*:db/mysqldb/data.sql
+    initialization-mode: always
+
 logging.level:
   org.hibernate.SQL: debug
 

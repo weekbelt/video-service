@@ -182,7 +182,7 @@ class VideoControllerTest {
     @DisplayName("동영상 정보 수정 뷰 - 실패(권한 X)")
     void editVideoView_fail() throws Exception {
         // given
-        Member member = memberFactory.createMember("twins");
+        Member member = memberFactory.createMember("tigers");
         Video video = videoFactory.createVideo(member);
 
         String requestUri = "/videos/" + video.getId() + "/edit";
@@ -273,7 +273,7 @@ class VideoControllerTest {
     @DisplayName("동영상 삭제 - 실패(삭제 권한 X)")
     void deleteVideo_fail() throws Exception {
         // given
-        Member member = memberFactory.createMember("twins");
+        Member member = memberFactory.createMember("tigers");
         Video video = videoFactory.createVideo(member);
 
         String requestUri = "/videos/" + video.getId() + "/delete";

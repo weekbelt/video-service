@@ -70,7 +70,7 @@ class MemberControllerTest {
     @DisplayName("회원 정보 뷰 - (수정권한 X)")
     void userDetail_isNotOwner() throws Exception {
         // given
-        Member twins = memberFactory.createMember("twins");
+        Member twins = memberFactory.createMember("tigers");
         String requestUrl = "/members/profile/" + twins.getName();
 
         // when
@@ -176,14 +176,14 @@ class MemberControllerTest {
 
         // when
         ResultActions resultActions = mockMvc.perform(post(requestUrl)
-                .param("name", "twins")
+                .param("name", "tigers")
                 .with(csrf()));
 
         // when
         resultActions
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attributeExists("message"))
-                .andExpect(redirectedUrl("/members/profile/twins"));
+                .andExpect(redirectedUrl("/members/profile/tigers"));
     }
 
     @ParameterizedTest(name = "{index} {displayName} name={0}")
@@ -253,11 +253,11 @@ class MemberControllerTest {
     void changeEmail_fail_existsEmail() throws Exception {
         // given
         String requestUrl = "/members/change-email";
-        memberFactory.createMember("twins");
+        memberFactory.createMember("tigers");
 
         // when
         ResultActions resultActions = mockMvc.perform(post(requestUrl)
-                .param("email", "twins@email.com")
+                .param("email", "tigers@email.com")
                 .with(csrf()));
 
         // when

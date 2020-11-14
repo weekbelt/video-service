@@ -14,13 +14,6 @@ const videoObj = {
             const name = document.querySelector(".user-profile").dataset.name;
             videoPage = await this.ajaxByName(name);
         }
-        // const searchingBy = document.querySelector("#keyword");
-        // if (searchingBy) {
-        //     this.keyword = searchingBy.dataset.keyword;
-        // }
-
-        // const requestUri = "/api/videos?page=" + this.lastPageNumber + "&keyword=" + this.keyword;
-        // let videoPage = await fetchRequest("GET", requestUri);
 
         // 화면에 비디오 리스트 호출
         this.showVideos(videoPage);
