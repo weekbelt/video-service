@@ -12,12 +12,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -108,8 +110,9 @@ class MemberControllerTest {
     @WithMember("joohyuk")
     @DisplayName("회원 업데이트 - 성공")
     void editProfile_success() throws Exception {
+        InputStream profileImageResource = new ClassPathResource("images/twins.png").getInputStream();
         MockMultipartFile file = new MockMultipartFile(
-                "multipartImageProfile", "test.png", "image/png", "image".getBytes());
+                "multipartImageProfile", "twins.png", "image/png", profileImageResource);
         // given
         String requestUrl = "/members/edit-profile";
 
