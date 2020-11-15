@@ -12,12 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-
-import java.io.InputStream;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -61,22 +58,20 @@ class VideoControllerTest {
     @DisplayName("동영상 업로드 성공")
     void uploadVideo_success() throws Exception {
         // given
-        InputStream thumbnailResource = new ClassPathResource("images/twins.png").getInputStream();
         MockMultipartFile thumbnailImageFile
                 = new MockMultipartFile(
                 "thumbnailImageFile",
                 "twins.png",
                 "image/png",
-                thumbnailResource
+                "twins.png".getBytes()
         );
 
-        InputStream videoResource = new ClassPathResource("videos/aaa.mp4").getInputStream();
         MockMultipartFile videoFile
                 = new MockMultipartFile(
                 "videoFile",
-                "test.mp4",
+                "aaa.mp4",
                 "video/mp4",
-                videoResource
+                "aaa.mp4".getBytes()
         );
         String request = "/videos/upload";
 
