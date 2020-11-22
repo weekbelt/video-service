@@ -15,6 +15,13 @@
 
 <hr>
 
+## 배포 환경
+- Travis CI를 Github에 연동하여 master브랜치로 push할 경우 자동으로 빌드하도록 설정
+- 빌드 후 생성된 .jar 파일을 AWS S3에 저장
+- S3에 있는 .jar 파일을 CodeDeploy에 배포 요청
+- EC2에 배포
+
+
 ## 주요 기능
 
 ### 01. 메인 페이지
